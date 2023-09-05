@@ -52,4 +52,7 @@ export default {
 
   'menu.user': '用户权限',
   'menu.user.user-manage': '用户管理',
+
+  'menu.db': '数据库',
+  'menu.db.db-manage': '数据库管理',
 };

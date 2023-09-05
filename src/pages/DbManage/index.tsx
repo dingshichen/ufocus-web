@@ -1,18 +1,11 @@
 import React, {useRef, useState} from "react";
-import {
-  ActionType,
-  ModalForm,
-  PageContainer,
-  ProColumns,
-  ProFormText,
-  ProTable
-} from "@ant-design/pro-components";
+import {ActionType, ModalForm, PageContainer, ProColumns, ProFormText, ProTable} from "@ant-design/pro-components";
 import {Button, message} from "antd";
 import {PlusOutlined} from "@ant-design/icons";
-import {addRule, user} from "@/services/ant-design-pro/api";
+import {addRule, dbInstance, user} from "@/services/ant-design-pro/api";
 
 // TODO 接口未更换
-const handleAdd = async (fields: API.UserItem) => {
+const handleAdd = async (fields: API.DbInstanceItem) => {
   const hide = message.loading('正在添加');
   try {
     await addRule({ ...fields });
@@ -26,7 +19,7 @@ const handleAdd = async (fields: API.UserItem) => {
   }
 };
 
-const handleUpdate = async (fields: API.UserItem) => {
+const handleUpdate = async (fields: API.DbInstanceItem) => {
   const hide = message.loading('正在添加');
   try {
     await addRule({ ...fields });
@@ -40,7 +33,7 @@ const handleUpdate = async (fields: API.UserItem) => {
   }
 };
 
-const UserManage: React.FC = () => {
+const DbManage: React.FC = () => {
 
   // 新建按钮的弹窗
   const [createModalOpen, handleModalOpen] = useState<boolean>(false);
@@ -49,42 +42,39 @@ const UserManage: React.FC = () => {
   const [updateModalOpen, handleUpdateModalOpen] = useState<boolean>(false);
 
   // 操作的行
-  const [currentRow, setCurrentRow] = useState<API.UserItem>();
+  const [currentRow, setCurrentRow] = useState<API.DbInstanceItem>();
 
   // 刷新表格
   const actionRef = useRef<ActionType>();
 
-  const columns: ProColumns<API.UserItem>[] = [
+  const columns: ProColumns<API.DbInstanceItem>[] = [
     {
-      title: "用户名",
-      dataIndex: "chnName",
+      title: "数据库实例名称",
+      dataIndex: "dbInstanceName",
     },
     {
-      title: "手机号码",
-      dataIndex: "mobilePhoneNumber",
+      title: "数据库产品代码",
+      dataIndex: "dbProductCode",
+      search: false,
     },
     {
-      title: "电子邮箱",
-      dataIndex: "emailAddress",
+      title: "数据库产品版本号",
+      dataIndex: "dbProductVersionNumber",
+      search: false,
+    },
+    {
+      title: "链接地址",
+      dataIndex: "linkAddress",
+      search: false,
+    },
+    {
+      title: "账号",
+      dataIndex: "account",
       search: false
     },
     {
-      title: "停用状态",
-      dataIndex: "isLockFlag",
-      valueEnum: {
-        0: {
-          text: "可用",
-          status: "false"
-        },
-        1: {
-          text: "停用",
-          status: "true"
-        }
-      }
-    },
-    {
       title: "创建人",
-      dataIndex: "createUser",
+      dataIndex: "createUser.chnName",
       search: false
     },
     {
@@ -107,16 +97,15 @@ const UserManage: React.FC = () => {
           变更
         </a>,
         <a key="lock" href="https://procomponents.ant.design/">
-          停用
+          删除
         </a>,
       ],
     },
   ]
-
   return (
     <PageContainer>
-      <ProTable<API.UserItem, API.PageParams>
-        headerTitle="用户列表"
+      <ProTable<API.DbInstanceItem, API.PageParams>
+        headerTitle="数据库实例列表"
         rowKey="id"
         actionRef={actionRef}
         toolBarRender={() => [
@@ -130,15 +119,15 @@ const UserManage: React.FC = () => {
             <PlusOutlined /> 新建
           </Button>
         ]}
-        request={user}
+        request={dbInstance}
         columns={columns}/>
       <ModalForm
-        title="新建用户"
+        title="新建数据库实例"
         open={createModalOpen}
         onOpenChange={handleModalOpen}
         width="400px"
         onFinish={async (value) => {
-          const success = await handleAdd(value as API.UserItem);
+          const success = await handleAdd(value as API.DbInstanceItem);
           if (success) {
             handleModalOpen(false);
             if (actionRef.current) {
@@ -150,85 +139,71 @@ const UserManage: React.FC = () => {
           rules={[
             {
               required: true,
-              message: "请输入用户名",
+              message: "请输入数据库实例名称",
             },
           ]}
           width="md"
-          name="chnName"
-          label="用户名"
+          name="dbInstanceName"
+          label="数据库实例名称"
         />
         <ProFormText
           rules={[
             {
               required: true,
-              message: "请输入手机号码",
+              message: "请选择数据库产品",
             },
           ]}
           width="md"
-          name="mobilePhoneNumber"
-          label="手机号码"
+          name="dbProductCode"
+          label="数据库产品"
         />
         <ProFormText
+          rules={[
+            {
+              required: true,
+              message: "请选择数据库产品版本号",
+            },
+          ]}
           width="md"
-          name="emailAddress"
-          label="电子邮箱"
+          name="dbProductVersionNumber"
+          label="数据库产品版本号"
+        />
+        <ProFormText
+          rules={[
+            {
+              required: true,
+              message: "请输入链接地址",
+            },
+          ]}
+          width="md"
+          name="linkAddress"
+          label="链接地址"
+        />
+        <ProFormText
+          rules={[
+            {
+              required: true,
+              message: "请输入账号",
+            },
+          ]}
+          width="md"
+          name="account"
+          label="账号"
         />
         <ProFormText.Password
+          rules={[
+            {
+              required: true,
+              message: "请输入密码",
+            },
+          ]}
           width="md"
           name="password"
           label="密码"
-          readonly={ true }
-          initialValue={ "123456" }
-        />
-      </ModalForm>
-      <ModalForm
-        title="变更用户"
-        open={updateModalOpen}
-        onOpenChange={handleUpdateModalOpen}
-        width="400px"
-        onFinish={async (value) => {
-          const success = await handleUpdate(value as API.UserItem);
-          if (success) {
-            handleUpdateModalOpen(false);
-            if (actionRef.current) {
-              actionRef.current.reload();
-            }
-          }
-        }}
-      >
-        <ProFormText
-          rules={[
-            {
-              required: true,
-              message: "请输入用户名",
-            },
-          ]}
-          width="md"
-          name="chnName"
-          label="用户名"
-          initialValue={ currentRow?.chnName }
-        />
-        <ProFormText
-          rules={[
-            {
-              required: true,
-              message: "请输入手机号码",
-            },
-          ]}
-          width="md"
-          name="mobilePhoneNumber"
-          label="手机号码"
-          initialValue={ currentRow?.mobilePhoneNumber }
-        />
-        <ProFormText
-          width="md"
-          name="emailAddress"
-          label="电子邮箱"
-          initialValue={ currentRow?.emailAddress }
         />
       </ModalForm>
     </PageContainer>
   )
 }
 
-export default UserManage
+export default DbManage

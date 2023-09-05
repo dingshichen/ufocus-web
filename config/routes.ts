@@ -62,6 +62,22 @@ export default [
     ]
   },
   {
+    path: '/db',
+    name: 'db',
+    icon: 'user',
+    routes: [
+      {
+        path: '/db',
+        redirect: '/db/manage',
+      },
+      {
+        path: '/db/manage',
+        name:'db-manage',
+        component: './DbManage'
+      }
+    ]
+  },
+  {
     name: 'list.table-list',
     icon: 'table',
     path: '/list',

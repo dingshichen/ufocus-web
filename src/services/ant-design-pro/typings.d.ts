@@ -109,9 +109,28 @@ declare namespace API {
 
   class UserItem extends UserOption {
     mobilePhoneNumber: string;
+    emailAddress: string;
     isLockFlag: boolean;
     createUser: UserOption;
     createTime: string;
   }
 
+  class DbInstanceOption extends Base {
+    dbInstanceName: string;
+    dbProductCode: string;
+  }
+
+  class DbInstanceItem extends DbInstanceOption {
+    dbProductVersionNumber: string;
+    linkAddress: string;
+    account: string;
+    createUser: UserOption;
+    createTime: string;
+  }
+
+  class DbInstanceDetail extends DbInstanceItem {
+    password: string;
+    latestUpdateUser: UserOption;
+    latestUpdateTime: string;
+  }
 }
