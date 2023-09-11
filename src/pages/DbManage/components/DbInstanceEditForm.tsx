@@ -18,17 +18,20 @@ const DbInstanceEditForm: React.FC<DbInstanceEditProps> = (props) => {
       open={props.open}
       onOpenChange={props.onOpenChange}
       width="400px"
+      modalProps={{
+        destroyOnClose: true
+      }}
       onFinish={props.onFinish}>
       <ProFormText
         rules={[
           {
             required: true,
-            message: "请输入数据库实例名称",
+            message: "请输入实例名称",
           },
         ]}
         width="md"
         name="dbInstanceName"
-        label="数据库实例名称"
+        label="实例名称"
         initialValue={ props.currentRow?.dbInstanceName }
       />
       <ProFormText

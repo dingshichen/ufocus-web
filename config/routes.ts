@@ -72,8 +72,13 @@ export default [
       },
       {
         path: '/db/manage',
-        name:'db-manage',
+        name: 'db-manage',
         component: './DbManage'
+      },
+      {
+        path: '/db/group/manage',
+        name: 'db-group-manage',
+        component: './DbGroupManage'
       }
     ]
   },

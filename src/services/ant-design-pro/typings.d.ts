@@ -114,23 +114,4 @@ declare namespace API {
     createUser: UserOption;
     createTime: string;
   }
-
-  class DbInstanceOption extends Base {
-    dbInstanceName: string;
-    dbProductCode: string;
-  }
-
-  class DbInstanceItem extends DbInstanceOption {
-    dbProductVersionNumber: string;
-    linkAddress: string;
-    createUser: UserOption;
-    createTime: string;
-  }
-
-  class DbInstanceDetail extends DbInstanceItem {
-    account: string;
-    password: string;
-    latestUpdateUser: UserOption;
-    latestUpdateTime: string;
-  }
 }

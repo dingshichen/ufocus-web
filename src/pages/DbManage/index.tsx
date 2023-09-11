@@ -2,8 +2,9 @@ import React, {useRef, useState} from "react";
 import {ActionType, PageContainer, ProColumns, ProTable} from "@ant-design/pro-components";
 import {Button, message} from "antd";
 import {PlusOutlined} from "@ant-design/icons";
-import {addRule, dbInstance, deleteDbInstance, loadDbInstance} from "@/services/ant-design-pro/api";
+import {addRule, dbInstance} from "@/services/ant-design-pro/api";
 import DbInstanceEditForm from "@/pages/DbManage/components/DbInstanceEditForm";
+import {loadDbInstanceMock} from "@/services/db/api";
 
 // TODO 接口未更换
 const handleAdd = async (fields: API.DbInstanceItem) => {
@@ -37,11 +38,11 @@ const handleUpdate = async (fields: API.DbInstanceItem) => {
 function getDbInstanceColumn(option: ProColumns<API.DbInstanceItem>): ProColumns<API.DbInstanceItem>[] {
   return [
     {
-      title: "数据库实例名称",
+      title: "实例名称",
       dataIndex: "dbInstanceName",
     },
     {
-      title: "数据库产品代码",
+      title: "数据库产品",
       dataIndex: "dbProductCode",
       search: false,
     },
@@ -73,7 +74,7 @@ function getDbInstanceColumn(option: ProColumns<API.DbInstanceItem>): ProColumns
  * 数据库管理页面
  */
 const DbManage: React.FC = () => {
-  const [createModalOpen, handleModalOpen] = useState<boolean>(false);
+  const [isModalOpen, setModalOpen] = useState<boolean>(false);
   const [currentRow, setCurrentRow] = useState<API.DbInstanceDetail>()
   const actionRef = useRef<ActionType>();
   const columns = getDbInstanceColumn(
@@ -86,27 +87,15 @@ const DbManage: React.FC = () => {
           key="update"
           onClick={() => {
             const init = async () => {
-              const detail = await loadDbInstance(record.id)
-              setCurrentRow(detail)
+              return await loadDbInstanceMock(record.id)
             }
-            init().then(() => {
-              handleModalOpen(true);
+            init().then((value) => {
+              setCurrentRow(value)
+              setModalOpen(true);
             })
           }}
         >
           变更
-        </a>,
-        <a
-          key="delete"
-          onClick={() => {
-            deleteDbInstance(record.id).then(() => {
-              if (actionRef.current) {
-                actionRef.current.reload();
-              }
-            })
-          }}
-        >
-          删除
         </a>,
       ],
     }
@@ -123,7 +112,7 @@ const DbManage: React.FC = () => {
             key="primary"
             onClick={() => {
               setCurrentRow(undefined);
-              handleModalOpen(true);
+              setModalOpen(true);
             }}
           >
             <PlusOutlined/> 新建
@@ -132,13 +121,13 @@ const DbManage: React.FC = () => {
         request={dbInstance}
         columns={columns}/>
       <DbInstanceEditForm
-        open={createModalOpen}
-        onOpenChange={handleModalOpen}
+        open={isModalOpen}
+        onOpenChange={setModalOpen}
         currentRow={currentRow}
         onFinish={async (value) => {
           const success = await handleAdd(value);
           if (success) {
-            handleModalOpen(false);
+            setModalOpen(false);
             if (actionRef.current) {
               actionRef.current.reload();
             }
