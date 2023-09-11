@@ -78,6 +78,22 @@ export default [
     ]
   },
   {
+    path: '/ticket',
+    name: 'ticket',
+    icon: 'user',
+    routes: [
+      {
+        path: '/ticket',
+        redirect: '/ticket/manage',
+      },
+      {
+        path: '/ticket/manage',
+        name:'ticket-manage',
+        component: './TicketManage'
+      }
+    ]
+  },
+  {
     name: 'list.table-list',
     icon: 'table',
     path: '/list',

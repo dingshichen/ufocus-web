@@ -123,12 +123,12 @@ declare namespace API {
   class DbInstanceItem extends DbInstanceOption {
     dbProductVersionNumber: string;
     linkAddress: string;
-    account: string;
     createUser: UserOption;
     createTime: string;
   }
 
   class DbInstanceDetail extends DbInstanceItem {
+    account: string;
     password: string;
     latestUpdateUser: UserOption;
     latestUpdateTime: string;

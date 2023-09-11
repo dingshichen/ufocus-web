@@ -128,3 +128,11 @@ export async function dbInstance(
     ...(options || {}),
   });
 }
+
+export function loadDbInstance(id: number) {
+  return request<API.DbInstanceDetail>('/api/db/instance/' + id, {method: 'GET'});
+}
+
+export function deleteDbInstance(id: number) {
+  return request<API.DbInstanceDetail>('/api/db/instance/' + id, {method: 'DELETE'});
+}

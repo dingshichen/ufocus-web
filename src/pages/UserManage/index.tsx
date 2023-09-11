@@ -10,12 +10,13 @@ import {
 import {Button, message} from "antd";
 import {PlusOutlined} from "@ant-design/icons";
 import {addRule, user} from "@/services/ant-design-pro/api";
+import UserEditForm from "@/pages/UserManage/components/UserEditForm";
 
 // TODO 接口未更换
 const handleAdd = async (fields: API.UserItem) => {
   const hide = message.loading('正在添加');
   try {
-    await addRule({ ...fields });
+    await addRule({...fields});
     hide();
     message.success('Added successfully');
     return true;
@@ -29,7 +30,7 @@ const handleAdd = async (fields: API.UserItem) => {
 const handleUpdate = async (fields: API.UserItem) => {
   const hide = message.loading('正在添加');
   try {
-    await addRule({ ...fields });
+    await addRule({...fields});
     hide();
     message.success('Added successfully');
     return true;
@@ -127,7 +128,7 @@ const UserManage: React.FC = () => {
               handleModalOpen(true);
             }}
           >
-            <PlusOutlined /> 新建
+            <PlusOutlined/> 新建
           </Button>
         ]}
         request={user}
@@ -177,15 +178,13 @@ const UserManage: React.FC = () => {
           width="md"
           name="password"
           label="密码"
-          readonly={ true }
-          initialValue={ "123456" }
+          readonly={true}
+          initialValue={"123456"}
         />
       </ModalForm>
-      <ModalForm
-        title="变更用户"
+      <UserEditForm
         open={updateModalOpen}
         onOpenChange={handleUpdateModalOpen}
-        width="400px"
         onFinish={async (value) => {
           const success = await handleUpdate(value as API.UserItem);
           if (success) {
@@ -195,38 +194,7 @@ const UserManage: React.FC = () => {
             }
           }
         }}
-      >
-        <ProFormText
-          rules={[
-            {
-              required: true,
-              message: "请输入用户名",
-            },
-          ]}
-          width="md"
-          name="chnName"
-          label="用户名"
-          initialValue={ currentRow?.chnName }
-        />
-        <ProFormText
-          rules={[
-            {
-              required: true,
-              message: "请输入手机号码",
-            },
-          ]}
-          width="md"
-          name="mobilePhoneNumber"
-          label="手机号码"
-          initialValue={ currentRow?.mobilePhoneNumber }
-        />
-        <ProFormText
-          width="md"
-          name="emailAddress"
-          label="电子邮箱"
-          initialValue={ currentRow?.emailAddress }
-        />
-      </ModalForm>
+      />
     </PageContainer>
   )
 }

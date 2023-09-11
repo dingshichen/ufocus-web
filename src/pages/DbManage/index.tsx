@@ -1,14 +1,15 @@
 import React, {useRef, useState} from "react";
-import {ActionType, ModalForm, PageContainer, ProColumns, ProFormText, ProTable} from "@ant-design/pro-components";
+import {ActionType, PageContainer, ProColumns, ProTable} from "@ant-design/pro-components";
 import {Button, message} from "antd";
 import {PlusOutlined} from "@ant-design/icons";
-import {addRule, dbInstance, user} from "@/services/ant-design-pro/api";
+import {addRule, dbInstance, deleteDbInstance, loadDbInstance} from "@/services/ant-design-pro/api";
+import DbInstanceEditForm from "@/pages/DbManage/components/DbInstanceEditForm";
 
 // TODO 接口未更换
 const handleAdd = async (fields: API.DbInstanceItem) => {
   const hide = message.loading('正在添加');
   try {
-    await addRule({ ...fields });
+    await addRule({...fields});
     hide();
     message.success('Added successfully');
     return true;
@@ -22,7 +23,7 @@ const handleAdd = async (fields: API.DbInstanceItem) => {
 const handleUpdate = async (fields: API.DbInstanceItem) => {
   const hide = message.loading('正在添加');
   try {
-    await addRule({ ...fields });
+    await addRule({...fields});
     hide();
     message.success('Added successfully');
     return true;
@@ -33,21 +34,8 @@ const handleUpdate = async (fields: API.DbInstanceItem) => {
   }
 };
 
-const DbManage: React.FC = () => {
-
-  // 新建按钮的弹窗
-  const [createModalOpen, handleModalOpen] = useState<boolean>(false);
-
-  // 变更按钮的弹窗
-  const [updateModalOpen, handleUpdateModalOpen] = useState<boolean>(false);
-
-  // 操作的行
-  const [currentRow, setCurrentRow] = useState<API.DbInstanceItem>();
-
-  // 刷新表格
-  const actionRef = useRef<ActionType>();
-
-  const columns: ProColumns<API.DbInstanceItem>[] = [
+function getDbInstanceColumn(option: ProColumns<API.DbInstanceItem>): ProColumns<API.DbInstanceItem>[] {
+  return [
     {
       title: "数据库实例名称",
       dataIndex: "dbInstanceName",
@@ -68,11 +56,6 @@ const DbManage: React.FC = () => {
       search: false,
     },
     {
-      title: "账号",
-      dataIndex: "account",
-      search: false
-    },
-    {
       title: "创建人",
       dataIndex: "createUser.chnName",
       search: false
@@ -82,6 +65,18 @@ const DbManage: React.FC = () => {
       dataIndex: "createTime",
       valueType: 'dateTime'
     },
+    option
+  ];
+}
+
+/**
+ * 数据库管理页面
+ */
+const DbManage: React.FC = () => {
+  const [createModalOpen, handleModalOpen] = useState<boolean>(false);
+  const [currentRow, setCurrentRow] = useState<API.DbInstanceDetail>()
+  const actionRef = useRef<ActionType>();
+  const columns = getDbInstanceColumn(
     {
       title: "操作",
       dataIndex: "option",
@@ -90,18 +85,32 @@ const DbManage: React.FC = () => {
         <a
           key="update"
           onClick={() => {
-            setCurrentRow(record);
-            handleUpdateModalOpen(true);
+            const init = async () => {
+              const detail = await loadDbInstance(record.id)
+              setCurrentRow(detail)
+            }
+            init().then(() => {
+              handleModalOpen(true);
+            })
           }}
         >
           变更
         </a>,
-        <a key="lock" href="https://procomponents.ant.design/">
+        <a
+          key="delete"
+          onClick={() => {
+            deleteDbInstance(record.id).then(() => {
+              if (actionRef.current) {
+                actionRef.current.reload();
+              }
+            })
+          }}
+        >
           删除
         </a>,
       ],
-    },
-  ]
+    }
+  )
   return (
     <PageContainer>
       <ProTable<API.DbInstanceItem, API.PageParams>
@@ -113,95 +122,28 @@ const DbManage: React.FC = () => {
             type="primary"
             key="primary"
             onClick={() => {
+              setCurrentRow(undefined);
               handleModalOpen(true);
             }}
           >
-            <PlusOutlined /> 新建
+            <PlusOutlined/> 新建
           </Button>
         ]}
         request={dbInstance}
         columns={columns}/>
-      <ModalForm
-        title="新建数据库实例"
+      <DbInstanceEditForm
         open={createModalOpen}
         onOpenChange={handleModalOpen}
-        width="400px"
+        currentRow={currentRow}
         onFinish={async (value) => {
-          const success = await handleAdd(value as API.DbInstanceItem);
+          const success = await handleAdd(value);
           if (success) {
             handleModalOpen(false);
             if (actionRef.current) {
               actionRef.current.reload();
             }
           }
-        }}>
-        <ProFormText
-          rules={[
-            {
-              required: true,
-              message: "请输入数据库实例名称",
-            },
-          ]}
-          width="md"
-          name="dbInstanceName"
-          label="数据库实例名称"
-        />
-        <ProFormText
-          rules={[
-            {
-              required: true,
-              message: "请选择数据库产品",
-            },
-          ]}
-          width="md"
-          name="dbProductCode"
-          label="数据库产品"
-        />
-        <ProFormText
-          rules={[
-            {
-              required: true,
-              message: "请选择数据库产品版本号",
-            },
-          ]}
-          width="md"
-          name="dbProductVersionNumber"
-          label="数据库产品版本号"
-        />
-        <ProFormText
-          rules={[
-            {
-              required: true,
-              message: "请输入链接地址",
-            },
-          ]}
-          width="md"
-          name="linkAddress"
-          label="链接地址"
-        />
-        <ProFormText
-          rules={[
-            {
-              required: true,
-              message: "请输入账号",
-            },
-          ]}
-          width="md"
-          name="account"
-          label="账号"
-        />
-        <ProFormText.Password
-          rules={[
-            {
-              required: true,
-              message: "请输入密码",
-            },
-          ]}
-          width="md"
-          name="password"
-          label="密码"
-        />
-      </ModalForm>
+        }}/>
     </PageContainer>
   )
 }
