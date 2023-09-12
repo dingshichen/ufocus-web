@@ -58,7 +58,7 @@ function getDbInstanceColumn(option: ProColumns<API.DbInstanceItem>): ProColumns
     },
     {
       title: "创建人",
-      dataIndex: "createUser.chnName",
+      dataIndex: ["createUser", "chnName"],
       search: false
     },
     {

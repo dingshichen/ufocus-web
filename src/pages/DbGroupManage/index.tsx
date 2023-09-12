@@ -21,6 +21,25 @@ const handleAdd = async (fields: API.DbGroupDetail) => {
   }
 };
 
+function getDbGroupColumn(option: ProColumns<API.DbGroupItem>): ProColumns<API.DbGroupItem>[] {
+  return [
+    {
+      title: "分组名称",
+      dataIndex: "groupName",
+    },
+    {
+      title: "数据库实例",
+      dataIndex: "dbInstances"
+    },
+    {
+      title: "描述",
+      dataIndex: "groupDesc",
+      search: false
+    },
+    option
+  ]
+}
+
 const DbGroupManage: React.FC = () => {
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
   const [currentRow, setCurrentRow] = useState<API.DbGroupItem>()
@@ -82,24 +101,5 @@ const DbGroupManage: React.FC = () => {
     </PageContainer>
   )
 };
-
-function getDbGroupColumn(option: ProColumns<API.DbGroupItem>): ProColumns<API.DbGroupItem>[] {
-  return [
-    {
-      title: "分组名称",
-      dataIndex: "groupName",
-    },
-    {
-      title: "数据库实例",
-      dataIndex: "dbInstances"
-    },
-    {
-      title: "描述",
-      dataIndex: "groupDesc",
-      search: false
-    },
-    option
-  ]
-}
 
 export default DbGroupManage;

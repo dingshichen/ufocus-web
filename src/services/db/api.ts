@@ -1,6 +1,6 @@
 import {request} from "@@/exports";
 
-export function loadDbInstanceMock(id: number) {
+export async function loadDbInstanceMock(id: number) {
   return new Promise<API.DbInstanceDetail>((resolve) => {
     if (id === 1) {
       resolve({
@@ -66,7 +66,7 @@ export function loadDbInstanceMock(id: number) {
   })
 }
 
-export function loadDbGroupMock(id: number) {
+export async function loadDbGroupMock(id: number) {
   return new Promise<API.DbGroupDetail>((resolve) => {
     if (id === 1) {
       resolve({
