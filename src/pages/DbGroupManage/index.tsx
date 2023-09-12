@@ -1,8 +1,25 @@
 import React, {useRef, useState} from "react";
 import {ActionType, PageContainer, ProColumns, ProTable} from "@ant-design/pro-components";
 import {dbGroup, loadDbGroupMock} from "@/services/db/api";
-import {Button} from "antd";
+import {Button, message} from "antd";
 import {PlusOutlined} from "@ant-design/icons";
+import DbGroupEditForm from "@/pages/DbGroupManage/components/DbGroupEditForm";
+import {addRule} from "@/services/ant-design-pro/api";
+
+// TODO 接口未更换
+const handleAdd = async (fields: API.DbGroupDetail) => {
+  const hide = message.loading('正在添加');
+  try {
+    await addRule({...fields});
+    hide();
+    message.success('Added successfully');
+    return true;
+  } catch (error) {
+    hide();
+    message.error('Adding failed, please try again!');
+    return false;
+  }
+};
 
 const DbGroupManage: React.FC = () => {
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
@@ -49,6 +66,19 @@ const DbGroupManage: React.FC = () => {
         ]}
         request={dbGroup}
         columns={columns}/>
+      <DbGroupEditForm
+        open={isModalOpen}
+        onOpenChange={setModalOpen}
+        currentRow={currentRow}
+        onFinish={async (value) => {
+          const success = await handleAdd(value);
+          if (success) {
+            setModalOpen(false);
+            if (actionRef.current) {
+              actionRef.current.reload();
+            }
+          }
+        }}/>
     </PageContainer>
   )
 };
