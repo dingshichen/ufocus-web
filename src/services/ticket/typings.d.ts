@@ -5,8 +5,6 @@ declare namespace API {
 
   class TicketItem extends TicketOption {
     dbGroup: DbGroupOption;
-    forceVerificationFlag: boolean;
-    verificationState: string;
     auditState: string;
     performState: string;
     createUser: UserOption;

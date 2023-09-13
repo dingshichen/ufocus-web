@@ -6,12 +6,11 @@ const ticket = (req: Request, res: Response) => {
       {
         id: 1,
         ticketTitle: "考核创建表结构",
+        module: "数据标准",
         dbGroup: {
           id: 2,
           groupName: "MySQL测试所有"
         },
-        forceVerificationFlag: true,
-        verificationState: "验证通过",
         auditState: "审核通过",
         performState: "执行成功",
         createUser: {
@@ -23,12 +22,11 @@ const ticket = (req: Request, res: Response) => {
       {
         id: 1,
         ticketTitle: "考核数据初始化",
+        module: "元数据",
         dbGroup: {
           id: 2,
           groupName: "MySQL测试所有"
         },
-        forceVerificationFlag: true,
-        verificationState: "验证通过",
         auditState: "审核中",
         performState: "待执行",
         createUser: {

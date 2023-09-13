@@ -1,8 +1,24 @@
 import React, {useRef, useState} from "react";
 import {ActionType, PageContainer, ProColumns, ProTable} from "@ant-design/pro-components";
 import {loadTicket, ticket} from "@/services/ticket/api";
-import {Button} from "antd";
+import {Button, message} from "antd";
 import {PlusOutlined} from "@ant-design/icons";
+import TicketEditForm from "@/pages/TicketManage/components/TicketEditForm";
+import {addRule} from "@/services/ant-design-pro/api";
+
+const handleAdd = async (fields: API.TicketDetail) => {
+  const hide = message.loading('正在添加');
+  try {
+    await addRule({...fields});
+    hide();
+    message.success('Added successfully');
+    return true;
+  } catch (error) {
+    hide();
+    message.error('Adding failed, please try again!');
+    return false;
+  }
+};
 
 function getTicketColumn(option: ProColumns<API.TicketItem>): ProColumns<API.TicketItem>[] {
   return [
@@ -13,16 +29,6 @@ function getTicketColumn(option: ProColumns<API.TicketItem>): ProColumns<API.Tic
     {
       title: "数据库分组",
       dataIndex: ["dbGroup", "groupName"]
-    },
-    {
-      title: "是否强制校验",
-      dataIndex: "forceVerificationFlag",
-      search: false
-    },
-    {
-      title: "校验状态",
-      dataIndex: "verificationState",
-      search: false
     },
     {
       title: "审核状态",
@@ -47,7 +53,7 @@ function getTicketColumn(option: ProColumns<API.TicketItem>): ProColumns<API.Tic
 
 const TicketManage: React.FC = () => {
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
-  const [currentRow, setCurrentRow] = useState<API.TicketItem>()
+  const [currentRow, setCurrentRow] = useState<API.TicketDetail>()
   const actionRef = useRef<ActionType>();
   const columns = getTicketColumn({
     title: "操作",
@@ -118,6 +124,19 @@ const TicketManage: React.FC = () => {
         ]}
         request={ticket}
         columns={columns}/>
+      <TicketEditForm
+        open={isModalOpen}
+        onOpenChange={setModalOpen}
+        currentRow={currentRow}
+        onFinish={async (value) => {
+        const success = await handleAdd(value);
+        if (success) {
+          setModalOpen(false);
+          if (actionRef.current) {
+            actionRef.current.reload();
+          }
+        }
+      }}/>
     </PageContainer>
   )
 }
