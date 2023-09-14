@@ -5,6 +5,7 @@ import {PlusOutlined} from "@ant-design/icons";
 import {addRule, dbInstance} from "@/services/ant-design-pro/api";
 import DbInstanceEditForm from "@/pages/db/components/DbInstanceEditForm";
 import {loadDbInstanceMock} from "@/services/db/api";
+import {TagDaMeng, TagGaussDB, TagMySQL} from "@/components/Tag/DbProduct";
 
 // TODO 接口未更换
 const handleAdd = async (fields: API.DbInstanceItem) => {
@@ -45,11 +46,13 @@ function getDbInstanceColumn(option: ProColumns<API.DbInstanceItem>): ProColumns
       title: "数据库产品",
       dataIndex: "dbProductCode",
       search: false,
-    },
-    {
-      title: "数据库产品版本号",
-      dataIndex: "dbProductVersionNumber",
-      search: false,
+      render: (_, entity) => {
+        switch (entity.dbProductCode) {
+          case "MySQL": return <TagMySQL />
+          case "DAMENG": return <TagDaMeng />
+          case "GAUSSDB": return <TagGaussDB />
+        }
+      }
     },
     {
       title: "链接地址",
@@ -64,7 +67,8 @@ function getDbInstanceColumn(option: ProColumns<API.DbInstanceItem>): ProColumns
     {
       title: "创建时间",
       dataIndex: "createTime",
-      valueType: 'dateTime'
+      valueType: 'dateTime',
+      search: false
     },
     option
   ];

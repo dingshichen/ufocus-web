@@ -6,8 +6,7 @@ export async function loadDbInstanceMock(id: number) {
       resolve({
         id: 1,
         dbInstanceName: "MySQL测试环境主库",
-        dbProductCode: "MySQL",
-        dbProductVersionNumber: "8.0",
+        dbProductCode: "MYSQL",
         linkAddress: "localhost:3306",
         account: "dagp",
         password: "dagp",
@@ -27,7 +26,6 @@ export async function loadDbInstanceMock(id: number) {
         id: 2,
         dbInstanceName: "DM测试环境租户库",
         dbProductCode: "DAMENG",
-        dbProductVersionNumber: "8.0",
         linkAddress: "localhost:3306",
         account: "dagp",
         password: "dagp",
@@ -47,7 +45,6 @@ export async function loadDbInstanceMock(id: number) {
         id: 3,
         dbInstanceName: "GAUSSDB测试环境主库",
         dbProductCode: "GAUSSDB",
-        dbProductVersionNumber: "2.0",
         linkAddress: "localhost:3306",
         account: "dagp",
         password: "dagp",
@@ -76,8 +73,8 @@ export async function loadDbGroupMock(id: number) {
         dbInstances: [
           {
             id: 1,
-            dbInstanceName: "xxx",
-            dbProductCode: "ccc"
+            dbInstanceName: "MySQL测试环境主库",
+            dbProductCode: "MYSQL"
           }
         ],
         createUser: {
@@ -99,8 +96,13 @@ export async function loadDbGroupMock(id: number) {
         dbInstances: [
           {
             id: 1,
-            dbInstanceName: "xxx",
-            dbProductCode: "ccc"
+            dbInstanceName: "MySQL测试环境主库",
+            dbProductCode: "MYSQL"
+          },
+          {
+            id: 2,
+            dbInstanceName: "MySQL测试环境从库",
+            dbProductCode: "MYSQL"
           }
         ],
         createUser: {

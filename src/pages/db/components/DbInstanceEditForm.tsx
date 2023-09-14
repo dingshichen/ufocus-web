@@ -1,5 +1,5 @@
 import React from "react";
-import {ModalForm, ProFormText} from "@ant-design/pro-components";
+import {ModalForm, ProFormSelect, ProFormText} from "@ant-design/pro-components";
 
 export type DbInstanceEditProps = {
   open: boolean;
@@ -34,29 +34,22 @@ const DbInstanceEditForm: React.FC<DbInstanceEditProps> = (props) => {
         label="实例名称"
         initialValue={ props.currentRow?.dbInstanceName }
       />
-      <ProFormText
+      <ProFormSelect
+        name="dbProductCode"
+        label="数据库产品"
+        width="md"
+        valueEnum={{
+          'MYSQL': 'MYSQL',
+          'DAMENG': 'DAMENG',
+          'GAUSSDB': 'GAUSSDB',
+        }}
         rules={[
           {
             required: true,
             message: "请选择数据库产品",
           },
         ]}
-        width="md"
-        name="dbProductCode"
-        label="数据库产品"
         initialValue={ props.currentRow?.dbProductCode }
-      />
-      <ProFormText
-        rules={[
-          {
-            required: true,
-            message: "请选择数据库产品版本号",
-          },
-        ]}
-        width="md"
-        name="dbProductVersionNumber"
-        label="数据库产品版本号"
-        initialValue={ props.currentRow?.dbProductVersionNumber }
       />
       <ProFormText
         rules={[

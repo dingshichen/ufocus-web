@@ -1,10 +1,11 @@
 import React, {useRef, useState} from "react";
 import {ActionType, PageContainer, ProColumns, ProTable} from "@ant-design/pro-components";
 import {dbGroup, loadDbGroupMock} from "@/services/db/api";
-import {Button, message} from "antd";
+import {Button, message, Tag} from "antd";
 import {PlusOutlined} from "@ant-design/icons";
 import DbGroupEditForm from "@/pages/db/components/DbGroupEditForm";
 import {addRule} from "@/services/ant-design-pro/api";
+import {TagDaMeng, TagGaussDB, TagMySQL} from "@/components/Tag/DbProduct";
 
 // TODO 接口未更换
 const handleAdd = async (fields: API.DbGroupDetail) => {
@@ -29,7 +30,21 @@ function getDbGroupColumn(option: ProColumns<API.DbGroupItem>): ProColumns<API.D
     },
     {
       title: "数据库实例",
-      dataIndex: "dbInstances"
+      dataIndex: "dbInstances",
+      render: (_, entity) => {
+        return entity.dbInstances.map(e => {
+          switch (e.dbProductCode) {
+            case "MYSQL":
+              return <TagMySQL key={e.id} text={e.dbInstanceName} />
+            case "DAMENG":
+              return <TagDaMeng key={e.id} text={e.dbInstanceName} />
+            case "GAUSSDB":
+              return <TagGaussDB key={e.id} text={e.dbInstanceName} />
+            default:
+              return <Tag>{e.dbInstanceName}</Tag>
+          }
+        })
+      },
     },
     {
       title: "描述",

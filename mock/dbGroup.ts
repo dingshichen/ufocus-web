@@ -10,8 +10,8 @@ const dbGroup = (req: Request, res: Response) => {
         dbInstances: [
           {
             id: 1,
-            dbInstanceName: "xxx",
-            dbProductCode: "ccc"
+            dbInstanceName: "MySQL测试环境主库",
+            dbProductCode: "MYSQL"
           }
         ],
         createUser: {
@@ -27,8 +27,13 @@ const dbGroup = (req: Request, res: Response) => {
         dbInstances: [
           {
             id: 1,
-            dbInstanceName: "xxx",
-            dbProductCode: "ccc"
+            dbInstanceName: "MySQL测试环境主库",
+            dbProductCode: "MYSQL"
+          },
+          {
+            id: 2,
+            dbInstanceName: "MySQL测试环境从库",
+            dbProductCode: "MYSQL"
           }
         ],
         createUser: {

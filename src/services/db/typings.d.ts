@@ -5,7 +5,6 @@ declare namespace API {
   }
 
   class DbInstanceItem extends DbInstanceOption {
-    dbProductVersionNumber: string;
     linkAddress: string;
     createUser: UserOption;
     createTime: string;
