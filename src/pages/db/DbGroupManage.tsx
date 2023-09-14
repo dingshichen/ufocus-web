@@ -3,7 +3,7 @@ import {ActionType, PageContainer, ProColumns, ProTable} from "@ant-design/pro-c
 import {dbGroup, loadDbGroupMock} from "@/services/db/api";
 import {Button, message} from "antd";
 import {PlusOutlined} from "@ant-design/icons";
-import DbGroupEditForm from "@/pages/DbGroupManage/components/DbGroupEditForm";
+import DbGroupEditForm from "@/pages/db/components/DbGroupEditForm";
 import {addRule} from "@/services/ant-design-pro/api";
 
 // TODO 接口未更换

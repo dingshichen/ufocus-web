@@ -3,7 +3,7 @@ import {ActionType, PageContainer, ProColumns, ProTable} from "@ant-design/pro-c
 import {loadTicket, ticket} from "@/services/ticket/api";
 import {Button, message} from "antd";
 import {PlusOutlined} from "@ant-design/icons";
-import TicketEditForm from "@/pages/TicketManage/components/TicketEditForm";
+import TicketEditForm from "@/pages/ticket/components/TicketEditForm";
 import {addRule} from "@/services/ant-design-pro/api";
 
 const handleAdd = async (fields: API.TicketDetail) => {
@@ -129,14 +129,14 @@ const TicketManage: React.FC = () => {
         onOpenChange={setModalOpen}
         currentRow={currentRow}
         onFinish={async (value) => {
-        const success = await handleAdd(value);
-        if (success) {
-          setModalOpen(false);
-          if (actionRef.current) {
-            actionRef.current.reload();
+          const success = await handleAdd(value);
+          if (success) {
+            setModalOpen(false);
+            if (actionRef.current) {
+              actionRef.current.reload();
+            }
           }
-        }
-      }}/>
+        }}/>
     </PageContainer>
   )
 }

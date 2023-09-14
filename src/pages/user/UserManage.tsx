@@ -1,19 +1,18 @@
 import React, {useRef, useState} from "react";
 import {
   ActionType,
-  ModalForm,
   PageContainer,
   ProColumns,
-  ProFormText,
   ProTable
 } from "@ant-design/pro-components";
 import {Button, message} from "antd";
 import {PlusOutlined} from "@ant-design/icons";
 import {addRule, user} from "@/services/ant-design-pro/api";
-import UserEditForm from "@/pages/UserManage/components/UserEditForm";
+import UserEditForm from "@/pages/user/components/UserEditForm";
+import {loadUserMock} from "@/services/user/api";
 
 // TODO 接口未更换
-const handleAdd = async (fields: API.UserItem) => {
+const handleAdd = async (fields: API.UserDetail) => {
   const hide = message.loading('正在添加');
   try {
     await addRule({...fields});
@@ -42,19 +41,9 @@ const handleUpdate = async (fields: API.UserItem) => {
 };
 
 const UserManage: React.FC = () => {
-
-  // 新建按钮的弹窗
-  const [createModalOpen, handleModalOpen] = useState<boolean>(false);
-
-  // 变更按钮的弹窗
-  const [updateModalOpen, handleUpdateModalOpen] = useState<boolean>(false);
-
-  // 操作的行
-  const [currentRow, setCurrentRow] = useState<API.UserItem>();
-
-  // 刷新表格
+  const [isModalOpen, setModalOpen] = useState<boolean>(false);
+  const [currentRow, setCurrentRow] = useState<API.UserDetail>();
   const actionRef = useRef<ActionType>();
-
   const columns: ProColumns<API.UserItem>[] = [
     {
       title: "用户名",
@@ -91,7 +80,8 @@ const UserManage: React.FC = () => {
     {
       title: "创建时间",
       dataIndex: "createTime",
-      valueType: 'dateTime'
+      valueType: 'dateTime',
+      search: false
     },
     {
       title: "操作",
@@ -101,8 +91,13 @@ const UserManage: React.FC = () => {
         <a
           key="update"
           onClick={() => {
-            setCurrentRow(record);
-            handleUpdateModalOpen(true);
+            const init = async () => {
+              return await loadUserMock(record.id)
+            }
+            init().then((user) => {
+              setCurrentRow(user);
+              setModalOpen(true);
+            })
           }}
         >
           变更
@@ -125,7 +120,8 @@ const UserManage: React.FC = () => {
             type="primary"
             key="primary"
             onClick={() => {
-              handleModalOpen(true);
+              setCurrentRow(undefined);
+              setModalOpen(true);
             }}
           >
             <PlusOutlined/> 新建
@@ -133,62 +129,14 @@ const UserManage: React.FC = () => {
         ]}
         request={user}
         columns={columns}/>
-      <ModalForm
-        title="新建用户"
-        open={createModalOpen}
-        onOpenChange={handleModalOpen}
-        width="400px"
-        onFinish={async (value) => {
-          const success = await handleAdd(value as API.UserItem);
-          if (success) {
-            handleModalOpen(false);
-            if (actionRef.current) {
-              actionRef.current.reload();
-            }
-          }
-        }}>
-        <ProFormText
-          rules={[
-            {
-              required: true,
-              message: "请输入用户名",
-            },
-          ]}
-          width="md"
-          name="chnName"
-          label="用户名"
-        />
-        <ProFormText
-          rules={[
-            {
-              required: true,
-              message: "请输入手机号码",
-            },
-          ]}
-          width="md"
-          name="mobilePhoneNumber"
-          label="手机号码"
-        />
-        <ProFormText
-          width="md"
-          name="emailAddress"
-          label="电子邮箱"
-        />
-        <ProFormText.Password
-          width="md"
-          name="password"
-          label="密码"
-          readonly={true}
-          initialValue={"123456"}
-        />
-      </ModalForm>
       <UserEditForm
-        open={updateModalOpen}
-        onOpenChange={handleUpdateModalOpen}
+        open={isModalOpen}
+        onOpenChange={setModalOpen}
+        currentRow={currentRow}
         onFinish={async (value) => {
           const success = await handleUpdate(value as API.UserItem);
           if (success) {
-            handleUpdateModalOpen(false);
+            setModalOpen(false);
             if (actionRef.current) {
               actionRef.current.reload();
             }

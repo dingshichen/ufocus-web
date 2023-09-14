@@ -1,21 +1,22 @@
 import React from "react";
 import {ModalForm, ProFormText} from "@ant-design/pro-components";
 
-export type UpdateFormProps = {
+export type UserEditProps = {
   open: boolean;
   onOpenChange: (visible: boolean) => void;
-  onFinish: (formData: API.UserItem) => Promise<boolean | void>;
-  currentRow?: API.UserItem;
+  onFinish: (formData: API.UserDetail) => Promise<boolean | void>;
+  currentRow?: API.UserDetail;
 };
 
-const UserEditForm: React.FC<UpdateFormProps> = (value) => {
+const UserEditForm: React.FC<UserEditProps> = (props) => {
   return (
     <ModalForm
-      title="变更用户"
-      open={value.open}
-      onOpenChange={value.onOpenChange}
+      title={ props.currentRow ? "变更用户" : "新建用户"}
+      open={props.open}
+      onOpenChange={props.onOpenChange}
       width="400px"
-      onFinish={value.onFinish}
+      modalProps={{ destroyOnClose: true }}
+      onFinish={props.onFinish}
     >
       <ProFormText
         rules={[
@@ -27,7 +28,7 @@ const UserEditForm: React.FC<UpdateFormProps> = (value) => {
         width="md"
         name="chnName"
         label="用户名"
-        initialValue={ value.currentRow?.chnName }
+        initialValue={ props.currentRow?.chnName }
       />
       <ProFormText
         rules={[
@@ -39,14 +40,23 @@ const UserEditForm: React.FC<UpdateFormProps> = (value) => {
         width="md"
         name="mobilePhoneNumber"
         label="手机号码"
-        initialValue={ value.currentRow?.mobilePhoneNumber }
+        initialValue={ props.currentRow?.mobilePhoneNumber }
       />
       <ProFormText
         width="md"
         name="emailAddress"
         label="电子邮箱"
-        initialValue={ value.currentRow?.emailAddress }
+        initialValue={ props.currentRow?.emailAddress }
       />
+      { !props.currentRow && (
+        <ProFormText.Password
+          width="md"
+          name="password"
+          label="密码"
+          readonly={true}
+          initialValue={"123456"}
+        />
+      ) }
     </ModalForm>
   )
 }

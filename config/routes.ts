@@ -57,7 +57,7 @@ export default [
       {
         path: '/user/manage',
         name:'user-manage',
-        component: './UserManage'
+        component: './user/UserManage',
       }
     ]
   },
@@ -73,12 +73,12 @@ export default [
       {
         path: '/db/manage',
         name: 'db-manage',
-        component: './DbManage'
+        component: './db/DbManage'
       },
       {
         path: '/db/group/manage',
         name: 'db-group-manage',
-        component: './DbGroupManage'
+        component: './db/DbGroupManage'
       }
     ]
   },
@@ -94,7 +94,7 @@ export default [
       {
         path: '/ticket/manage',
         name:'ticket-manage',
-        component: './TicketManage'
+        component: './ticket/TicketManage',
       }
     ]
   },

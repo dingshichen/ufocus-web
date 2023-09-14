@@ -25,7 +25,6 @@ export async function loadTicket(id: number) {
       resolve({
         id: 1,
         ticketTitle: "考核创建表结构",
-        module: "数据标准",
         dbGroup: {
           id: 2,
           groupName: "MySQL测试所有"
@@ -48,7 +47,6 @@ export async function loadTicket(id: number) {
       resolve({
         id: 1,
         ticketTitle: "考核数据初始化",
-        module: "元数据",
         dbGroup: {
           id: 2,
           groupName: "MySQL测试所有"

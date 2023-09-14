@@ -3,7 +3,7 @@ import {ActionType, PageContainer, ProColumns, ProTable} from "@ant-design/pro-c
 import {Button, message} from "antd";
 import {PlusOutlined} from "@ant-design/icons";
 import {addRule, dbInstance} from "@/services/ant-design-pro/api";
-import DbInstanceEditForm from "@/pages/DbManage/components/DbInstanceEditForm";
+import DbInstanceEditForm from "@/pages/db/components/DbInstanceEditForm";
 import {loadDbInstanceMock} from "@/services/db/api";
 
 // TODO 接口未更换
