@@ -62,19 +62,19 @@ const UserManage: React.FC = () => {
       title: "停用状态",
       dataIndex: "isLockFlag",
       valueEnum: {
-        0: {
+        false: {
           text: "可用",
-          status: "false"
+          status: "success"
         },
-        1: {
+        true: {
           text: "停用",
-          status: "true"
+          status: "error"
         }
       }
     },
     {
       title: "创建人",
-      dataIndex: "createUser",
+      dataIndex: ["createUser", "chnName"],
       search: false
     },
     {
