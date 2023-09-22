@@ -19,7 +19,7 @@ export default [
         name: 'login',
         path: '/hub/login',
         component: './Hub/Login',
-      }
+      },
     ],
   },
   {
@@ -56,10 +56,10 @@ export default [
       },
       {
         path: '/user/manage',
-        name:'user-manage',
+        name: 'user-manage',
         component: './user/UserManage',
-      }
-    ]
+      },
+    ],
   },
   {
     path: '/db',
@@ -73,14 +73,14 @@ export default [
       {
         path: '/db/manage',
         name: 'db-manage',
-        component: './db/DbManage'
+        component: './db/DbManage',
       },
       {
         path: '/db/group/manage',
         name: 'db-group-manage',
-        component: './db/DbGroupManage'
-      }
-    ]
+        component: './db/DbGroupManage',
+      },
+    ],
   },
   {
     path: '/ticket',
@@ -93,10 +93,16 @@ export default [
       },
       {
         path: '/ticket/manage',
-        name:'ticket-manage',
+        name: 'ticket-manage',
         component: './ticket/TicketManage',
-      }
-    ]
+      },
+      {
+        path: '/ticket/edit',
+        name: 'ticket-edit',
+        component: './ticket/TicketEdit',
+        hideInMenu: true,
+      },
+    ],
   },
   {
     name: 'list.table-list',
