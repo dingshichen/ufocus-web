@@ -21,7 +21,7 @@ const TicketEdit: React.FC = () => {
         ]}
       />
       <ProFormSelect
-        name="dbGroup"
+        name={["dbGroup", "groupName"]}
         label="数据库分组"
         width="md"
         request={selectDbGroupMock}
