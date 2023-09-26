@@ -1,27 +1,12 @@
-import { addRule } from '@/services/ant-design-pro/api';
 import { loadTicket, ticket } from '@/services/ticket/api';
 import { PlusOutlined } from '@ant-design/icons';
 import { ActionType, PageContainer, ProColumns, ProTable } from '@ant-design/pro-components';
-import { Button, message } from 'antd';
+import { Button } from 'antd';
 import qs from 'qs';
 import React, { useRef } from 'react';
 import { history } from 'umi';
 
-const handleAdd = async (fields: API.TicketDetail) => {
-  const hide = message.loading('正在添加');
-  try {
-    await addRule({ ...fields });
-    hide();
-    message.success('Added successfully');
-    return true;
-  } catch (error) {
-    hide();
-    message.error('Adding failed, please try again!');
-    return false;
-  }
-};
-
-function getTicketColumn(option: ProColumns<API.TicketItem>): ProColumns<API.TicketItem>[] {
+function getDbTicketColumn(option: ProColumns<API.TicketItem>): ProColumns<API.TicketItem>[] {
   return [
     {
       title: '工单标题',
@@ -52,9 +37,9 @@ function getTicketColumn(option: ProColumns<API.TicketItem>): ProColumns<API.Tic
   ];
 }
 
-const TicketManage: React.FC = () => {
+const DbTicketManage: React.FC = () => {
   const actionRef = useRef<ActionType>();
-  const columns = getTicketColumn({
+  const columns = getDbTicketColumn({
     title: '操作',
     dataIndex: 'option',
     valueType: 'option',
@@ -67,7 +52,7 @@ const TicketManage: React.FC = () => {
           };
           init().then(() => {
             history.push({
-              pathname: '/ticket/edit',
+              pathname: '/db/ticket/edit',
               search: qs.stringify({
                 id: record.id,
               }),
@@ -119,7 +104,7 @@ const TicketManage: React.FC = () => {
             key="primary"
             onClick={() => {
               history.push({
-                pathname: '/ticket/edit',
+                pathname: '/db/ticket/edit',
               });
             }}
           >
@@ -133,4 +118,4 @@ const TicketManage: React.FC = () => {
   );
 };
 
-export default TicketManage;
+export default DbTicketManage;

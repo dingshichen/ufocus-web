@@ -80,26 +80,15 @@ export default [
         name: 'db-group-manage',
         component: './db/DbGroupManage',
       },
-    ],
-  },
-  {
-    path: '/ticket',
-    name: 'ticket',
-    icon: 'user',
-    routes: [
       {
-        path: '/ticket',
-        redirect: '/ticket/manage',
+        path: '/db/ticket/manage',
+        name: 'db-ticket-manage',
+        component: './db/DbTicketManage',
       },
       {
-        path: '/ticket/manage',
-        name: 'ticket-manage',
-        component: './ticket/TicketManage',
-      },
-      {
-        path: '/ticket/edit',
-        name: 'ticket-edit',
-        component: './ticket/TicketEdit',
+        path: '/db/ticket/edit',
+        name: 'db-ticket-edit',
+        component: './db/DbTicketEdit',
         hideInMenu: true,
       },
     ],

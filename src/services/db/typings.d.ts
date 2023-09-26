@@ -32,4 +32,22 @@ declare namespace API {
     latestUpdateUser: UserOption;
     latestUpdateTime: string;
   }
+
+  class DbTicketOption extends Base {
+    ticketTitle: string;
+  }
+
+  class DbTicketItem extends DbTicketOption {
+    dbGroup: DbGroupOption;
+    auditState: string;
+    performState: string;
+    createUser: UserOption;
+    createTime: string;
+  }
+
+  class DbTicketDetail extends DbTicketItem {
+    textContent: string;
+    latestUpdateUser: UserOption;
+    latestUpdateTime: string;
+  }
 }

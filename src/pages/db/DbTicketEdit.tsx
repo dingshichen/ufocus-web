@@ -4,7 +4,7 @@ import {PageContainer, ProForm, ProFormSelect, ProFormText, ProFormTextArea} fro
 import React from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-const TicketEdit: React.FC = () => {
+const DbTicketEdit: React.FC = () => {
   const [searchParams] = useSearchParams();
   const idString = searchParams.get('id');
   return (
@@ -37,7 +37,7 @@ const TicketEdit: React.FC = () => {
         <ProFormTextArea
           name="textContent"
           label="文本内容"
-          width="md"
+          width="xl"
           rules={[
           {
             required: true,
@@ -50,4 +50,4 @@ const TicketEdit: React.FC = () => {
   );
 };
 
-export default TicketEdit;
+export default DbTicketEdit;
