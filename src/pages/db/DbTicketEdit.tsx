@@ -1,5 +1,4 @@
-import { selectDbGroupMock } from '@/services/db/api';
-import { loadTicket } from '@/services/ticket/api';
+import { selectDbGroupMock, loadTicket } from '@/services/db/api';
 import {PageContainer, ProForm, ProFormSelect, ProFormText, ProFormTextArea} from '@ant-design/pro-components';
 import React from 'react';
 import { useSearchParams } from 'react-router-dom';

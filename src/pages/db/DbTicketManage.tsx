@@ -1,4 +1,4 @@
-import { loadTicket, ticket } from '@/services/ticket/api';
+import { loadTicket, ticket } from '@/services/db/api';
 import { PlusOutlined } from '@ant-design/icons';
 import { ActionType, PageContainer, ProColumns, ProTable } from '@ant-design/pro-components';
 import { Button } from 'antd';
@@ -6,7 +6,7 @@ import qs from 'qs';
 import React, { useRef } from 'react';
 import { history } from 'umi';
 
-function getDbTicketColumn(option: ProColumns<API.TicketItem>): ProColumns<API.TicketItem>[] {
+function getDbTicketColumn(option: ProColumns<API.DbTicketItem>): ProColumns<API.DbTicketItem>[] {
   return [
     {
       title: '工单标题',
@@ -94,7 +94,7 @@ const DbTicketManage: React.FC = () => {
   });
   return (
     <PageContainer>
-      <ProTable<API.TicketItem, API.PageParams>
+      <ProTable<API.DbTicketItem, API.PageParams>
         headerTitle="SQL工单列表"
         rowKey="id"
         actionRef={actionRef}
