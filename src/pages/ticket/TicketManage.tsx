@@ -1,11 +1,10 @@
-import TicketEditForm from '@/pages/ticket/components/TicketEditForm';
 import { addRule } from '@/services/ant-design-pro/api';
 import { loadTicket, ticket } from '@/services/ticket/api';
 import { PlusOutlined } from '@ant-design/icons';
 import { ActionType, PageContainer, ProColumns, ProTable } from '@ant-design/pro-components';
 import { Button, message } from 'antd';
 import qs from 'qs';
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { history } from 'umi';
 
 const handleAdd = async (fields: API.TicketDetail) => {
@@ -54,8 +53,6 @@ function getTicketColumn(option: ProColumns<API.TicketItem>): ProColumns<API.Tic
 }
 
 const TicketManage: React.FC = () => {
-  const [isModalOpen, setModalOpen] = useState<boolean>(false);
-  const [currentRow, setCurrentRow] = useState<API.TicketDetail>();
   const actionRef = useRef<ActionType>();
   const columns = getTicketColumn({
     title: '操作',
@@ -68,8 +65,7 @@ const TicketManage: React.FC = () => {
           const init = async () => {
             return await loadTicket(record.id);
           };
-          init().then((value) => {
-            setCurrentRow(value);
+          init().then(() => {
             history.push({
               pathname: '/ticket/edit',
               search: qs.stringify({
@@ -88,7 +84,8 @@ const TicketManage: React.FC = () => {
             return await loadTicket(record.id);
           };
           init().then((value) => {
-            setCurrentRow(value);
+            // TODO 删除
+            console.log("删除：value" + value.id)
           });
         }}
       >
@@ -101,8 +98,8 @@ const TicketManage: React.FC = () => {
             return await loadTicket(record.id);
           };
           init().then((value) => {
-            setCurrentRow(value);
-            setModalOpen(true);
+            // TODO 执行或审核
+            console.log("执行或审核：value" + value.id)
           });
         }}
       >
@@ -121,7 +118,6 @@ const TicketManage: React.FC = () => {
             type="primary"
             key="primary"
             onClick={() => {
-              setCurrentRow(undefined);
               history.push({
                 pathname: '/ticket/edit',
               });
@@ -132,20 +128,6 @@ const TicketManage: React.FC = () => {
         ]}
         request={ticket}
         columns={columns}
-      />
-      <TicketEditForm
-        open={isModalOpen}
-        onOpenChange={setModalOpen}
-        currentRow={currentRow}
-        onFinish={async (value) => {
-          const success = await handleAdd(value);
-          if (success) {
-            setModalOpen(false);
-            if (actionRef.current) {
-              actionRef.current.reload();
-            }
-          }
-        }}
       />
     </PageContainer>
   );
