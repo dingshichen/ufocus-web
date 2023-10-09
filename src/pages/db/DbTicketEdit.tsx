@@ -1,4 +1,4 @@
-import { selectDbGroupMock, loadTicket } from '@/services/db/api';
+import { selectDbGroupMock, loadDbTicketMock } from '@/services/db/api';
 import {PageContainer, ProForm, ProFormSelect, ProFormText, ProFormTextArea} from '@ant-design/pro-components';
 import React from 'react';
 import { useSearchParams } from 'react-router-dom';
@@ -8,7 +8,7 @@ const DbTicketEdit: React.FC = () => {
   const idString = searchParams.get('id');
   return (
     <PageContainer>
-      <ProForm request={idString === null ? undefined : () => loadTicket(Number(idString))}>
+      <ProForm request={idString === null ? undefined : () => loadDbTicketMock(Number(idString))}>
         <ProFormText
           width="md"
           name="ticketTitle"

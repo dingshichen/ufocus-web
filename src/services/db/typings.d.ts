@@ -50,4 +50,19 @@ declare namespace API {
     latestUpdateUser: UserOption;
     latestUpdateTime: string;
   }
+
+  class DbTicketWithScriptDetail extends DbTicketDetail {
+    instanceScripts: DbTicketInstanceScriptItem[]
+  }
+
+  class DbTicketInstanceScriptItem {
+    dbInstance: DbInstanceOption;
+    scripts: DbTicketScriptItem[];
+  }
+
+  class DbTicketScriptItem extends Base {
+    exceptionInformationContent?: string;
+    performState: string;
+    textContent: string;
+  }
 }

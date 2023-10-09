@@ -1,4 +1,6 @@
 import { request } from '@@/exports';
+import {resolve} from "uri-js";
+import {RequestData} from "@ant-design/pro-descriptions/es/useFetchData";
 
 export async function loadDbInstanceMock(id: number) {
   return new Promise<API.DbInstanceDetail>((resolve) => {
@@ -154,7 +156,7 @@ export async function selectDbGroupMock() {
   });
 }
 
-export async function ticket(
+export async function dbTicket(
   params: {
     // query
     /** 当前的页码 */
@@ -173,7 +175,7 @@ export async function ticket(
   });
 }
 
-export async function loadTicket(id: number) {
+export async function loadDbTicketMock(id: number) {
   return new Promise<API.DbTicketDetail>((resolve) => {
     if (id === 1) {
       resolve({
@@ -220,5 +222,93 @@ export async function loadTicket(id: number) {
         latestUpdateTime: "2023-09-01 12:00:00",
       })
     }
+  })
+}
+
+export async function loadDbTicketWithScript(id: number) {
+  return new Promise<RequestData<API.DbTicketWithScriptDetail>>((resolve) => {
+    resolve({
+      data: {
+        id: 1,
+        ticketTitle: "考核创建表结构",
+        dbGroup: {
+          id: 2,
+          groupName: "MySQL测试所有"
+        },
+        auditState: "审核通过",
+        performState: "执行成功",
+        createUser: {
+          id: 1,
+          chnName: "超级管理员"
+        },
+        createTime: "2023-09-01 12:00:00",
+        textContent: "alter table",
+        latestUpdateUser: {
+          id: 1,
+          chnName: "超级管理员"
+        },
+        latestUpdateTime: "2023-09-01 12:00:00",
+        instanceScripts: [
+          {
+            dbInstance: {
+              id: 1,
+              dbInstanceName: "MySQL测试环境主库",
+              dbProductCode: "MYSQL"
+            },
+            scripts: [
+              {
+                id: 1,
+                performState: "SUCCESS",
+                textContent: "alter table rpt_std_obj_dist add column rspnsbl_dept_id bigint comment '责任部门ID';",
+              },
+              {
+                id: 2,
+                exceptionInformationContent: "主键冲突",
+                performState: "ERROR",
+                textContent: "INSERT INTO dqm_rule_tmpl_clss (rule_tmpl_clss_id, rule_tmpl_clss_nm, `desc`, upp_rule_tmpl_clss_id) VALUES (1697535612331057123, '数据监控类', '数据监控类检核规则模版', 0);",
+              }
+            ]
+          },
+          {
+            dbInstance: {
+              id: 2,
+              dbInstanceName: "MySQL测试环境租户库",
+              dbProductCode: "MYSQL"
+            },
+            scripts: [
+              {
+                id: 1,
+                performState: "SUCCESS",
+                textContent: "alter table rpt_std_obj_dist add column rspnsbl_dept_id bigint comment '责任部门ID';",
+              },
+              {
+                id: 2,
+                performState: "SUCCESS",
+                textContent: "INSERT INTO dqm_rule_tmpl_clss (rule_tmpl_clss_id, rule_tmpl_clss_nm, `desc`, upp_rule_tmpl_clss_id) VALUES (1697535612331057123, '数据监控类', '数据监控类检核规则模版', 0);",
+              }
+            ]
+          }
+        ]
+      },
+      success: true
+    })
+  })
+}
+
+export async function dbTicketScript(dbTicketId: number) {
+  return new Promise<API.DbTicketScriptItem[]>((resolve) => {
+    resolve([
+      {
+        id: 1,
+        performState: "执行成功",
+        textContent: "alter table",
+      },
+      {
+        id: 2,
+        exceptionInformationContent: "主键冲突",
+        performState: "执行失败",
+        textContent: "insert into",
+      }
+    ])
   })
 }

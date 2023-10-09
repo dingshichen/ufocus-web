@@ -57,4 +57,5 @@ export default {
   'menu.db.db-group-manage': '分组管理',
   'menu.db.db-ticket-manage': 'SQL工单',
   'menu.db.db-ticket-edit': 'SQL工单',
+  'menu.db.db-ticket-detail': 'SQL工单',
 };
