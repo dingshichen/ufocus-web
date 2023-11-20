@@ -31,18 +31,18 @@ const UserEditForm: React.FC<UserEditProps> = (props) => {
         initialValue={ props.currentRow?.chnName }
       />
       <ProFormText
-        rules={[
-          {
-            required: true,
-            message: "请输入手机号码",
-          },
-        ]}
         width="md"
         name="mobilePhoneNumber"
         label="手机号码"
         initialValue={ props.currentRow?.mobilePhoneNumber }
       />
       <ProFormText
+        rules={[
+          {
+            required: true,
+            message: "请输入电子邮箱",
+          },
+        ]}
         width="md"
         name="emailAddress"
         label="电子邮箱"
