@@ -1,40 +1,11 @@
 import React, {useRef, useState} from "react";
 import {ActionType, PageContainer, ProColumns, ProTable} from "@ant-design/pro-components";
-import {Button, message} from "antd";
+import {Button} from "antd";
 import {PlusOutlined} from "@ant-design/icons";
-import {addRule, dbInstance} from "@/services/ant-design-pro/api";
+import {dbInstance} from "@/services/ant-design-pro/api";
 import DbInstanceEditForm from "@/pages/db/components/DbInstanceEditForm";
 import {loadDbInstanceMock} from "@/services/db/api";
 import {TagDaMeng, TagGaussDB, TagMySQL} from "@/components/Tag/DbProduct";
-
-// TODO 接口未更换
-const handleAdd = async (fields: API.DbInstanceItem) => {
-  const hide = message.loading('正在添加');
-  try {
-    await addRule({...fields});
-    hide();
-    message.success('Added successfully');
-    return true;
-  } catch (error) {
-    hide();
-    message.error('Adding failed, please try again!');
-    return false;
-  }
-};
-
-const handleUpdate = async (fields: API.DbInstanceItem) => {
-  const hide = message.loading('正在添加');
-  try {
-    await addRule({...fields});
-    hide();
-    message.success('Added successfully');
-    return true;
-  } catch (error) {
-    hide();
-    message.error('Adding failed, please try again!');
-    return false;
-  }
-};
 
 function getDbInstanceColumn(option: ProColumns<API.DbInstanceItem>): ProColumns<API.DbInstanceItem>[] {
   return [
@@ -129,13 +100,7 @@ const DbManage: React.FC = () => {
         onOpenChange={setModalOpen}
         currentRow={currentRow}
         onFinish={async (value) => {
-          const success = await handleAdd(value);
-          if (success) {
-            setModalOpen(false);
-            if (actionRef.current) {
-              actionRef.current.reload();
-            }
-          }
+          console.log(value)
         }}/>
     </PageContainer>
   )

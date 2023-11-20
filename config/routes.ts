@@ -85,18 +85,6 @@ export default [
         name: 'db-ticket-manage',
         component: './db/DbTicketManage',
       },
-      {
-        path: '/db/ticket/edit',
-        name: 'db-ticket-edit',
-        component: './db/DbTicketEdit',
-        hideInMenu: true,
-      },
-      {
-        path: '/db/ticket/detail',
-        name: 'db-ticket-detail',
-        component: './db/DbTicketDetail',
-        hideInMenu: true,
-      },
     ],
   },
   {

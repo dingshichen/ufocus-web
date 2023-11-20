@@ -1,26 +1,10 @@
 import React, {useRef, useState} from "react";
 import {ActionType, PageContainer, ProColumns, ProTable} from "@ant-design/pro-components";
 import {dbGroup, loadDbGroupMock} from "@/services/db/api";
-import {Button, message, Tag} from "antd";
+import {Button, Tag} from "antd";
 import {PlusOutlined} from "@ant-design/icons";
 import DbGroupEditForm from "@/pages/db/components/DbGroupEditForm";
-import {addRule} from "@/services/ant-design-pro/api";
 import {TagDaMeng, TagGaussDB, TagMySQL} from "@/components/Tag/DbProduct";
-
-// TODO 接口未更换
-const handleAdd = async (fields: API.DbGroupDetail) => {
-  const hide = message.loading('正在添加');
-  try {
-    await addRule({...fields});
-    hide();
-    message.success('Added successfully');
-    return true;
-  } catch (error) {
-    hide();
-    message.error('Adding failed, please try again!');
-    return false;
-  }
-};
 
 function getDbGroupColumn(option: ProColumns<API.DbGroupItem>): ProColumns<API.DbGroupItem>[] {
   return [
@@ -105,13 +89,7 @@ const DbGroupManage: React.FC = () => {
         onOpenChange={setModalOpen}
         currentRow={currentRow}
         onFinish={async (value) => {
-          const success = await handleAdd(value);
-          if (success) {
-            setModalOpen(false);
-            if (actionRef.current) {
-              actionRef.current.reload();
-            }
-          }
+          console.log(value)
         }}/>
     </PageContainer>
   )

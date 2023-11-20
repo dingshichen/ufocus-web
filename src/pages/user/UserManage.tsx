@@ -5,43 +5,16 @@ import {
   ProColumns,
   ProTable
 } from "@ant-design/pro-components";
-import {Button, message} from "antd";
+import {Button} from "antd";
 import {PlusOutlined} from "@ant-design/icons";
-import {addRule, user} from "@/services/ant-design-pro/api";
+import {user} from "@/services/ant-design-pro/api";
 import UserEditForm from "@/pages/user/components/UserEditForm";
 import {loadUserMock} from "@/services/user/api";
-
-// TODO 接口未更换
-const handleAdd = async (fields: API.UserDetail) => {
-  const hide = message.loading('正在添加');
-  try {
-    await addRule({...fields});
-    hide();
-    message.success('Added successfully');
-    return true;
-  } catch (error) {
-    hide();
-    message.error('Adding failed, please try again!');
-    return false;
-  }
-};
-
-const handleUpdate = async (fields: API.UserItem) => {
-  const hide = message.loading('正在添加');
-  try {
-    await addRule({...fields});
-    hide();
-    message.success('Added successfully');
-    return true;
-  } catch (error) {
-    hide();
-    message.error('Adding failed, please try again!');
-    return false;
-  }
-};
+import UserDescriptions from "@/pages/user/components/UserDescriptions";
 
 const UserManage: React.FC = () => {
-  const [isModalOpen, setModalOpen] = useState<boolean>(false);
+  const [isDetailOpen, setDetailOpen] = useState<boolean>(false);
+  const [isEditOpen, setEditOpen] = useState<boolean>(false);
   const [currentRow, setCurrentRow] = useState<API.UserDetail>();
   const actionRef = useRef<ActionType>();
   const columns: ProColumns<API.UserItem>[] = [
@@ -64,13 +37,13 @@ const UserManage: React.FC = () => {
       valueEnum: {
         false: {
           text: "可用",
-          status: "success"
+          status: "success",
         },
         true: {
           text: "停用",
-          status: "error"
+          status: "error",
         }
-      }
+      },
     },
     {
       title: "创建人",
@@ -89,6 +62,20 @@ const UserManage: React.FC = () => {
       valueType: "option",
       render: (_, record) => [
         <a
+          key="detail"
+          onClick={() => {
+            const init = async () => {
+              return await loadUserMock(record.id)
+            }
+            init().then((user) => {
+              setCurrentRow(user);
+              setDetailOpen(true);
+            })
+          }}
+        >
+          详情
+        </a>,
+        <a
           key="update"
           onClick={() => {
             const init = async () => {
@@ -96,7 +83,7 @@ const UserManage: React.FC = () => {
             }
             init().then((user) => {
               setCurrentRow(user);
-              setModalOpen(true);
+              setEditOpen(true);
             })
           }}
         >
@@ -121,7 +108,7 @@ const UserManage: React.FC = () => {
             key="primary"
             onClick={() => {
               setCurrentRow(undefined);
-              setModalOpen(true);
+              setEditOpen(true);
             }}
           >
             <PlusOutlined/> 新建
@@ -129,18 +116,18 @@ const UserManage: React.FC = () => {
         ]}
         request={user}
         columns={columns}/>
+      <UserDescriptions
+        open={isDetailOpen}
+        onOpenChange={setDetailOpen}
+        currentRow={currentRow!}
+      />
       <UserEditForm
-        open={isModalOpen}
-        onOpenChange={setModalOpen}
+        open={isEditOpen}
+        onOpenChange={setEditOpen}
         currentRow={currentRow}
         onFinish={async (value) => {
-          const success = await handleUpdate(value as API.UserItem);
-          if (success) {
-            setModalOpen(false);
-            if (actionRef.current) {
-              actionRef.current.reload();
-            }
-          }
+          // TODO 提交
+          console.log(value)
         }}
       />
     </PageContainer>

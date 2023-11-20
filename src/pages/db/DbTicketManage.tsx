@@ -1,12 +1,27 @@
-import { loadDbTicketMock, dbTicket } from '@/services/db/api';
+import {loadDbTicketMock, dbTicket, loadDbTicketWithScriptV2} from '@/services/db/api';
 import { PlusOutlined } from '@ant-design/icons';
 import { ActionType, PageContainer, ProColumns, ProTable } from '@ant-design/pro-components';
-import { Button } from 'antd';
-import qs from 'qs';
-import React, { useRef } from 'react';
-import { history } from 'umi';
+import {Button, message} from 'antd';
+import React, {useRef, useState} from 'react';
+import DbTicketEditForm from "@/pages/db/components/DbTicketEditForm";
+import {addRule} from "@/services/ant-design-pro/api";
 
-function getDbTicketColumn(): ProColumns<API.DbTicketItem>[] {
+// TODO
+const handleAdd = async (fields: API.DbTicketWithScriptDetail) => {
+  const hide = message.loading('正在添加');
+  try {
+    await addRule({...fields});
+    hide();
+    message.success('Added successfully');
+    return true;
+  } catch (error) {
+    hide();
+    message.error('Adding failed, please try again!');
+    return false;
+  }
+};
+
+function getDbTicketColumn(option: ProColumns<API.DbTicketItem>): ProColumns<API.DbTicketItem>[] {
   return [
     {
       title: '工单标题',
@@ -33,6 +48,15 @@ function getDbTicketColumn(): ProColumns<API.DbTicketItem>[] {
       dataIndex: 'createTime',
       valueType: 'dateTime',
     },
+    option
+  ];
+}
+
+const DbTicketManage: React.FC = () => {
+  const [isModalOpen, setModalOpen] = useState<boolean>(false);
+  const [currentRow, setCurrentRow] = useState<API.DbTicketWithScriptDetail>();
+  const actionRef = useRef<ActionType>();
+  const columns = getDbTicketColumn(
     {
       title: '操作',
       dataIndex: 'option',
@@ -41,30 +65,21 @@ function getDbTicketColumn(): ProColumns<API.DbTicketItem>[] {
         <a
           key="detail"
           onClick={() => {
-            history.push({
-              pathname: '/db/ticket/detail',
-              search: qs.stringify({
-                id: record.id,
-              }),
-            });
-        }}
-          >
+            loadDbTicketWithScriptV2(record.id).then(value => {
+              setCurrentRow(value);
+              setModalOpen(true);
+            })
+          }}
+        >
           详情
         </a>,
         <a
           key="update"
           onClick={() => {
-            const init = async () => {
-              return await loadDbTicketMock(record.id);
-            };
-            init().then(() => {
-              history.push({
-                pathname: '/db/ticket/edit',
-                search: qs.stringify({
-                  id: record.id,
-                }),
-              });
-            });
+            loadDbTicketWithScriptV2(record.id).then(value => {
+              setCurrentRow(value);
+              setModalOpen(true);
+            })
           }}
         >
           变更
@@ -98,12 +113,8 @@ function getDbTicketColumn(): ProColumns<API.DbTicketItem>[] {
           {record.auditState === '审核通过' ? '执行' : '审核'}
         </a>,
       ],
-    },
-  ];
-}
-
-const DbTicketManage: React.FC = () => {
-  const actionRef = useRef<ActionType>();
+    }
+  );
   return (
     <PageContainer>
       <ProTable<API.DbTicketItem, API.PageParams>
@@ -115,17 +126,29 @@ const DbTicketManage: React.FC = () => {
             type="primary"
             key="primary"
             onClick={() => {
-              history.push({
-                pathname: '/db/ticket/edit',
-              });
+              setCurrentRow(undefined)
+              setModalOpen(true);
             }}
           >
             <PlusOutlined /> 新建
           </Button>,
         ]}
         request={dbTicket}
-        columns={getDbTicketColumn()}
+        columns={columns}
       />
+      <DbTicketEditForm
+        open={isModalOpen}
+        onOpenChange={setModalOpen}
+        currentRow={currentRow}
+        onFinish={async (value) => {
+          const success = await handleAdd(value);
+          if (success) {
+            setModalOpen(false);
+            if (actionRef.current) {
+              actionRef.current.reload();
+            }
+          }
+        }}/>
     </PageContainer>
   );
 };
