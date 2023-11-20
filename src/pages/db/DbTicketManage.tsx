@@ -1,25 +1,11 @@
 import {loadDbTicketMock, dbTicket, loadDbTicketWithScriptV2} from '@/services/db/api';
 import { PlusOutlined } from '@ant-design/icons';
 import { ActionType, PageContainer, ProColumns, ProTable } from '@ant-design/pro-components';
-import {Button, message} from 'antd';
+import {Button} from 'antd';
 import React, {useRef, useState} from 'react';
 import DbTicketEditForm from "@/pages/db/components/DbTicketEditForm";
-import {addRule} from "@/services/ant-design-pro/api";
-
-// TODO
-const handleAdd = async (fields: API.DbTicketWithScriptDetail) => {
-  const hide = message.loading('正在添加');
-  try {
-    await addRule({...fields});
-    hide();
-    message.success('Added successfully');
-    return true;
-  } catch (error) {
-    hide();
-    message.error('Adding failed, please try again!');
-    return false;
-  }
-};
+import DbTicketDescriptions from "@/pages/db/components/DbTicketDescriptions";
+// import DbTicketDescriptions from "@/pages/db/components/DbTicketDescriptions";
 
 function getDbTicketColumn(option: ProColumns<API.DbTicketItem>): ProColumns<API.DbTicketItem>[] {
   return [
@@ -53,7 +39,8 @@ function getDbTicketColumn(option: ProColumns<API.DbTicketItem>): ProColumns<API
 }
 
 const DbTicketManage: React.FC = () => {
-  const [isModalOpen, setModalOpen] = useState<boolean>(false);
+  const [isDetailOpen, setDetailOpen] = useState<boolean>(false);
+  const [isEditOpen, setEditOpen] = useState<boolean>(false);
   const [currentRow, setCurrentRow] = useState<API.DbTicketWithScriptDetail>();
   const actionRef = useRef<ActionType>();
   const columns = getDbTicketColumn(
@@ -67,7 +54,7 @@ const DbTicketManage: React.FC = () => {
           onClick={() => {
             loadDbTicketWithScriptV2(record.id).then(value => {
               setCurrentRow(value);
-              setModalOpen(true);
+              setDetailOpen(true);
             })
           }}
         >
@@ -78,7 +65,7 @@ const DbTicketManage: React.FC = () => {
           onClick={() => {
             loadDbTicketWithScriptV2(record.id).then(value => {
               setCurrentRow(value);
-              setModalOpen(true);
+              setEditOpen(true);
             })
           }}
         >
@@ -127,7 +114,7 @@ const DbTicketManage: React.FC = () => {
             key="primary"
             onClick={() => {
               setCurrentRow(undefined)
-              setModalOpen(true);
+              setEditOpen(true);
             }}
           >
             <PlusOutlined /> 新建
@@ -136,19 +123,20 @@ const DbTicketManage: React.FC = () => {
         request={dbTicket}
         columns={columns}
       />
+      <DbTicketDescriptions
+        open={isDetailOpen}
+        onOpenChange={setDetailOpen}
+        currentRow={currentRow!}
+      />
       <DbTicketEditForm
-        open={isModalOpen}
-        onOpenChange={setModalOpen}
+        open={isEditOpen}
+        onOpenChange={setEditOpen}
         currentRow={currentRow}
         onFinish={async (value) => {
-          const success = await handleAdd(value);
-          if (success) {
-            setModalOpen(false);
-            if (actionRef.current) {
-              actionRef.current.reload();
-            }
-          }
-        }}/>
+          // TODO
+          console.log(value)
+        }}
+      />
     </PageContainer>
   );
 };

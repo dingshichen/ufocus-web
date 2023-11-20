@@ -1,20 +1,29 @@
-import { PageContainer,ProDescriptions } from "@ant-design/pro-components";
 import React from "react";
-import { useSearchParams } from "react-router-dom";
+import {ModalForm, ProDescriptions} from "@ant-design/pro-components";
 import DbTicketScriptTab from "@/pages/db/components/DbTicketScriptTab";
-import {loadDbTicketWithScript} from "@/services/db/api";
 
-const DbTicketDetail: React.FC = () => {
-  const [searchParams] = useSearchParams();
-  const id = Number(searchParams.get('id'));
+export type DbTicketDescriptionsProps = {
+  currentRow: API.DbTicketWithScriptDetail;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}
+
+/**
+ * 浮层数据库工单详情
+ */
+const DbTicketDescriptions: React.FC<DbTicketDescriptionsProps> = (props) => {
   return (
-    <PageContainer>
+    <ModalForm
+      open={props.open}
+      onOpenChange={props.onOpenChange}
+      width="1000px"
+      modalProps={{ destroyOnClose: true }}
+      submitter={false}
+    >
       <ProDescriptions<API.DbTicketWithScriptDetail, API.Base>
         column={2}
-        title="详情"
-        request={async ()=> {
-          return loadDbTicketWithScript(id)
-        }}
+        title="工单详情"
+        dataSource={ props.currentRow }
       >
         <ProDescriptions.Item dataIndex="ticketTitle" label="工单标题"/>
         <ProDescriptions.Item dataIndex={["dbGroup", "groupName"]} label="数据库分组"/>
@@ -28,8 +37,9 @@ const DbTicketDetail: React.FC = () => {
           return <DbTicketScriptTab dbTicketId={1} instanceScripts={(value as API.DbTicketWithScriptDetail).instanceScripts}/>
         }} />
       </ProDescriptions>
-    </PageContainer>
-  );
-};
+    </ModalForm>
+  )
+}
 
-export default DbTicketDetail;
+export default DbTicketDescriptions;
+

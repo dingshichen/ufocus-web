@@ -17,6 +17,9 @@ const tabs = (instanceScripts: API.DbTicketInstanceScriptItem[]) => {
   });
 }
 
+/**
+ * 数据工单脚本标签，按数据库实例生成
+ */
 const DbTicketScriptTab: React.FC<DbTicketScriptTabProps> = (props) => {
   return <Tabs defaultActiveKey={props.instanceScripts[0].dbInstance.id.toString()} items={tabs(props.instanceScripts)} />;
 };
