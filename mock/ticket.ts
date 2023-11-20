@@ -12,7 +12,7 @@ const ticket = (req: Request, res: Response) => {
           groupName: 'MySQL测试所有',
         },
         auditState: '审核通过',
-        performState: '执行成功',
+        performState: 'SUCCESS',
         createUser: {
           id: 1,
           chnName: '超级管理员',
@@ -28,7 +28,7 @@ const ticket = (req: Request, res: Response) => {
           groupName: 'MySQL测试所有',
         },
         auditState: '审核中',
-        performState: '待执行',
+        performState: 'WAIT',
         createUser: {
           id: 1,
           chnName: '超级管理员',

@@ -5,7 +5,6 @@ import {Button} from 'antd';
 import React, {useRef, useState} from 'react';
 import DbTicketEditForm from "@/pages/db/components/DbTicketEditForm";
 import DbTicketDescriptions from "@/pages/db/components/DbTicketDescriptions";
-// import DbTicketDescriptions from "@/pages/db/components/DbTicketDescriptions";
 
 function getDbTicketColumn(option: ProColumns<API.DbTicketItem>): ProColumns<API.DbTicketItem>[] {
   return [
@@ -24,6 +23,24 @@ function getDbTicketColumn(option: ProColumns<API.DbTicketItem>): ProColumns<API
     {
       title: '执行状态',
       dataIndex: 'performState',
+      valueEnum: {
+        "WAIT": {
+          text: "未执行",
+          status: "default",
+        },
+        "RUNNING": {
+          text: "执行中",
+          status: "processing",
+        },
+        "SUCCESS": {
+          text: "执行成功",
+          status: "success",
+        },
+        "ERROR": {
+          text: "执行失败",
+          status: "error",
+        },
+      },
     },
     {
       title: '创建人',

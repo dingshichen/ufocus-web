@@ -23,10 +23,24 @@ const DbTicketScripTable: React.FC<DbTicketScriptListProps> = (props) => {
         {
           title: "执行状态",
           dataIndex: "performState",
-        },
-        {
-          title: "异常信息",
-          dataIndex: "exceptionInformationContent",
+          valueEnum: {
+            "WAIT": {
+              text: "未执行",
+              status: "default",
+            },
+            "RUNNING": {
+              text: "执行中",
+              status: "processing",
+            },
+            "SUCCESS": {
+              text: "执行成功",
+              status: "success",
+            },
+            "ERROR": {
+              text: "执行失败",
+              status: "error",
+            },
+          },
         },
         {
           title: "操作",
