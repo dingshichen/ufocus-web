@@ -3,6 +3,7 @@ import {ProTable} from "@ant-design/pro-components";
 import {history} from "@@/core/history";
 import qs from "qs";
 import {loadDbTicketMock} from "@/services/db/api";
+import {Tooltip} from "antd";
 
 export type DbTicketScriptListProps = {
   scripts: API.DbTicketScriptItem[]
@@ -43,6 +44,9 @@ const DbTicketScripTable: React.FC<DbTicketScriptListProps> = (props) => {
               status: "error",
             },
           },
+          render: (node, record) => {
+            return record.exceptionInformationContent === undefined ? node : <Tooltip title={record.exceptionInformationContent}><span>{node}</span></Tooltip>
+          }
         },
         {
           title: "操作",
