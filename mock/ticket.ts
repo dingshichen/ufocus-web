@@ -11,7 +11,7 @@ const ticket = (req: Request, res: Response) => {
           id: 2,
           groupName: 'MySQL测试所有',
         },
-        auditState: '审核通过',
+        auditState: 'APPROVE',
         performState: 'SUCCESS',
         createUser: {
           id: 1,
@@ -27,7 +27,7 @@ const ticket = (req: Request, res: Response) => {
           id: 2,
           groupName: 'MySQL测试所有',
         },
-        auditState: '审核中',
+        auditState: 'REJECT',
         performState: 'WAIT',
         createUser: {
           id: 1,

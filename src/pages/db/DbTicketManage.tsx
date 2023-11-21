@@ -17,8 +17,26 @@ function getDbTicketColumn(option: ProColumns<API.DbTicketItem>): ProColumns<API
       dataIndex: ['dbGroup', 'groupName'],
     },
     {
-      title: '审核状态',
+      title: '审批状态',
       dataIndex: 'auditState',
+      valueEnum: {
+        "WAIT_AUDIT": {
+          text: "待审批",
+          status: "default",
+        },
+        "APPROVE": {
+          text: "已通过",
+          status: "success",
+        },
+        "REJECT": {
+          text: "已拒绝",
+          status: "error",
+        },
+        "CANCEL": {
+          text: "已撤销",
+          status: "error",
+        }
+      }
     },
     {
       title: '执行状态',
