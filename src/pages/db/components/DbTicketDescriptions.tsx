@@ -16,7 +16,7 @@ const DbTicketDescriptions: React.FC<DbTicketDescriptionsProps> = (props) => {
     <ModalForm
       open={props.open}
       onOpenChange={props.onOpenChange}
-      width="1000px"
+      width="1200px"
       modalProps={{ destroyOnClose: true }}
       submitter={false}
     >

@@ -23,6 +23,8 @@ const DbTicketScripTable: React.FC<DbTicketScriptListProps> = (props) => {
         {
           title: "执行状态",
           dataIndex: "performState",
+          width: 100,
+          fixed: "right",
           valueEnum: {
             "WAIT": {
               text: "未执行",
@@ -45,6 +47,8 @@ const DbTicketScripTable: React.FC<DbTicketScriptListProps> = (props) => {
         {
           title: "操作",
           valueType: 'option',
+          width: 120,
+          fixed: "right",
           render: (_, record) => [
             <a
               key="update"
@@ -90,7 +94,7 @@ const DbTicketScripTable: React.FC<DbTicketScriptListProps> = (props) => {
                 });
               }}
             >
-              重新执行
+              重试
             </a>,
           ],
         }
