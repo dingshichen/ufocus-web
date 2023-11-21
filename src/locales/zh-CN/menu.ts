@@ -52,6 +52,7 @@ export default {
 
   'menu.user': '用户权限',
   'menu.user.user-manage': '用户管理',
+  'menu.user.role-manage': '角色管理',
   'menu.db': '数据库',
   'menu.db.db-manage': '实例管理',
   'menu.db.db-group-manage': '分组管理',

@@ -59,6 +59,11 @@ export default [
         name: 'user-manage',
         component: './user/UserManage',
       },
+      {
+        path: '/user/role',
+        name: 'role-manage',
+        component: './role/RoleManage',
+      },
     ],
   },
   {
