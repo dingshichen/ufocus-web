@@ -19,7 +19,7 @@ const UserManage: React.FC = () => {
   const actionRef = useRef<ActionType>();
   const columns: ProColumns<API.UserItem>[] = [
     {
-      title: "用户名",
+      title: "用户名称",
       dataIndex: "chnName",
     },
     {
