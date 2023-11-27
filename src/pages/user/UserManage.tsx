@@ -5,7 +5,7 @@ import {
   ProColumns,
   ProTable
 } from "@ant-design/pro-components";
-import {Button} from "antd";
+import { Button, Popconfirm } from 'antd';
 import {PlusOutlined} from "@ant-design/icons";
 import {user} from "@/services/ant-design-pro/api";
 import UserEditForm from "@/pages/user/components/UserEditForm";
@@ -89,9 +89,16 @@ const UserManage: React.FC = () => {
         >
           变更
         </a>,
-        <a key="lock" href="https://procomponents.ant.design/">
-          停用
-        </a>,
+        <Popconfirm
+          key="lock"
+          title="注意"
+          description="停用后该用户将无法登陆！"
+          onConfirm={async () => {
+            console.log("确认删除 id = " + record.id)
+          }} >
+            <a>停用</a>
+        </Popconfirm>
+        ,
       ],
     },
   ]
@@ -134,4 +141,4 @@ const UserManage: React.FC = () => {
   )
 }
 
-export default UserManage
+export default UserManage;
