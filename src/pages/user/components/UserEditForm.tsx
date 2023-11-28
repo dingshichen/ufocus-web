@@ -40,7 +40,7 @@ const UserEditForm: React.FC<UserEditProps> = (props) => {
         ]}
         width="md"
         name="roleName"
-        label="角色名称"
+        label="角色"
         initialValue={ props.currentRow?.role.chnName }
         request={selectRoleOptions}
       />

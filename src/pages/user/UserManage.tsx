@@ -24,7 +24,7 @@ const UserManage: React.FC = () => {
       dataIndex: "chnName",
     },
     {
-      title: "角色名称",
+      title: "角色",
       dataIndex: ["role", "chnName"],
       valueType: "select",
       request: selectRoleOptions
