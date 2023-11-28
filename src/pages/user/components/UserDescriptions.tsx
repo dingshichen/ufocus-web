@@ -24,7 +24,8 @@ const UserDescriptions: React.FC<UserDescriptionsProps> = (props) => {
         title="用户详情"
         dataSource={ props.currentRow }
       >
-        <ProDescriptions.Item dataIndex="chnName" label="用户名"/>
+        <ProDescriptions.Item dataIndex="chnName" label="用户名" span={2} />
+        <ProDescriptions.Item dataIndex={["role", "chnName"]} label="角色名称"/>
         <ProDescriptions.Item dataIndex="mobilePhoneNumber" label="手机号码"/>
         <ProDescriptions.Item dataIndex="emailAddress" label="电子邮箱"/>
         <ProDescriptions.Item dataIndex="isLockFlag" label="停用状态"

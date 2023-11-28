@@ -11,6 +11,7 @@ import {user} from "@/services/ant-design-pro/api";
 import UserEditForm from "@/pages/user/components/UserEditForm";
 import {loadUserMock} from "@/services/user/api";
 import UserDescriptions from "@/pages/user/components/UserDescriptions";
+import {selectRoleOptions} from "@/services/role/api";
 
 const UserManage: React.FC = () => {
   const [isDetailOpen, setDetailOpen] = useState<boolean>(false);
@@ -21,6 +22,12 @@ const UserManage: React.FC = () => {
     {
       title: "用户名称",
       dataIndex: "chnName",
+    },
+    {
+      title: "角色名称",
+      dataIndex: ["role", "chnName"],
+      valueType: "select",
+      request: selectRoleOptions
     },
     {
       title: "手机号码",

@@ -4,8 +4,11 @@ export async function loadUserMock(id: number) {
       resolve({
         id: 1,
         chnName: "超级管理员",
-        mobilePhoneNumber: "10000",
         emailAddress: "10000@qq.com",
+        role: {
+          id: 1,
+          chnName: "超级管理员",
+        },
         isLockFlag: true,
         createUser: {
           id: 1,
@@ -23,6 +26,11 @@ export async function loadUserMock(id: number) {
         id: 2,
         chnName: "丁时辰",
         mobilePhoneNumber: "17705505750",
+        emailAddress: "foreverhuiqiao@126.com",
+        role: {
+          id: 2,
+          chnName: "管理员",
+        },
         isLockFlag: true,
         createUser: {
           id: 1,

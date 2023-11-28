@@ -1,5 +1,6 @@
 import React from "react";
-import {ModalForm, ProFormText} from "@ant-design/pro-components";
+import { ModalForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
+import {selectRoleOptions} from "@/services/role/api";
 
 export type UserEditProps = {
   open: boolean;
@@ -29,6 +30,19 @@ const UserEditForm: React.FC<UserEditProps> = (props) => {
         name="chnName"
         label="用户名"
         initialValue={ props.currentRow?.chnName }
+      />
+      <ProFormSelect
+        rules={[
+        {
+          required: true,
+          message: "请选择角色",
+        },
+        ]}
+        width="md"
+        name="roleName"
+        label="角色名称"
+        initialValue={ props.currentRow?.role.chnName }
+        request={selectRoleOptions}
       />
       <ProFormText
         width="md"

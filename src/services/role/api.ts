@@ -1,4 +1,7 @@
 import {request} from "@@/exports";
+import {RequestOptionsType} from "@ant-design/pro-utils/es/typing";
+import {val} from "@umijs/utils/compiled/cheerio/lib/api/attributes";
+import {values} from "lodash";
 
 export async function role(
   params: {
@@ -36,4 +39,24 @@ export async function loadRoleMock(id: number) {
       latestUpdateTime: "2023-09-01 12:00:00",
     })
   })
+}
+
+export async function selectRoleMock() {
+  return new Promise<API.RoleOption[]>((resolve) => {
+    resolve([
+      {
+        id: 1,
+        chnName: "超级管理员",
+      },
+      {
+        id: 2,
+        chnName: "管理员",
+      }
+    ])
+  })
+}
+
+export async function selectRoleOptions(): Promise<RequestOptionsType[]> {
+  const roles = await selectRoleMock()
+  return roles.map((e) => { return { label: e.chnName, value: e.id}})
 }
