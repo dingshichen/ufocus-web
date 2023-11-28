@@ -1,5 +1,8 @@
 import React from "react";
 import {ModalForm, ProFormSelect, ProFormText} from "@ant-design/pro-components";
+import {selectDbInstanceMock} from "@/services/db/api";
+import {TagDbProduct} from "@/components/Tag/DbProduct";
+import {RequestOptionsType} from "@ant-design/pro-utils/es/typing";
 
 export type DbGroupEditProps = {
   open: boolean;
@@ -7,6 +10,16 @@ export type DbGroupEditProps = {
   currentRow?: API.DbGroupItem;
   onFinish: (value: API.DbGroupDetail) => Promise<void>
 };
+
+async function selectDbInstanceTag(): Promise<RequestOptionsType[]> {
+  const dbInstances = await selectDbInstanceMock()
+  return dbInstances.map((e) => {
+    return {
+      label: <TagDbProduct dbProductCode={e.dbProductCode} text={e.dbInstanceName} />,
+      value: e.id
+    }
+  })
+}
 
 const DbGroupEditForm: React.FC<DbGroupEditProps> = (props) => {
   return (
@@ -42,11 +55,13 @@ const DbGroupEditForm: React.FC<DbGroupEditProps> = (props) => {
         label="数据库实例"
         mode="multiple"
         width="md"
-        valueEnum={{
-          1: 'MySQL测试环境主库',
-          2: 'DM测试环境租户库',
-          3: 'GAUSSDB测试环境主库'
-        }}
+        request={selectDbInstanceTag}
+        initialValue={ props.currentRow?.dbInstances.map((e) => {
+          return {
+            label: <TagDbProduct dbProductCode={e.dbProductCode} text={e.dbInstanceName} />,
+            value: e.id
+          }})
+        }
       />
     </ModalForm>
   )

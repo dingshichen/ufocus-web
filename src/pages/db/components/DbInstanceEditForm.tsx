@@ -1,5 +1,6 @@
 import React from "react";
 import {ModalForm, ProFormSelect, ProFormText} from "@ant-design/pro-components";
+import {TagDaMeng, TagGaussDB, TagMySQL} from "@/components/Tag/DbProduct";
 
 export type DbInstanceEditProps = {
   open: boolean;
@@ -39,9 +40,9 @@ const DbInstanceEditForm: React.FC<DbInstanceEditProps> = (props) => {
         label="数据库产品"
         width="md"
         valueEnum={{
-          'MYSQL': 'MYSQL',
-          'DAMENG': 'DAMENG',
-          'GAUSSDB': 'GAUSSDB',
+          'MYSQL': <TagMySQL />,
+          'DAMENG': <TagDaMeng />,
+          'GAUSSDB': <TagGaussDB />,
         }}
         rules={[
           {

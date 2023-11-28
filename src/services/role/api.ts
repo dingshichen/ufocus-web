@@ -41,6 +41,13 @@ export async function loadRoleMock(id: number) {
   })
 }
 
+export function toRoleOption(role: API.RoleOption): RequestOptionsType {
+  return {
+    label: role.chnName,
+    value: role.id,
+  }
+}
+
 export async function selectRoleMock() {
   return new Promise<API.RoleOption[]>((resolve) => {
     resolve([

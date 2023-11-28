@@ -1,5 +1,40 @@
 import { request } from '@@/exports';
 import {RequestData} from "@ant-design/pro-descriptions/es/useFetchData";
+import {RequestOptionsType} from "@ant-design/pro-utils/es/typing";
+
+export function toDbInstanceOption(dbInstance: API.DbInstanceOption): RequestOptionsType {
+  return {
+    label: dbInstance.dbInstanceName,
+    value: dbInstance.id,
+  }
+}
+
+export async function selectDbInstanceMock() {
+  return new Promise<API.DbInstanceOption[]>((resolve) => {
+    resolve([
+      {
+        id: 1,
+        dbInstanceName: 'MySQL测试环境主库',
+        dbProductCode: 'MYSQL',
+      },
+      {
+        id: 2,
+        dbInstanceName: 'DM测试环境租户库',
+        dbProductCode: 'DAMENG',
+      },
+      {
+        id: 3,
+        dbInstanceName: 'GAUSSDB测试环境主库',
+        dbProductCode: 'GAUSSDB',
+      },
+    ])
+  })
+}
+
+export async function selectDbInstanceOptions(): Promise<RequestOptionsType[]> {
+  const records = await selectDbInstanceMock();
+  return records.map(toDbInstanceOption)
+}
 
 export async function loadDbInstanceMock(id: number) {
   return new Promise<API.DbInstanceDetail>((resolve) => {

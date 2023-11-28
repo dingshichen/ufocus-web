@@ -1,6 +1,7 @@
 import React from "react";
 import {Tabs} from "antd";
 import DbTicketScripTable from "@/pages/db/components/DbTicketScripTable";
+import {TagDbProduct} from "@/components/Tag/DbProduct";
 
 export type DbTicketScriptTabProps = {
   dbTicketId: number;
@@ -11,7 +12,7 @@ const tabs = (instanceScripts: API.DbTicketInstanceScriptItem[]) => {
   return instanceScripts.map(value => {
     return {
       key: value.dbInstance.id.toString(),
-      label: value.dbInstance.dbInstanceName,
+      label: <TagDbProduct dbProductCode={value.dbInstance.dbProductCode} text={value.dbInstance.dbInstanceName} />,
       children: <DbTicketScripTable scripts={value.scripts}/>
     }
   });
