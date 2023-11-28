@@ -1,6 +1,6 @@
 import React, {useRef, useState} from "react";
 import {ActionType, PageContainer, ProColumns, ProTable} from "@ant-design/pro-components";
-import {Button} from "antd";
+import {Button, Popconfirm} from "antd";
 import {PlusOutlined} from "@ant-design/icons";
 import {loadRoleMock, role} from "@/services/role/api";
 import RoleDescriptions from "@/pages/role/components/RoleDescriptions";
@@ -61,6 +61,15 @@ const RoleManage: React.FC = () => {
         >
           变更
         </a>,
+        <Popconfirm
+          key="delete"
+          title="注意"
+          description="删除该角色后将无法恢复！"
+          onConfirm={async () => {
+            console.log("确认删除 id = " + record.id)
+          }} >
+          <a>删除</a>
+        </Popconfirm>
       ],
     },
   ]
