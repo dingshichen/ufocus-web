@@ -15,7 +15,7 @@ const UserEditForm: React.FC<UserEditProps> = (props) => {
       open={props.open}
       onOpenChange={props.onOpenChange}
       width="400px"
-      modalProps={{ destroyOnClose: true }}
+      modalProps={{ destroyOnClose: true, maskClosable: false }}
       onFinish={props.onFinish}
     >
       <ProFormText

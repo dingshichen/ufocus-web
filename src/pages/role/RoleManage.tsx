@@ -2,7 +2,9 @@ import React, {useRef, useState} from "react";
 import {ActionType, PageContainer, ProColumns, ProTable} from "@ant-design/pro-components";
 import {Button} from "antd";
 import {PlusOutlined} from "@ant-design/icons";
-import {role} from "@/services/role/api";
+import {loadRoleMock, role} from "@/services/role/api";
+import RoleDescriptions from "@/pages/role/components/RoleDescriptions";
+import RoleEditForm from "@/pages/role/components/RoleEditForm";
 
 const RoleManage: React.FC = () => {
   const [isDetailOpen, setDetailOpen] = useState<boolean>(false);
@@ -34,7 +36,13 @@ const RoleManage: React.FC = () => {
         <a
           key="detail"
           onClick={() => {
-            // TODO
+            const init = async () => {
+              return loadRoleMock(record.id)
+            }
+            init().then((role) => {
+              setCurrentRow(role);
+              setDetailOpen(true);
+            })
           }}
         >
           详情
@@ -42,7 +50,13 @@ const RoleManage: React.FC = () => {
         <a
           key="update"
           onClick={() => {
-            // TODO
+            const init = async () => {
+              return loadRoleMock(record.id)
+            }
+            init().then((role) => {
+              setCurrentRow(role);
+              setEditOpen(true);
+            })
           }}
         >
           变更
@@ -70,7 +84,17 @@ const RoleManage: React.FC = () => {
         ]}
         request={role}
         columns={columns} />
-
+        <RoleDescriptions
+          open={isDetailOpen}
+          onOpenChange={setDetailOpen}
+          currentRow={currentRow!}/>
+        <RoleEditForm
+          open={isEditOpen}
+          onOpenChange={setEditOpen}
+          currentRow={currentRow}
+          onFinish={async (value) => {
+            console.log("角色编辑完成：" + value)
+          }}/>
     </PageContainer>
   )
 }

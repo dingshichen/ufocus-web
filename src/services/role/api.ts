@@ -19,3 +19,21 @@ export async function role(
   });
 }
 
+export async function loadRoleMock(id: number) {
+  return new Promise<API.RoleDetail>((resolve) => {
+    resolve({
+      id: 1,
+      chnName: "超级管理员",
+      createUser: {
+        id: 1,
+        chnName: "超级管理员",
+      },
+      createTime: "2023-09-01 12:00:00",
+      latestUpdateUser: {
+        id: 1,
+        chnName: "超级管理员"
+      },
+      latestUpdateTime: "2023-09-01 12:00:00",
+    })
+  })
+}

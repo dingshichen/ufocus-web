@@ -17,7 +17,7 @@ const DbTicketDescriptions: React.FC<DbTicketDescriptionsProps> = (props) => {
       open={props.open}
       onOpenChange={props.onOpenChange}
       width="1200px"
-      modalProps={{ destroyOnClose: true }}
+      modalProps={{ destroyOnClose: true, maskClosable: false }}
       submitter={false}
     >
       <ProDescriptions<API.DbTicketWithScriptDetail, API.Base>

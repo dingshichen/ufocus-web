@@ -16,7 +16,7 @@ const UserDescriptions: React.FC<UserDescriptionsProps> = (props) => {
       open={props.open}
       onOpenChange={props.onOpenChange}
       width="600px"
-      modalProps={{ destroyOnClose: true }}
+      modalProps={{ destroyOnClose: true, maskClosable: false }}
       submitter={false}
     >
       <ProDescriptions<API.UserDetail, API.Base>
