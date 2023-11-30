@@ -1,6 +1,6 @@
 import React from "react";
 import {ModalForm, ProFormSelect, ProFormText, ProFormTextArea} from "@ant-design/pro-components";
-import {selectDbGroupMock} from "@/services/db/api";
+import {selectBeforeDbTicket, selectDbGroupMock} from "@/services/db/api";
 
 export type DbTicketEditProps = {
   open: boolean;
@@ -18,7 +18,8 @@ const DbTicketEditForm: React.FC<DbTicketEditProps> = (props) => {
       width="400px"
       modalProps={{
         destroyOnClose: true,
-        width: '600px'
+        width: '600px',
+        maskClosable: false,
       }}
       onFinish={props.onFinish}>
       <ProFormText
@@ -47,6 +48,39 @@ const DbTicketEditForm: React.FC<DbTicketEditProps> = (props) => {
         fieldProps={{ fieldNames: { label: 'groupName', value: 'id' } }}
         initialValue={props.currentRow?.dbGroup?.groupName}
       />
+      <ProFormSelect
+        name="dbTicketType"
+        label="类型"
+        width="md"
+        rules={[
+          {
+            required: true,
+            message: '请选择类型',
+          },
+        ]}
+        valueEnum={{
+          "结构变更": "结构变更",
+          "数据变更": "数据变更",
+          "存储过程": "存储过程",
+        }}
+        initialValue={props.currentRow?.dbTicketType}
+        />
+      <ProFormSelect
+        name={["beforeDbTicket", "ticketTitle"]}
+        label="紧前工单"
+        width="md"
+        request={async () => {
+          const tickets = await selectBeforeDbTicket()
+          return tickets.map((e) => {
+            return {
+              label: e.ticketTitle,
+              value: e.id
+            }
+          })
+        }}
+        fieldProps={{ showSearch: true }}
+        initialValue={props.currentRow?.beforeDbTicket?.ticketTitle}
+        />
       <ProFormTextArea
         name="textContent"
         label="文本内容"

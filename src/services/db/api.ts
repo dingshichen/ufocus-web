@@ -219,6 +219,7 @@ export async function loadDbTicketMock(id: number) {
           id: 2,
           groupName: "MySQL测试所有"
         },
+        dbTicketType: '结构变更',
         auditState: "审核通过",
         performState: "执行成功",
         createUser: {
@@ -235,11 +236,17 @@ export async function loadDbTicketMock(id: number) {
       })
     } else {
       resolve({
-        id: 1,
+        id: 2,
         ticketTitle: "考核数据初始化",
         dbGroup: {
           id: 2,
           groupName: "MySQL测试所有"
+        },
+        dbTicketType: '数据变更',
+        beforeDbTicket: {
+          id: 1,
+          ticketTitle: "考核创建表结构",
+          performState: "执行成功",
         },
         auditState: "审核中",
         performState: "待执行",
@@ -268,6 +275,12 @@ export async function loadDbTicketWithScript(id: number) {
         dbGroup: {
           id: 2,
           groupName: "MySQL测试所有"
+        },
+        dbTicketType: '结构变更',
+        beforeDbTicket: {
+          id: 2,
+          ticketTitle: "考核数据初始化",
+          performState: "执行成功",
         },
         auditState: "审核通过",
         performState: "执行成功",
@@ -337,6 +350,12 @@ export async function loadDbTicketWithScriptV2(id: number) {
       dbGroup: {
         id: 2,
         groupName: "MySQL测试所有"
+      },
+      dbTicketType: '结构变更',
+      beforeDbTicket: {
+        id: 2,
+        ticketTitle: "考核数据初始化",
+        performState: "执行成功",
       },
       auditState: "审核通过",
       performState: "执行成功",
@@ -409,6 +428,28 @@ export async function dbTicketScript(dbTicketId: number) {
         exceptionInformationContent: "主键冲突",
         performState: "执行失败",
         textContent: "insert into",
+      }
+    ])
+  })
+}
+
+export async function selectBeforeDbTicket() {
+  return new Promise<API.DbTicketOption[]>((resolve) => {
+    resolve([
+      {
+        id: 1,
+        ticketTitle: "数据安全创建表",
+        performState: "执行成功"
+      },
+      {
+        id: 2,
+        ticketTitle: "数据质量修改数据",
+        performState: "执行成功"
+      },
+      {
+        id: 3,
+        ticketTitle: "平台修改表结构",
+        performState: "执行成功"
       }
     ])
   })

@@ -27,6 +27,8 @@ const DbTicketDescriptions: React.FC<DbTicketDescriptionsProps> = (props) => {
       >
         <ProDescriptions.Item dataIndex="ticketTitle" label="工单标题"/>
         <ProDescriptions.Item dataIndex={["dbGroup", "groupName"]} label="数据库分组"/>
+        <ProDescriptions.Item dataIndex="dbTicketType" label="类型"/>
+        <ProDescriptions.Item dataIndex={["beforeDbTicket", "ticketTitle"]} label="紧前工单"/>
         <ProDescriptions.Item dataIndex="auditState" label="审核状态"/>
         <ProDescriptions.Item dataIndex="performState" label="执行状态"/>
         <ProDescriptions.Item dataIndex={["createUser", "chnName"]} label="创建人"/>

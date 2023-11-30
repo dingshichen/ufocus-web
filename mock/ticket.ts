@@ -11,6 +11,7 @@ const ticket = (req: Request, res: Response) => {
           id: 2,
           groupName: 'MySQL测试所有',
         },
+        dbTicketType: '结构变更',
         auditState: 'APPROVE',
         performState: 'SUCCESS',
         createUser: {
@@ -26,6 +27,12 @@ const ticket = (req: Request, res: Response) => {
         dbGroup: {
           id: 2,
           groupName: 'MySQL测试所有',
+        },
+        dbTicketType: '数据变更',
+        beforeDbTicket: {
+          id: 1,
+          ticketTitle: "考核数据初始化",
+          performState: "执行成功",
         },
         auditState: 'REJECT',
         performState: 'WAIT',

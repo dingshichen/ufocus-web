@@ -35,12 +35,14 @@ declare namespace API {
 
   class DbTicketOption extends Base {
     ticketTitle: string;
+    performState: string;
   }
 
   class DbTicketItem extends DbTicketOption {
     dbGroup: DbGroupOption;
+    dbTicketType: string;
+    beforeDbTicket?: DbTicketOption;
     auditState: string;
-    performState: string;
     createUser: UserOption;
     createTime: string;
   }

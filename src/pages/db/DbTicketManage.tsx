@@ -1,7 +1,7 @@
-import {loadDbTicketMock, dbTicket, loadDbTicketWithScriptV2} from '@/services/db/api';
+import {dbTicket, loadDbTicketWithScriptV2} from '@/services/db/api';
 import { PlusOutlined } from '@ant-design/icons';
 import { ActionType, PageContainer, ProColumns, ProTable } from '@ant-design/pro-components';
-import {Button} from 'antd';
+import {Button, Popconfirm} from 'antd';
 import React, {useRef, useState} from 'react';
 import DbTicketEditForm from "@/pages/db/components/DbTicketEditForm";
 import DbTicketDescriptions from "@/pages/db/components/DbTicketDescriptions";
@@ -15,6 +15,26 @@ function getDbTicketColumn(option: ProColumns<API.DbTicketItem>): ProColumns<API
     {
       title: '数据库分组',
       dataIndex: ['dbGroup', 'groupName'],
+    },
+    {
+      title: '类型',
+      dataIndex: 'dbTicketType',
+      valueEnum: {
+        '结构变更': {
+          text: '结构变更'
+        },
+        '数据变更': {
+          text: '数据变更'
+        },
+        '存储过程': {
+          text: '存储过程'
+        }
+      }
+    },
+    {
+      title: '紧前工单',
+      dataIndex: ['beforeDbTicket', 'ticketTitle'],
+      hideInSearch: true,
     },
     {
       title: '审批状态',
@@ -106,34 +126,15 @@ const DbTicketManage: React.FC = () => {
         >
           变更
         </a>,
-        <a
+        <Popconfirm
           key="delete"
-          onClick={() => {
-            const init = async () => {
-              return await loadDbTicketMock(record.id);
-            };
-            init().then((value) => {
-              // TODO 删除
-              console.log("删除：value" + value.id)
-            });
-          }}
-        >
-          删除
-        </a>,
-        <a
-          key="execute"
-          onClick={() => {
-            const init = async () => {
-              return await loadDbTicketMock(record.id);
-            };
-            init().then((value) => {
-              // TODO 执行或审核
-              console.log("执行或审核：value" + value.id)
-            });
-          }}
-        >
-          {record.auditState === '审核通过' ? '执行' : '审核'}
-        </a>,
+          title="注意"
+          description="删除该工单后将无法恢复！"
+          onConfirm={async () => {
+            console.log("确认删除 id = " + record.id)
+          }} >
+          <a>删除</a>
+        </Popconfirm>,
       ],
     }
   );
