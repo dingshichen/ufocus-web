@@ -42,7 +42,7 @@ const UserEditForm: React.FC<UserEditProps> = (props) => {
         name="roleName"
         label="角色"
         request={selectRoleOptions}
-        initialValue={ props.currentRow === undefined ? undefined : toRoleOption(props.currentRow!.role) }
+        initialValue={ props.currentRow ? toRoleOption(props.currentRow!.role) : undefined }
       />
       <ProFormText
         width="md"

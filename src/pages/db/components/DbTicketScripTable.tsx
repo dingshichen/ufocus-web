@@ -45,7 +45,7 @@ const DbTicketScripTable: React.FC<DbTicketScriptListProps> = (props) => {
             },
           },
           render: (node, record) => {
-            return record.exceptionInformationContent === undefined ? node : <Tooltip title={record.exceptionInformationContent}><span>{node}</span></Tooltip>
+            return record.exceptionInformationContent ? node : <Tooltip title={record.exceptionInformationContent}><span>{node}</span></Tooltip>
           }
         },
         {
