@@ -4,7 +4,7 @@ declare namespace API {
     id: number
   }
 
-  class Result<T> {
+  class R<T> {
     code: number;
     message: string;
     data?: T

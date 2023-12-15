@@ -3,9 +3,9 @@ import type { RunTimeLayoutConfig } from '@umijs/max';
 import { history } from '@umijs/max';
 import defaultSettings from '../config/defaultSettings';
 import { errorConfig } from './requestErrorConfig';
-import { currentUser as queryCurrentUser } from './services/ant-design-pro/api';
 import React from 'react';
 import { AvatarDropdown, AvatarName } from './components/RightContent/AvatarDropdown';
+import {currentUser} from "@/services/auth/api";
 const loginPath = '/hub/login';
 
 /**
@@ -13,15 +13,13 @@ const loginPath = '/hub/login';
  * */
 export async function getInitialState(): Promise<{
   settings?: Partial<LayoutSettings>;
-  currentUser?: API.CurrentUser;
+  currentUser?: API.UserDetail;
   loading?: boolean;
-  fetchUserInfo?: () => Promise<API.CurrentUser | undefined>;
+  fetchUserInfo?: () => Promise<API.UserDetail | undefined>;
 }> {
   const fetchUserInfo = async () => {
     try {
-      const msg = await queryCurrentUser({
-        skipErrorHandler: true,
-      });
+      const msg = await currentUser();
       return msg.data;
     } catch (error) {
       history.push(loginPath);
@@ -50,14 +48,15 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
     title: 'ufocus',
     actionsRender: () => [],
     avatarProps: {
-      src: initialState?.currentUser?.avatar,
+      // TODO 头像 src: initialState?.currentUser?.avatar,
+      src: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
       title: <AvatarName />,
       render: (_, avatarChildren) => {
         return <AvatarDropdown>{avatarChildren}</AvatarDropdown>;
       },
     },
     waterMarkProps: {
-      content: initialState?.currentUser?.name,
+      content: initialState?.currentUser?.chnName,
     },
     onPageChange: () => {
       const { location } = history;
