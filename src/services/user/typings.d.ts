@@ -7,14 +7,21 @@ declare namespace API {
   class UserItem extends UserOption {
     mobilePhoneNumber?: string;
     emailAddress: string;
-    role: RoleOption[];
+    roles: RoleOption[];
     isLockFlag: boolean;
-    createUser: UserOption;
-    createTime: string;
   }
 
   class UserDetail extends UserItem {
+    createUser: UserOption;
+    createTime: string;
     latestUpdateUser: UserOption;
     latestUpdateTime: string;
+  }
+
+  class UserQuery {
+    chnName?: string;
+    mobilePhoneNumber?: string;
+    isLockFlag?: boolean;
+    roleId?: number;
   }
 }

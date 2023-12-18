@@ -5,11 +5,10 @@ import {
   ProColumns,
   ProTable
 } from "@ant-design/pro-components";
-import { Button, Popconfirm } from 'antd';
+import {Button, Popconfirm, Tag} from 'antd';
 import {PlusOutlined} from "@ant-design/icons";
-import {user} from "@/services/ant-design-pro/api";
 import UserEditForm from "@/pages/user/components/UserEditForm";
-import {loadUserMock} from "@/services/user/api";
+import {loadUserMock, pageUsers} from "@/services/user/api";
 import UserDescriptions from "@/pages/user/components/UserDescriptions";
 import {selectRoleOptions} from "@/services/role/api";
 
@@ -25,9 +24,16 @@ const UserManage: React.FC = () => {
     },
     {
       title: "角色",
-      dataIndex: ["role", "chnName"],
       valueType: "select",
-      request: selectRoleOptions
+      request: selectRoleOptions,
+      ellipsis: true,
+      render: (_, user) => {
+        return(
+          <div>
+            { user.roles.map((role) => <Tag key={role.id}>{role.chnName}</Tag>) }
+          </div>
+        )
+      }
     },
     {
       title: "手机号码",
@@ -53,45 +59,26 @@ const UserManage: React.FC = () => {
       },
     },
     {
-      title: "创建人",
-      dataIndex: ["createUser", "chnName"],
-      search: false
-    },
-    {
-      title: "创建时间",
-      dataIndex: "createTime",
-      valueType: 'dateTime',
-      search: false
-    },
-    {
       title: "操作",
       dataIndex: "option",
       valueType: "option",
       render: (_, record) => [
         <a
           key="detail"
-          onClick={() => {
-            const init = async () => {
-              return await loadUserMock(record.id)
-            }
-            init().then((user) => {
-              setCurrentRow(user);
-              setDetailOpen(true);
-            })
+          onClick={async () => {
+            const user = await loadUserMock(record.id);
+            setCurrentRow(user);
+            setDetailOpen(true);
           }}
         >
           详情
         </a>,
         <a
           key="update"
-          onClick={() => {
-            const init = async () => {
-              return await loadUserMock(record.id)
-            }
-            init().then((user) => {
-              setCurrentRow(user);
-              setEditOpen(true);
-            })
+          onClick={async () => {
+            const user = await loadUserMock(record.id);
+            setCurrentRow(user);
+            setEditOpen(true);
           }}
         >
           变更
@@ -112,7 +99,7 @@ const UserManage: React.FC = () => {
 
   return (
     <PageContainer>
-      <ProTable<API.UserItem, API.PageParams>
+      <ProTable<API.UserItem, API.UserQuery & API.PageParams>
         headerTitle="用户列表"
         rowKey="id"
         actionRef={actionRef}
@@ -128,7 +115,7 @@ const UserManage: React.FC = () => {
             <PlusOutlined/> 新建
           </Button>
         ]}
-        request={user}
+        request={pageUsers}
         columns={columns}/>
       <UserDescriptions
         open={isDetailOpen}

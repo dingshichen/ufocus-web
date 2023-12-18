@@ -1,6 +1,6 @@
 import React from "react";
 import { ModalForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
-import {selectRoleOptions, toRoleOption} from "@/services/role/api";
+import {selectRoleOptions, toRoleOptions} from "@/services/role/api";
 
 export type UserEditProps = {
   open: boolean;
@@ -40,9 +40,10 @@ const UserEditForm: React.FC<UserEditProps> = (props) => {
         ]}
         width="md"
         name="roleName"
+        mode="multiple"
         label="角色"
         request={selectRoleOptions}
-        initialValue={ props.currentRow ? toRoleOption(props.currentRow!.role) : undefined }
+        initialValue={ props.currentRow ? toRoleOptions(props.currentRow!.roles) : undefined }
       />
       <ProFormText
         width="md"

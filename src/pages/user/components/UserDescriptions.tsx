@@ -1,5 +1,6 @@
 import React from "react";
 import {ModalForm, ProDescriptions} from "@ant-design/pro-components";
+import {Tag} from "antd";
 
 export type UserDescriptionsProps = {
   open: boolean;
@@ -25,7 +26,19 @@ const UserDescriptions: React.FC<UserDescriptionsProps> = (props) => {
         dataSource={ props.currentRow }
       >
         <ProDescriptions.Item dataIndex="chnName" label="用户名" span={2} />
-        <ProDescriptions.Item dataIndex={["role", "chnName"]} label="角色"/>
+        <ProDescriptions.Item label="角色"
+          render={(_, user) => {
+            return (
+              <div>
+                {user.roles.map((role: API.RoleOption) => {
+                  return (
+                    <Tag key={role.id}>{role.chnName}</Tag>
+                  )
+                })}
+              </div>
+            )
+          }}
+        />
         <ProDescriptions.Item dataIndex="mobilePhoneNumber" label="手机号码"/>
         <ProDescriptions.Item dataIndex="emailAddress" label="电子邮箱"/>
         <ProDescriptions.Item dataIndex="isLockFlag" label="停用状态"

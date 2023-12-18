@@ -41,11 +41,13 @@ export async function loadRoleMock(id: number) {
   })
 }
 
-export function toRoleOption(role: API.RoleOption): RequestOptionsType {
-  return {
-    label: role.chnName,
-    value: role.id,
-  }
+export function toRoleOptions(roles: API.RoleOption[]): RequestOptionsType[] {
+  return roles.map((role) => {
+    return {
+      label: role.chnName,
+      value: role.id,
+    }
+  })
 }
 
 export async function selectRoleMock() {
