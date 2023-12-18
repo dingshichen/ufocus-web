@@ -1,11 +1,11 @@
 declare namespace API {
 
   class Base {
-    id: number
+    id: string
   }
 
   class R<T> {
-    code: number;
+    code: string;
     message: string;
     data?: T
   }
@@ -21,5 +21,9 @@ declare namespace API {
     page: number = 1;
     size: number = 10;
     query: T;
+  }
+
+  class SelectQuery {
+    keyword?: string;
   }
 }

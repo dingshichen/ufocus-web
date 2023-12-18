@@ -1,7 +1,17 @@
 import {request} from "@@/exports";
 import {RequestOptionsType} from "@ant-design/pro-utils/es/typing";
-import {val} from "@umijs/utils/compiled/cheerio/lib/api/attributes";
-import {values} from "lodash";
+
+export async function selectRole(query: API.RoleSelectQuery = {}) {
+  const result = await request<{ data: API.RoleOption[] }>('/api/role/select', {
+    params: query
+  })
+  return result.data
+}
+
+export async function selectRoleOptions(): Promise<RequestOptionsType[]> {
+  const roles = await selectRole()
+  return roles.map((e) => { return { label: e.chnName, value: e.id}})
+}
 
 export async function role(
   params: {
@@ -22,18 +32,18 @@ export async function role(
   });
 }
 
-export async function loadRoleMock(id: number) {
+export async function loadRoleMock(id: string) {
   return new Promise<API.RoleDetail>((resolve) => {
     resolve({
-      id: 1,
+      id: "1",
       chnName: "超级管理员",
       createUser: {
-        id: 1,
+        id: "1",
         chnName: "超级管理员",
       },
       createTime: "2023-09-01 12:00:00",
       latestUpdateUser: {
-        id: 1,
+        id: "1",
         chnName: "超级管理员"
       },
       latestUpdateTime: "2023-09-01 12:00:00",
@@ -48,24 +58,4 @@ export function toRoleOptions(roles: API.RoleOption[]): RequestOptionsType[] {
       value: role.id,
     }
   })
-}
-
-export async function selectRoleMock() {
-  return new Promise<API.RoleOption[]>((resolve) => {
-    resolve([
-      {
-        id: 1,
-        chnName: "超级管理员",
-      },
-      {
-        id: 2,
-        chnName: "管理员",
-      }
-    ])
-  })
-}
-
-export async function selectRoleOptions(): Promise<RequestOptionsType[]> {
-  const roles = await selectRoleMock()
-  return roles.map((e) => { return { label: e.chnName, value: e.id}})
 }

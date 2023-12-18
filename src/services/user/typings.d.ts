@@ -24,4 +24,12 @@ declare namespace API {
     isLockFlag?: boolean;
     roleId?: number;
   }
+
+  class UserInsert {
+    chnName: string;
+    mobilePhoneNumber?: string;
+    emailAddress: string;
+    roleIds: string[];
+    pwd: string;
+  }
 }

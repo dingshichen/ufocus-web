@@ -5,14 +5,14 @@ import {selectRoleOptions, toRoleOptions} from "@/services/role/api";
 export type UserEditProps = {
   open: boolean;
   onOpenChange: (visible: boolean) => void;
-  onFinish: (formData: API.UserDetail) => Promise<boolean | void>;
+  onFinish: (formData: API.UserInsert) => Promise<boolean | void>;
   currentRow?: API.UserDetail;
 };
 
 const UserEditForm: React.FC<UserEditProps> = (props) => {
   return (
     <ModalForm
-      title={ props.currentRow ? "变更用户" : "新建用户"}
+      title={ props.currentRow ? "变更用户" : "新建用户" }
       open={props.open}
       onOpenChange={props.onOpenChange}
       width="400px"
@@ -39,7 +39,7 @@ const UserEditForm: React.FC<UserEditProps> = (props) => {
         },
         ]}
         width="md"
-        name="roleName"
+        name="roleIds"
         mode="multiple"
         label="角色"
         request={selectRoleOptions}
@@ -66,7 +66,7 @@ const UserEditForm: React.FC<UserEditProps> = (props) => {
       { !props.currentRow && (
         <ProFormText.Password
           width="md"
-          name="password"
+          name="pwd"
           label="密码"
           readonly={true}
           initialValue={"123456"}

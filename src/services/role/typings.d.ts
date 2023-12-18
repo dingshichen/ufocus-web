@@ -13,4 +13,8 @@ declare namespace API {
     latestUpdateUser: UserOption;
     latestUpdateTime: string;
   }
+
+  class RoleSelectQuery extends SelectQuery {
+
+  }
 }

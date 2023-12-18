@@ -8,7 +8,7 @@ import {
 import {Button, Popconfirm, Tag} from 'antd';
 import {PlusOutlined} from "@ant-design/icons";
 import UserEditForm from "@/pages/user/components/UserEditForm";
-import {loadUserMock, pageUsers} from "@/services/user/api";
+import {insertUser, loadUser, pageUsers} from "@/services/user/api";
 import UserDescriptions from "@/pages/user/components/UserDescriptions";
 import {selectRoleOptions} from "@/services/role/api";
 
@@ -66,7 +66,8 @@ const UserManage: React.FC = () => {
         <a
           key="detail"
           onClick={async () => {
-            const user = await loadUserMock(record.id);
+            console.log(record)
+            const user = await loadUser(record.id);
             setCurrentRow(user);
             setDetailOpen(true);
           }}
@@ -76,7 +77,8 @@ const UserManage: React.FC = () => {
         <a
           key="update"
           onClick={async () => {
-            const user = await loadUserMock(record.id);
+            console.log(record)
+            const user = await loadUser(record.id);
             setCurrentRow(user);
             setEditOpen(true);
           }}
@@ -127,8 +129,9 @@ const UserManage: React.FC = () => {
         onOpenChange={setEditOpen}
         currentRow={currentRow}
         onFinish={async (value) => {
-          // TODO 提交
-          console.log(value)
+          await insertUser(value)
+          setEditOpen(false);
+          actionRef.current?.reload();
         }}
       />
     </PageContainer>
