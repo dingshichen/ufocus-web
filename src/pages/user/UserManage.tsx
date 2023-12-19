@@ -8,7 +8,7 @@ import {
 import {Button, Popconfirm, Tag} from 'antd';
 import {PlusOutlined} from "@ant-design/icons";
 import UserEditForm from "@/pages/user/components/UserEditForm";
-import {insertUser, loadUser, pageUsers, updateUser} from "@/services/user/api";
+import {insertUser, loadUser, lockUser, pageUsers, unlockUser, updateUser} from "@/services/user/api";
 import UserDescriptions from "@/pages/user/components/UserDescriptions";
 import {selectRoles} from "@/services/role/api";
 
@@ -32,6 +32,14 @@ async function handleSubmit(value: Record<string, any>, current?: API.UserDetail
       mobilePhoneNumber: value.mobilePhoneNumber,
       emailAddress: value.emailAddress,
     });
+  }
+}
+
+async function handleLocking(record: API.UserItem) {
+  if (record.isLockFlag) {
+    unlockUser(record.id)
+  } else {
+    lockUser(record.id)
   }
 }
 
@@ -97,7 +105,7 @@ const UserManage: React.FC = () => {
         >
           详情
         </a>,
-        <a
+        record.isLockFlag || <a
           key="update"
           onClick={async () => {
             const user = await loadUser(record.id);
@@ -110,11 +118,12 @@ const UserManage: React.FC = () => {
         <Popconfirm
           key="lock"
           title="注意"
-          description="停用后该用户将无法登陆！"
+          description={ record.isLockFlag ? "确认启用该用户？" : "停用后该用户将无法登陆！"}
           onConfirm={async () => {
-            console.log("确认删除 id = " + record.id)
+            await handleLocking(record);
+            actionRef.current?.reload();
           }} >
-            <a>停用</a>
+            <a>{ record.isLockFlag? "启用" : "停用" }</a>
         </Popconfirm>
         ,
       ],
