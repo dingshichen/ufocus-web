@@ -32,4 +32,11 @@ declare namespace API {
     roleIds: string[];
     pwd: string;
   }
+
+  class UserUpdate extends Base {
+    chnName: string;
+    mobilePhoneNumber?: string;
+    emailAddress: string;
+    roleIds: string[];
+  }
 }

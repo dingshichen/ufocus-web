@@ -81,13 +81,6 @@ export async function user(
   });
 }
 
-export async function updateUser(options?: { [id: number]: any }) {
-  return request<API.UserItem>('/api/user', {
-    method: 'PUT',
-    ...(options || {}),
-  });
-}
-
 export async function dbInstance(
   params: {
     // query

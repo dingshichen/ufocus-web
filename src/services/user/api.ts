@@ -21,6 +21,11 @@ export async function pageUsers(param: API.UserQuery & API.PageParams) {
   }
 }
 
+export async function loadUser(id: string) {
+  const result = await request<{ data: API.UserDetail }>(`/api/user/${id}`);
+  return result.data
+}
+
 export async function insertUser(param: API.UserInsert) {
   await request<{ data: number }>('/api/user/insert', {
     method: 'POST',
@@ -33,7 +38,14 @@ export async function insertUser(param: API.UserInsert) {
   });
 }
 
-export async function loadUser(id: string) {
-  const result = await request<{ data: API.UserDetail }>(`/api/user/${id}`);
-  return result.data
+export async function updateUser(param: API.UserUpdate) {
+  await request<{ data: number }>('/api/user/update', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    data: {
+    ...param
+    }
+  });
 }

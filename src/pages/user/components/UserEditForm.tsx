@@ -1,11 +1,11 @@
 import React from "react";
 import { ModalForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
-import {selectRoleOptions, toRoleOptions} from "@/services/role/api";
+import {selectRole} from "@/services/role/api";
 
 export type UserEditProps = {
   open: boolean;
   onOpenChange: (visible: boolean) => void;
-  onFinish: (formData: API.UserInsert) => Promise<boolean | void>;
+  onFinish: (formData: Record<string, any>) => Promise<boolean | void>;
   currentRow?: API.UserDetail;
 };
 
@@ -39,11 +39,11 @@ const UserEditForm: React.FC<UserEditProps> = (props) => {
         },
         ]}
         width="md"
-        name="roleIds"
+        name="roles"
         mode="multiple"
         label="角色"
-        request={selectRoleOptions}
-        initialValue={ props.currentRow ? toRoleOptions(props.currentRow!.roles) : undefined }
+        request={selectRole}
+        initialValue={ props.currentRow?.roles.map(e => ({ value: e.id, label: e.chnName }) ) }
       />
       <ProFormText
         width="md"

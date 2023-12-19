@@ -8,9 +8,32 @@ import {
 import {Button, Popconfirm, Tag} from 'antd';
 import {PlusOutlined} from "@ant-design/icons";
 import UserEditForm from "@/pages/user/components/UserEditForm";
-import {insertUser, loadUser, pageUsers} from "@/services/user/api";
+import {insertUser, loadUser, pageUsers, updateUser} from "@/services/user/api";
 import UserDescriptions from "@/pages/user/components/UserDescriptions";
-import {selectRoleOptions} from "@/services/role/api";
+import {selectRole} from "@/services/role/api";
+
+/**
+ * 处理提交
+ */
+async function handleSubmit(value: Record<string, any>, current?: API.UserDetail) {
+  if (current === undefined) {
+    await insertUser({
+      chnName: value.chnName,
+      roleIds: value.roles,
+      mobilePhoneNumber: value.mobilePhoneNumber,
+      emailAddress: value.emailAddress,
+      pwd: value.pwd,
+    });
+  } else {
+    await updateUser({
+      id: current.id,
+      chnName: value.chnName,
+      roleIds: value.roles.map((e: Record<string, any>) => e.value),
+      mobilePhoneNumber: value.mobilePhoneNumber,
+      emailAddress: value.emailAddress,
+    });
+  }
+}
 
 const UserManage: React.FC = () => {
   const [isDetailOpen, setDetailOpen] = useState<boolean>(false);
@@ -25,7 +48,8 @@ const UserManage: React.FC = () => {
     {
       title: "角色",
       valueType: "select",
-      request: selectRoleOptions,
+      request: selectRole,
+      fieldProps: { fieldNames: { value: 'id', label: 'chnName' } },
       ellipsis: true,
       render: (_, user) => {
         return(
@@ -66,7 +90,6 @@ const UserManage: React.FC = () => {
         <a
           key="detail"
           onClick={async () => {
-            console.log(record)
             const user = await loadUser(record.id);
             setCurrentRow(user);
             setDetailOpen(true);
@@ -77,7 +100,6 @@ const UserManage: React.FC = () => {
         <a
           key="update"
           onClick={async () => {
-            console.log(record)
             const user = await loadUser(record.id);
             setCurrentRow(user);
             setEditOpen(true);
@@ -129,7 +151,7 @@ const UserManage: React.FC = () => {
         onOpenChange={setEditOpen}
         currentRow={currentRow}
         onFinish={async (value) => {
-          await insertUser(value)
+          await handleSubmit(value, currentRow)
           setEditOpen(false);
           actionRef.current?.reload();
         }}
