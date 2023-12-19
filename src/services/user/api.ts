@@ -27,7 +27,7 @@ export async function loadUser(id: string) {
 }
 
 export async function insertUser(param: API.UserInsert) {
-  await request<{ data: number }>('/api/user/insert', {
+  request<{ data: number }>('/api/user/insert', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -39,7 +39,7 @@ export async function insertUser(param: API.UserInsert) {
 }
 
 export async function updateUser(param: API.UserUpdate) {
-  await request<{ data: number }>('/api/user/update', {
+  request<{ data: number }>('/api/user/update', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

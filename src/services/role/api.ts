@@ -1,47 +1,61 @@
 import {request} from "@@/exports";
 import {toEnum} from "@/services/common/api";
 
-export async function selectRole(query: API.RoleSelectQuery = {}) {
+export async function selectRoles(query: API.RoleSelectQuery = {}) {
   const result = await request<{ data: API.RoleOption[] }>('/api/role/select', {
     params: query
   })
   return toEnum(result.data)
 }
 
-export async function role(
-  params: {
-    // query
-    /** 当前的页码 */
-    current?: number;
-    /** 页面的容量 */
-    pageSize?: number;
-  },
-  options?: { [key: string]: any },
-) {
-  return request<API.UserItem>('/api/role', {
-    method: 'GET',
-    params: {
-      ...params,
+export async function pageRoles(param: API.RoleQuery & API.PageParams) {
+  const result = await request<{ data: API.PageInfo<API.RoleItem> }>('/api/role/page', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
     },
-    ...(options || {}),
-  });
+    data: {
+      page: param.current,
+      size: param.pageSize,
+      query: {
+        ...param
+      }
+    }
+  })
+  return {
+    data: result.data.records,
+    success: true,
+    total: result.data.total
+  }
 }
 
-export async function loadRoleMock(id: string) {
-  return new Promise<API.RoleDetail>((resolve) => {
-    resolve({
-      id: "1",
-      chnName: "超级管理员",
-      createUser: {
-        id: "1",
-        chnName: "超级管理员",
-      },
-      createTime: "2023-09-01 12:00:00",
-      latestUpdateUser: {
-        id: "1",
-        chnName: "超级管理员"
-      },
-      latestUpdateTime: "2023-09-01 12:00:00",
-    })
+export async function loadRole(id: string) {
+  const result = await request<{ data: API.RoleDetail }>(`/api/role/${id}`);
+  return result.data
+}
+
+export async function insertRole(param: API.RoleInsert) {
+  request('/api/role/insert', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    data: param
+  })
+}
+
+export async function updateRole(param: API.RoleUpdate) {
+  request(`/api/role/update`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    data: param
+  })
+}
+
+export async function deleteRole(id: string) {
+  request(`/api/role/${id}`, {
+    method: 'DELETE',
   })
 }

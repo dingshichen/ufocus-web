@@ -1,6 +1,7 @@
 import React, {useRef} from "react";
 import {ActionType, ModalForm, ProColumns, ProDescriptions, ProTable} from "@ant-design/pro-components";
-import {user} from "@/services/ant-design-pro/api";
+import {pageUsers} from "@/services/user/api";
+import {Tag} from "antd";
 
 export type RoleDescriptionsProps = {
   open: boolean,
@@ -36,19 +37,23 @@ const RoleDescriptions: React.FC<RoleDescriptionsProps> = (props) => {
         column={2}
         dataSource={ props.currentRow }
       >
-        <ProDescriptions.Item dataIndex="chnName" label="角色名称" span={2}/>
+        <ProDescriptions.Item dataIndex="chnName" label="角色名称" span={2}
+          render={(_, entity) => (<Tag>{entity.chnName}</Tag>)}
+        />
         <ProDescriptions.Item dataIndex={["createUser", "chnName"]} label="创建人"/>
         <ProDescriptions.Item dataIndex="createTime" label="创建时间" valueType="dateTime"/>
         <ProDescriptions.Item dataIndex={["latestUpdateUser", "chnName"]} label="最近修改人"/>
         <ProDescriptions.Item dataIndex="latestUpdateTime" label="最近更新时间" valueType="dateTime"/>
       </ProDescriptions>
-      <ProTable<API.UserItem, API.PageParams>
+      <ProTable<API.UserItem, API.UserQuery & API.PageParams>
         headerTitle="用户列表"
         rowKey="id"
         actionRef={actionRef}
+        defaultSize="small"
         search={false}
-        params={{ pageSize: 5}}
-        request={user}
+        pagination={{ defaultPageSize: 5 }}
+        params={{ roleId: props.currentRow?.id }}
+        request={pageUsers}
         columns={columns}
       />
     </ModalForm>

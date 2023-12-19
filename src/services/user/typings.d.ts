@@ -22,7 +22,7 @@ declare namespace API {
     chnName?: string;
     mobilePhoneNumber?: string;
     isLockFlag?: boolean;
-    roleId?: number;
+    roleId?: string;
   }
 
   class UserInsert {

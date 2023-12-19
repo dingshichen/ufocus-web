@@ -5,7 +5,7 @@ export type RoleEditProps = {
   open: boolean;
   onOpenChange: (visible: boolean) => void;
   currentRow?: API.RoleDetail;
-  onFinish: (values: API.RoleDetail) => Promise<boolean | void>;
+  onFinish: (values: Record<string, any>) => Promise<boolean | void>;
 }
 
 const RoleEditForm: React.FC<RoleEditProps> = (props) => {

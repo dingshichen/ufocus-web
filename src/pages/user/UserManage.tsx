@@ -10,14 +10,14 @@ import {PlusOutlined} from "@ant-design/icons";
 import UserEditForm from "@/pages/user/components/UserEditForm";
 import {insertUser, loadUser, pageUsers, updateUser} from "@/services/user/api";
 import UserDescriptions from "@/pages/user/components/UserDescriptions";
-import {selectRole} from "@/services/role/api";
+import {selectRoles} from "@/services/role/api";
 
 /**
  * 处理提交
  */
 async function handleSubmit(value: Record<string, any>, current?: API.UserDetail) {
   if (current === undefined) {
-    await insertUser({
+    insertUser({
       chnName: value.chnName,
       roleIds: value.roles,
       mobilePhoneNumber: value.mobilePhoneNumber,
@@ -25,7 +25,7 @@ async function handleSubmit(value: Record<string, any>, current?: API.UserDetail
       pwd: value.pwd,
     });
   } else {
-    await updateUser({
+    updateUser({
       id: current.id,
       chnName: value.chnName,
       roleIds: value.roles.map((e: Record<string, any>) => e.value),
@@ -48,7 +48,7 @@ const UserManage: React.FC = () => {
     {
       title: "角色",
       valueType: "select",
-      request: selectRole,
+      request: selectRoles,
       fieldProps: { fieldNames: { value: 'id', label: 'chnName' } },
       ellipsis: true,
       render: (_, user) => {

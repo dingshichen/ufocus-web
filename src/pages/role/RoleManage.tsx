@@ -1,10 +1,18 @@
 import React, {useRef, useState} from "react";
 import {ActionType, PageContainer, ProColumns, ProTable} from "@ant-design/pro-components";
-import {Button, Popconfirm} from "antd";
+import {Button, Popconfirm, Tag} from "antd";
 import {PlusOutlined} from "@ant-design/icons";
-import {loadRoleMock, role} from "@/services/role/api";
+import {deleteRole, insertRole, loadRole, pageRoles, updateRole} from "@/services/role/api";
 import RoleDescriptions from "@/pages/role/components/RoleDescriptions";
 import RoleEditForm from "@/pages/role/components/RoleEditForm";
+
+async function handleSubmit(value: Record<string, any>, current?: API.RoleDetail) {
+  if (current === undefined) {
+    insertRole({ chnName: value.chnName });
+  } else {
+    updateRole({ id: current.id, chnName: value.chnName })
+  }
+}
 
 const RoleManage: React.FC = () => {
   const [isDetailOpen, setDetailOpen] = useState<boolean>(false);
@@ -15,7 +23,7 @@ const RoleManage: React.FC = () => {
     {
       title: '角色名称',
       dataIndex: 'chnName',
-      valueType: 'text',
+      render: (_, record) => (<Tag>{record.chnName}</Tag>)
     },
     {
       title: "创建人",
@@ -35,28 +43,20 @@ const RoleManage: React.FC = () => {
       render: (_, record) => [
         <a
           key="detail"
-          onClick={() => {
-            const init = async () => {
-              return loadRoleMock(record.id)
-            }
-            init().then((role) => {
-              setCurrentRow(role);
-              setDetailOpen(true);
-            })
+          onClick={async () => {
+            const role = await loadRole(record.id);
+            setCurrentRow(role);
+            setDetailOpen(true);
           }}
         >
           详情
         </a>,
         <a
           key="update"
-          onClick={() => {
-            const init = async () => {
-              return loadRoleMock(record.id)
-            }
-            init().then((role) => {
-              setCurrentRow(role);
-              setEditOpen(true);
-            })
+          onClick={async () => {
+            const role = await loadRole(record.id);
+            setCurrentRow(role);
+            setEditOpen(true);
           }}
         >
           变更
@@ -66,7 +66,8 @@ const RoleManage: React.FC = () => {
           title="注意"
           description="删除该角色后将无法恢复！"
           onConfirm={async () => {
-            console.log("确认删除 id = " + record.id)
+            await deleteRole(record.id)
+            actionRef.current?.reload()
           }} >
           <a>删除</a>
         </Popconfirm>
@@ -75,7 +76,7 @@ const RoleManage: React.FC = () => {
   ]
   return (
     <PageContainer>
-      <ProTable<API.RoleItem, API.PageParams>
+      <ProTable<API.RoleItem, API.RoleQuery & API.PageParams>
         headerTitle="角色列表"
         rowKey="id"
         actionRef={actionRef}
@@ -91,7 +92,7 @@ const RoleManage: React.FC = () => {
             <PlusOutlined/> 新建
           </Button>
         ]}
-        request={role}
+        request={pageRoles}
         columns={columns} />
         <RoleDescriptions
           open={isDetailOpen}
@@ -102,7 +103,9 @@ const RoleManage: React.FC = () => {
           onOpenChange={setEditOpen}
           currentRow={currentRow}
           onFinish={async (value) => {
-            console.log("角色编辑完成：" + value)
+            await handleSubmit(value, currentRow)
+            setEditOpen(false)
+            actionRef.current?.reload()
           }}/>
     </PageContainer>
   )

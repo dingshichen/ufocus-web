@@ -17,4 +17,16 @@ declare namespace API {
   class RoleSelectQuery extends SelectQuery {
 
   }
+
+  class RoleQuery {
+    chnName?: string;
+  }
+
+  class RoleInsert {
+    chnName: string;
+  }
+
+  class RoleUpdate extends Base {
+    chnName: string;
+  }
 }
