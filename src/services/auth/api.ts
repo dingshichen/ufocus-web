@@ -13,9 +13,13 @@ export async function login(body: API.LoginParams) {
 
 /** 获取当前的用户 */
 export async function currentUser() {
-  return request<{
-    data: API.UserDetail;
-  }>('/api/user/current', {
+  return request<{ data: API.UserDetail }>('/api/user/current', {
     method: 'GET'
+  });
+}
+
+export async function logout() {
+  return request('/api/auth/logout', {
+    method: 'POST'
   });
 }

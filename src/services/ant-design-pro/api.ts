@@ -1,15 +1,6 @@
 // @ts-ignore
 /* eslint-disable */
 import { request } from '@umijs/max';
-
-/** 退出登录接口 POST /api/login/outLogin */
-export async function outLogin(options?: { [key: string]: any }) {
-  return request<Record<string, any>>('/api/login/outLogin', {
-    method: 'POST',
-    ...(options || {}),
-  });
-}
-
 /** 此处后端没有提供注释 GET /api/notices */
 export async function getNotices(options?: { [key: string]: any }) {
   return request<API.NoticeIconList>('/api/notices', {
@@ -98,8 +89,4 @@ export async function dbInstance(
     },
     ...(options || {}),
   });
-}
-
-export function loadDbInstance(id: number) {
-  return request<API.DbInstanceDetail>('/api/db/instance/' + id, {method: 'GET'});
 }
