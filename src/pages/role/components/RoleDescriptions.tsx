@@ -2,7 +2,7 @@ import React from "react";
 import {ModalForm, ProDescriptions} from "@ant-design/pro-components";
 import {Tabs, Tag} from "antd";
 import UserSmallTable from "@/pages/user/components/UserSmallTable";
-import PermissionTags from "@/pages/permission/components/PermissionTags";
+import PermissionSmallTable from "@/pages/permission/components/PermissionSmallTable";
 
 export type RoleDescriptionsProps = {
   open: boolean,
@@ -15,7 +15,7 @@ const getRoleDescriptionTabs = (roleId: string) => {
     {
       key: "permissions",
       label: "权限",
-      children: <PermissionTags roleId={roleId} />
+      children: <PermissionSmallTable roleId={roleId} />
     },
     {
       key: "users",
