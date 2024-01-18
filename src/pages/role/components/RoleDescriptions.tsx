@@ -1,7 +1,8 @@
-import React, {useRef} from "react";
-import {ActionType, ModalForm, ProColumns, ProDescriptions, ProTable} from "@ant-design/pro-components";
-import {pageUsers} from "@/services/user/api";
-import {Tag} from "antd";
+import React from "react";
+import {ModalForm, ProDescriptions} from "@ant-design/pro-components";
+import {Tabs, Tag} from "antd";
+import UserSmallTable from "@/pages/user/components/UserSmallTable";
+import PermissionTags from "@/pages/permission/components/PermissionTags";
 
 export type RoleDescriptionsProps = {
   open: boolean,
@@ -9,22 +10,22 @@ export type RoleDescriptionsProps = {
   currentRow: API.RoleDetail,
 }
 
-const RoleDescriptions: React.FC<RoleDescriptionsProps> = (props) => {
-  const actionRef = useRef<ActionType>();
-  const columns: ProColumns<API.UserItem>[] = [
+const getRoleDescriptionTabs = (roleId: string) => {
+  return [
     {
-      title: "用户名称",
-      dataIndex: "chnName",
+      key: "permissions",
+      label: "权限",
+      children: <PermissionTags roleId={roleId} />
     },
     {
-      title: "手机号码",
-      dataIndex: "mobilePhoneNumber",
-    },
-    {
-      title: "电子邮箱",
-      dataIndex: "emailAddress",
+      key: "users",
+      label: "用户",
+      children: <UserSmallTable roleId={roleId} />
     }
   ]
+}
+
+const RoleDescriptions: React.FC<RoleDescriptionsProps> = (props) => {
   return (
     <ModalForm
       title="角色详情"
@@ -45,17 +46,7 @@ const RoleDescriptions: React.FC<RoleDescriptionsProps> = (props) => {
         <ProDescriptions.Item dataIndex={["latestUpdateUser", "chnName"]} label="最近修改人"/>
         <ProDescriptions.Item dataIndex="latestUpdateTime" label="最近更新时间" valueType="dateTime"/>
       </ProDescriptions>
-      <ProTable<API.UserItem, API.UserQuery & API.PageParams>
-        headerTitle="用户列表"
-        rowKey="id"
-        actionRef={actionRef}
-        defaultSize="small"
-        search={false}
-        pagination={{ defaultPageSize: 5 }}
-        params={{ roleId: props.currentRow?.id }}
-        request={pageUsers}
-        columns={columns}
-      />
+      <Tabs defaultActiveKey="permissions" items={getRoleDescriptionTabs(props.currentRow?.id)} />
     </ModalForm>
   )
 }

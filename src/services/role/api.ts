@@ -59,3 +59,8 @@ export async function deleteRole(id: string) {
     method: 'DELETE',
   })
 }
+
+export async function rolePermission(roleId: string) {
+  const result = await request<{ data: API.PermissionOption[] }>(`/api/role/permission/${roleId}`);
+  return result.data
+}

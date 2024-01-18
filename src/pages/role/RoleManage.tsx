@@ -8,9 +8,9 @@ import RoleEditForm from "@/pages/role/components/RoleEditForm";
 
 async function handleSubmit(value: Record<string, any>, current?: API.RoleDetail) {
   if (current === undefined) {
-    insertRole({ chnName: value.chnName });
+    await insertRole({ chnName: value.chnName });
   } else {
-    updateRole({ id: current.id, chnName: value.chnName })
+    await updateRole({ id: current.id, chnName: value.chnName })
   }
 }
 

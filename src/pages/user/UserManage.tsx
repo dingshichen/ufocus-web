@@ -17,7 +17,7 @@ import {selectRoles} from "@/services/role/api";
  */
 async function handleSubmit(value: Record<string, any>, current?: API.UserDetail) {
   if (current === undefined) {
-    insertUser({
+    await insertUser({
       chnName: value.chnName,
       roleIds: value.roles,
       mobilePhoneNumber: value.mobilePhoneNumber,
@@ -25,7 +25,7 @@ async function handleSubmit(value: Record<string, any>, current?: API.UserDetail
       pwd: value.pwd,
     });
   } else {
-    updateUser({
+    await updateUser({
       id: current.id,
       chnName: value.chnName,
       roleIds: value.roles.map((e: Record<string, any>) => e.value),
@@ -37,9 +37,9 @@ async function handleSubmit(value: Record<string, any>, current?: API.UserDetail
 
 async function handleLocking(record: API.UserItem) {
   if (record.isLockFlag) {
-    unlockUser(record.id)
+    await unlockUser(record.id)
   } else {
-    lockUser(record.id)
+    await lockUser(record.id)
   }
 }
 
