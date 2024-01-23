@@ -1,13 +1,18 @@
 import React from "react";
-import {ModalForm, ProFormText} from "@ant-design/pro-components";
+import {ModalForm, ProFormSelect, ProFormText} from "@ant-design/pro-components";
+import {selectPermissions} from "@/services/permission/api";
 
 export type RoleEditProps = {
   open: boolean;
   onOpenChange: (visible: boolean) => void;
   currentRow?: API.RoleDetail;
+  currentRolePermissions?: API.PermissionOption[];
   onFinish: (values: Record<string, any>) => Promise<boolean | void>;
 }
 
+/**
+ * 角色编辑表单
+ */
 const RoleEditForm: React.FC<RoleEditProps> = (props) => {
   return (
     <ModalForm
@@ -28,6 +33,14 @@ const RoleEditForm: React.FC<RoleEditProps> = (props) => {
         name="chnName"
         label="角色名称"
         initialValue={ props.currentRow?.chnName }
+      />
+      <ProFormSelect
+        width="md"
+        name="permissionIds"
+        mode="multiple"
+        label="权限"
+        request={selectPermissions}
+        initialValue={ props.currentRolePermissions?.map((item) => ({ value: item.id, label: item.permissionName })) }
       />
     </ModalForm>
   )

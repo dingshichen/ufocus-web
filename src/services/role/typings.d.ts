@@ -24,9 +24,11 @@ declare namespace API {
 
   class RoleInsert {
     chnName: string;
+    permissionIds: string[];
   }
 
   class RoleUpdate extends Base {
     chnName: string;
+    permissionIds: string[];
   }
 }

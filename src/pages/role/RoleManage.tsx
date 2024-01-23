@@ -2,15 +2,15 @@ import React, {useRef, useState} from "react";
 import {ActionType, PageContainer, ProColumns, ProTable} from "@ant-design/pro-components";
 import {Button, Popconfirm, Tag} from "antd";
 import {PlusOutlined} from "@ant-design/icons";
-import {deleteRole, insertRole, loadRole, pageRoles, updateRole} from "@/services/role/api";
+import {deleteRole, insertRole, loadRole, pageRoles, rolePermission, updateRole} from "@/services/role/api";
 import RoleDescriptions from "@/pages/role/components/RoleDescriptions";
 import RoleEditForm from "@/pages/role/components/RoleEditForm";
 
 async function handleSubmit(value: Record<string, any>, current?: API.RoleDetail) {
   if (current === undefined) {
-    await insertRole({ chnName: value.chnName });
+    await insertRole({ chnName: value.chnName, permissionIds: value.permissionIds });
   } else {
-    await updateRole({ id: current.id, chnName: value.chnName })
+    await updateRole({ id: current.id, chnName: value.chnName, permissionIds: value.permissionIds })
   }
 }
 
@@ -18,6 +18,7 @@ const RoleManage: React.FC = () => {
   const [isDetailOpen, setDetailOpen] = useState<boolean>(false);
   const [isEditOpen, setEditOpen] = useState<boolean>(false);
   const [currentRow, setCurrentRow] = useState<API.RoleDetail>();
+  const [currentRowPermissions, setCurrentRoPermissions] = useState<API.PermissionOption[]>();
   const actionRef = useRef<ActionType>();
   const columns: ProColumns<API.RoleItem>[] = [
     {
@@ -55,7 +56,9 @@ const RoleManage: React.FC = () => {
           key="update"
           onClick={async () => {
             const role = await loadRole(record.id);
+            const permissions = await rolePermission(record.id);
             setCurrentRow(role);
+            setCurrentRoPermissions(permissions);
             setEditOpen(true);
           }}
         >
@@ -86,6 +89,7 @@ const RoleManage: React.FC = () => {
             key="primary"
             onClick={() => {
               setCurrentRow(undefined);
+              setCurrentRoPermissions(undefined);
               setEditOpen(true);
             }}
           >
@@ -102,6 +106,7 @@ const RoleManage: React.FC = () => {
           open={isEditOpen}
           onOpenChange={setEditOpen}
           currentRow={currentRow}
+          currentRolePermissions={currentRowPermissions}
           onFinish={async (value) => {
             await handleSubmit(value, currentRow)
             setEditOpen(false)
