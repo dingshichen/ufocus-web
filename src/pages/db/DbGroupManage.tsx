@@ -50,14 +50,10 @@ const DbGroupManage: React.FC = () => {
     render: (_, record) => [
       <a
         key="update"
-        onClick={() => {
-          const init = async () => {
-            return await loadDbGroupMock(record.id)
-          }
-          init().then((value) => {
-            setCurrentRow(value)
-            setModalOpen(true);
-          })
+        onClick={async () => {
+          const value = await loadDbGroupMock(record.id)
+          setCurrentRow(value)
+          setModalOpen(true);
         }}
       >
         变更
