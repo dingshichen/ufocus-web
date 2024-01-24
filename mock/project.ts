@@ -37,6 +37,7 @@ const load = (req: Request, res: Response) => {
         id: '1735560201238421505',
         chnName: '刘彬'
       },
+      projectDesc: '这是一个测试项目',
       createUser: {
         id: '1735560201238421505',
         chnName: '刘彬'

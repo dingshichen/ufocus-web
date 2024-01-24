@@ -8,6 +8,7 @@ declare namespace API {
   }
 
   class ProjectDetail extends ProjectItem {
+    projectDesc?: string;
     createUser: UserOption;
     createTime: string;
     latestUpdateUser: UserOption;

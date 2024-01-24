@@ -1,5 +1,5 @@
 import React from "react";
-import {ModalForm, ProFormSelect, ProFormText} from "@ant-design/pro-components";
+import {ModalForm, ProFormSelect, ProFormText, ProFormTextArea} from "@ant-design/pro-components";
 import {selectUser} from "@/services/user/api";
 
 export type ProjectEditProps = {
@@ -43,6 +43,12 @@ const ProjectEditForm: React.FC<ProjectEditProps> = (props) => {
         label="项目负责人"
         request={selectUser}
         initialValue={ props.currentRow?.responsibleUser?.id }
+      />
+      <ProFormTextArea
+        width="xl"
+        name="projectDesc"
+        label='描述'
+        initialValue={ props.currentRow?.projectDesc }
       />
     </ModalForm>
   )

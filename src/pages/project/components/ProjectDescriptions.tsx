@@ -25,11 +25,12 @@ const ProjectDescriptions: React.FC<ProjectDescriptionsProps> = (props) => {
         dataSource={ props.currentRow }
       >
         <ProDescriptions.Item dataIndex="projectName" label="项目名称" span={2} />
-        <ProDescriptions.Item dataIndex={['responsibleUser', 'chnName']} label="项目负责人"/>
+        <ProDescriptions.Item dataIndex={['responsibleUser', 'chnName']} label="项目负责人" span={2}/>
         <ProDescriptions.Item dataIndex={["createUser", "chnName"]} label="创建人"/>
         <ProDescriptions.Item dataIndex="createTime" label="创建时间" valueType="dateTime"/>
         <ProDescriptions.Item dataIndex={["latestUpdateUser", "chnName"]} label="最近修改人"/>
         <ProDescriptions.Item dataIndex="latestUpdateTime" label="最近更新时间" valueType="dateTime"/>
+        <ProDescriptions.Item dataIndex='projectDesc' label='描述' valueType='textarea' span={2} />
       </ProDescriptions>
     </ModalForm>
   )
