@@ -80,6 +80,11 @@ export default [
         name: 'project-manage',
         component: './project/ProjectManage',
       },
+      {
+        path: '/project/requirement/manage',
+        name: 'requirement-manage',
+        component: './requirement/RequirementManage',
+      },
     ]
   },
   {
