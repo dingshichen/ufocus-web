@@ -53,6 +53,8 @@ export default {
   'menu.user': '用户权限',
   'menu.user.user-manage': '用户管理',
   'menu.user.role-manage': '角色管理',
+  'menu.project': '项目过程',
+  'menu.project.project-manage': '项目管理',
   'menu.db': '数据工单',
   'menu.db.db-manage': '实例管理',
   'menu.db.db-group-manage': '实例分组',

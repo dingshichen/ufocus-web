@@ -5,6 +5,7 @@ import {Button, Popconfirm} from 'antd';
 import React, {useRef, useState} from 'react';
 import DbTicketEditForm from "@/pages/db/components/DbTicketEditForm";
 import DbTicketDescriptions from "@/pages/db/components/DbTicketDescriptions";
+import {selectUser} from "@/services/user/api";
 
 function getDbTicketColumn(option: ProColumns<API.DbTicketItem>): ProColumns<API.DbTicketItem>[] {
   return [
@@ -83,6 +84,7 @@ function getDbTicketColumn(option: ProColumns<API.DbTicketItem>): ProColumns<API
     {
       title: '创建人',
       dataIndex: ['createUser', 'chnName'],
+      request: selectUser,
     },
     {
       title: '创建时间',

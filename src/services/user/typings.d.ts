@@ -25,6 +25,10 @@ declare namespace API {
     roleId?: string;
   }
 
+  class UserSelectQuery extends SelectQuery{
+
+  }
+
   class UserInsert {
     chnName: string;
     mobilePhoneNumber?: string;

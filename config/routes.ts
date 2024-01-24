@@ -67,9 +67,25 @@ export default [
     ],
   },
   {
+    path: '/project',
+    name: 'project',
+    icon: 'project',
+    routes: [
+      {
+        path: 'project',
+        redirect: '/project/manage',
+      },
+      {
+        path: '/project/manage',
+        name: 'project-manage',
+        component: './project/ProjectManage',
+      },
+    ]
+  },
+  {
     path: '/db',
     name: 'db',
-    icon: 'user',
+    icon: 'database',
     routes: [
       {
         path: '/db',

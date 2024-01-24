@@ -1,4 +1,5 @@
 import {request} from "@@/exports";
+import {toEnum} from "@/services/common/api";
 
 export async function pageUsers(param: API.UserQuery & API.PageParams) {
   const result = await request<{ data: API.PageInfo<API.UserItem> }>('/api/user/page', {
@@ -19,6 +20,13 @@ export async function pageUsers(param: API.UserQuery & API.PageParams) {
     success: true,
     total: result.data.total
   }
+}
+
+export async function selectUser(query: API.UserSelectQuery) {
+  const result = await request<{ data: API.UserOption[] }>('/api/user/select', {
+    params: query
+  })
+  return toEnum(result.data)
 }
 
 export async function loadUser(id: string) {
