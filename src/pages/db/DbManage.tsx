@@ -60,14 +60,10 @@ const DbManage: React.FC = () => {
       render: (_, record) => [
         <a
           key="update"
-          onClick={() => {
-            const init = async () => {
-              return await loadDbInstanceMock(record.id)
-            }
-            init().then((value) => {
-              setCurrentRow(value)
-              setModalOpen(true);
-            })
+          onClick={async () => {
+            const value = await loadDbInstanceMock(record.id)
+            setCurrentRow(value)
+            setModalOpen(true);
           }}
         >
           变更

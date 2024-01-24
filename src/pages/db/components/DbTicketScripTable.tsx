@@ -56,17 +56,14 @@ const DbTicketScripTable: React.FC<DbTicketScriptListProps> = (props) => {
           render: (_, record) => [
             <a
               key="update"
-              onClick={() => {
-                const init = async () => {
-                  return await loadDbTicketMock(record.id);
-                };
-                init().then(() => {
-                  history.push({
-                    pathname: '/db/ticket/edit',
-                    search: qs.stringify({
-                      id: record.id,
-                    }),
-                  });
+              onClick={async () => {
+                const ticket = await loadDbTicketMock(record.id);
+                console.log(ticket)
+                history.push({
+                  pathname: '/db/ticket/edit',
+                  search: qs.stringify({
+                    id: record.id,
+                  }),
                 });
               }}
             >
@@ -74,28 +71,20 @@ const DbTicketScripTable: React.FC<DbTicketScriptListProps> = (props) => {
             </a>,
             <a
               key="delete"
-              onClick={() => {
-                const init = async () => {
-                  return await loadDbTicketMock(record.id);
-                };
-                init().then((value) => {
-                  // TODO 删除
-                  console.log("删除：value" + value.id)
-                });
+              onClick={async () => {
+                const value = await loadDbTicketMock(record.id);
+                // TODO 删除
+                console.log("删除：value" + value.id)
               }}
             >
               删除
             </a>,
             <a
               key="execute"
-              onClick={() => {
-                const init = async () => {
-                  return await loadDbTicketMock(record.id);
-                };
-                init().then((value) => {
-                  // TODO 执行或审核
-                  console.log("执行或审核：value" + value.id)
-                });
+              onClick={async () => {
+                const value = await loadDbTicketMock(record.id);
+                // TODO 执行
+                console.log("执行或审核：value" + value.id)
               }}
             >
               重试
