@@ -3,17 +3,17 @@ import {ModalForm, ProFormSelect, ProFormText} from "@ant-design/pro-components"
 import {selectUser} from "@/services/user/api";
 import {selectProject} from "@/services/project/api";
 
-export type RequirementEditProps = {
+export type TaskEditProps = {
   open: boolean;
   onOpenChange: (visible: boolean) => void;
   onFinish: (formData: Record<string, any>) => Promise<boolean | void>;
-  currentRow?: API.RequirementDetail;
+  currentRow?: API.TaskDetail;
 }
 
-const RequirementEditForm: React.FC<RequirementEditProps> = (props) => {
+const TaskEditForm: React.FC<TaskEditProps> = (props) => {
   return (
     <ModalForm
-      title={ props.currentRow ? "变更需求" : "新建需求" }
+      title={ props.currentRow ? "变更任务" : "新建任务" }
       open={props.open}
       onOpenChange={props.onOpenChange}
       width="400px"
@@ -24,13 +24,13 @@ const RequirementEditForm: React.FC<RequirementEditProps> = (props) => {
         rules={[
           {
             required: true,
-            message: "请输入需求标题",
+            message: "请输入任务标题",
           },
         ]}
         width="md"
-        name="requirementTitle"
-        label="需求标题"
-        initialValue={ props.currentRow?.requirementTitle }
+        name="taskTitle"
+        label="任务标题"
+        initialValue={ props.currentRow?.taskTitle }
       />
       <ProFormSelect
         rules={[
@@ -43,18 +43,18 @@ const RequirementEditForm: React.FC<RequirementEditProps> = (props) => {
         name="projectId"
         label="项目"
         request={selectProject}
-        initialValue={ props.currentRow?.responsibleUser?.id }
+        initialValue={ props.currentRow?.project?.id }
       />
       <ProFormSelect
         rules={[
           {
             required: true,
-            message: "请选择项目负责人",
+            message: "请选择任务负责人",
           },
         ]}
         width="md"
         name="responsibleUserId"
-        label="项目负责人"
+        label="任务负责人"
         request={selectUser}
         initialValue={ props.currentRow?.responsibleUser?.id }
       />
@@ -62,4 +62,4 @@ const RequirementEditForm: React.FC<RequirementEditProps> = (props) => {
   )
 }
 
-export default RequirementEditForm;
+export default TaskEditForm;

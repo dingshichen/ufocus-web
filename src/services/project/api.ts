@@ -1,4 +1,5 @@
 import {request} from "@@/exports";
+import {toEnum} from "@/services/common/api";
 
 
 export async function pageProject(param: API.ProjectQuery & API.PageParams) {
@@ -25,4 +26,11 @@ export async function pageProject(param: API.ProjectQuery & API.PageParams) {
 export async function loadProject(id: string) {
   const result = await request<{ data: API.ProjectDetail }>(`/api/project/${id}`);
   return result.data
+}
+
+export async function selectProject(query: API.ProjectSelectQuery) {
+  const result = await request<{ data: API.UserOption[] }>('/api/project/select', {
+    params: query
+  })
+  return toEnum(result.data, { label: 'projectName' })
 }

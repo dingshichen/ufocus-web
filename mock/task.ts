@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
-import {req} from "pino-std-serializers";
 
-const project = (req: Request, res: Response) => {
+const task = (req: Request, res: Response) => {
   res.json({
     data: {
       total: 2,
@@ -10,19 +9,37 @@ const project = (req: Request, res: Response) => {
       records: [
         {
           id: 1,
-          projectName: "核型项目A",
+          requirementTitle: "开发一个很棒的功能1",
+          project: {
+            id: 1,
+            projectName: "核型项目A",
+          },
           responsibleUser: {
             id: '1735560201238421505',
             chnName: '刘彬'
-          }
+          },
+          createUser: {
+            id: '1735560201238421505',
+            chnName: '刘彬'
+          },
+          createTime: '2023-07-01 12:12:12',
         },
         {
           id: 2,
-          projectName: "常规项目B",
+          project: {
+            id: 2,
+            projectName: "常规项目B",
+          },
+          requirementTitle: "开发一个很棒的功能2",
           responsibleUser: {
             id: '1735560201238421505',
             chnName: '刘彬'
-          }
+          },
+          createUser: {
+            id: '1735560201238421505',
+            chnName: '刘彬'
+          },
+          createTime: '2023-07-01 12:12:12',
         }
       ]
     }
@@ -33,12 +50,15 @@ const load = (req: Request, res: Response) => {
   res.json({
     data: {
       id: 1,
-      projectName: "核型项目A",
+      requirementTitle: "开发一个很棒的功能1",
+      project: {
+        id: 1,
+        projectName: "核型项目A",
+      },
       responsibleUser: {
         id: '1735560201238421505',
         chnName: '刘彬'
       },
-      projectDesc: '这是一个测试项目',
       createUser: {
         id: '1735560201238421505',
         chnName: '刘彬'
@@ -53,24 +73,8 @@ const load = (req: Request, res: Response) => {
   })
 }
 
-const select = (req: Request, res: Response) => {
-  res.json({
-    data: [
-      {
-        id: 1,
-        projectName: "核型项目A",
-      },
-      {
-        id: 2,
-        projectName: "常规项目B",
-      }
-    ]
-  })
-}
-
 export default {
-  'POST /api/project/page': project,
-  'GET /api/project/select': select,
-  'GET /api/project/1': load,
-  'GET /api/project/2': load,
+  'POST /api/task/page': task,
+  'GET /api/task/1': load,
+  'GET /api/task/2': load,
 }

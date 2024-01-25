@@ -85,6 +85,11 @@ export default [
         name: 'requirement-manage',
         component: './requirement/RequirementManage',
       },
+      {
+        path: '/project/task/manage',
+        name: 'task-manage',
+        component: './task/TaskManage',
+      },
     ]
   },
   {

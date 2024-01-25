@@ -5,5 +5,5 @@ export async function selectPermissions(query: API.PermissionSelectQuery = {}) {
   const result = await request<{ data: API.PermissionOption[] }>('/api/permission/select', {
     params: query
   })
-  return toEnum(result.data, undefined, 'permissionName')
+  return toEnum(result.data, { label: 'permissionName' })
 }
