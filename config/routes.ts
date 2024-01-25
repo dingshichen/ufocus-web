@@ -73,7 +73,12 @@ export default [
     routes: [
       {
         path: 'project',
-        redirect: '/project/manage',
+        redirect: '/project/process',
+      },
+      {
+        path: '/project/process',
+        name: 'process-dashboard',
+        component: './process/ProcessDashboard',
       },
       {
         path: '/project/manage',
