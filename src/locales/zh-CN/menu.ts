@@ -56,7 +56,7 @@ export default {
   'menu.project': '项目过程',
   'menu.project.project-manage': '项目管理',
   'menu.project.requirement-manage': '需求清单',
-  'menu.project.task-manage': '任务工单',
+  'menu.project.task-manage': '任务计划',
   'menu.db': '数据工单',
   'menu.db.db-manage': '实例管理',
   'menu.db.db-group-manage': '实例分组',
