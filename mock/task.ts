@@ -9,7 +9,7 @@ const task = (req: Request, res: Response) => {
       records: [
         {
           id: 1,
-          requirementTitle: "开发一个很棒的功能1",
+          taskTitle: "开发一个很棒的功能1",
           project: {
             id: 1,
             projectName: "核型项目A",
@@ -30,7 +30,7 @@ const task = (req: Request, res: Response) => {
             id: 2,
             projectName: "常规项目B",
           },
-          requirementTitle: "开发一个很棒的功能2",
+          taskTitle: "开发一个很棒的功能2",
           responsibleUser: {
             id: '1735560201238421505',
             chnName: '刘彬'
@@ -50,10 +50,14 @@ const load = (req: Request, res: Response) => {
   res.json({
     data: {
       id: 1,
-      requirementTitle: "开发一个很棒的功能1",
+      taskTitle: "开发一个很棒的功能1",
       project: {
         id: 1,
         projectName: "核型项目A",
+      },
+      requirement: {
+        id: 1,
+        requirementTitle: "需求A",
       },
       responsibleUser: {
         id: '1735560201238421505',

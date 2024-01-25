@@ -27,11 +27,6 @@ const TaskManage: React.FC = () => {
       request: selectProject,
     },
     {
-      title: "关联需求",
-      dataIndex: ['requirement', 'requirementTitle'],
-      search: false,
-    },
-    {
       title: "任务负责人",
       dataIndex: ['responsibleUser', 'chnName'],
       request: selectUser,
