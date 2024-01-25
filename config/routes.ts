@@ -90,6 +90,11 @@ export default [
         name: 'task-manage',
         component: './task/TaskManage',
       },
+      {
+        path: '/project/defect/manage',
+        name: 'defect-manage',
+        component: './defect/DefectManage',
+      },
     ]
   },
   {

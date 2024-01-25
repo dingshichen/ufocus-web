@@ -3,17 +3,17 @@ import {ModalForm, ProFormSelect, ProFormText} from "@ant-design/pro-components"
 import {selectUser} from "@/services/user/api";
 import {selectProject} from "@/services/project/api";
 
-export type RequirementEditProps = {
+export type DefectEditProps = {
   open: boolean;
   onOpenChange: (visible: boolean) => void;
   onFinish: (formData: Record<string, any>) => Promise<boolean | void>;
-  currentRow?: API.RequirementDetail;
+  currentRow?: API.DefectDetail;
 }
 
-const RequirementEditForm: React.FC<RequirementEditProps> = (props) => {
+const DefectEditForm: React.FC<DefectEditProps> = (props) => {
   return (
     <ModalForm
-      title={ props.currentRow ? "变更需求" : "新建需求" }
+      title={ props.currentRow ? "变更缺陷" : "新建缺陷" }
       open={props.open}
       onOpenChange={props.onOpenChange}
       width="400px"
@@ -24,21 +24,15 @@ const RequirementEditForm: React.FC<RequirementEditProps> = (props) => {
         rules={[
           {
             required: true,
-            message: "请输入需求标题",
+            message: "请输入缺陷标题",
           },
         ]}
         width="md"
-        name="requirementTitle"
-        label="需求标题"
-        initialValue={ props.currentRow?.requirementTitle }
+        name="defectTitle"
+        label="缺陷标题"
+        initialValue={ props.currentRow?.defectTitle }
       />
       <ProFormSelect
-        rules={[
-          {
-            required: true,
-            message: "请选择项目",
-          },
-        ]}
         width="md"
         name="projectId"
         label="项目"
@@ -49,12 +43,12 @@ const RequirementEditForm: React.FC<RequirementEditProps> = (props) => {
         rules={[
           {
             required: true,
-            message: "请选择需求负责人",
+            message: "请选择缺陷负责人",
           },
         ]}
         width="md"
         name="responsibleUserId"
-        label="需求负责人"
+        label="缺陷负责人"
         request={selectUser}
         initialValue={ props.currentRow?.responsibleUser?.id }
       />
@@ -62,4 +56,4 @@ const RequirementEditForm: React.FC<RequirementEditProps> = (props) => {
   )
 }
 
-export default RequirementEditForm;
+export default DefectEditForm;

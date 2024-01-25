@@ -6,20 +6,23 @@ import {PlusOutlined} from "@ant-design/icons";
 import {loadRequirement, pageRequirement} from "@/services/requirement/api";
 import RequirementDescriptions from "@/pages/requirement/components/RequirementDescriptions";
 import RequirementEditForm from "@/pages/requirement/components/RequirementEditForm";
+import {loadDefect, pageDefect} from "@/services/defect/api";
+import DefectDescriptions from "@/pages/defect/components/DefectDescriptions";
+import DefectEditForm from "@/pages/defect/components/DefectEditForm";
 import {selectProject} from "@/services/project/api";
 
 /**
- * 需求管理
+ * 缺陷管理
  */
-const RequirementManage: React.FC = () => {
+const DefectManage: React.FC = () => {
   const [isDetailOpen, setDetailOpen] = useState<boolean>(false);
   const [isEditOpen, setEditOpen] = useState<boolean>(false);
-  const [currentRow, setCurrentRow] = useState<API.RequirementDetail>();
+  const [currentRow, setCurrentRow] = useState<API.DefectDetail>();
   const actionRef = useRef<ActionType>();
-  const columns: ProColumns<API.RequirementItem>[] = [
+  const columns: ProColumns<API.DefectItem>[] = [
     {
-      title: "需求标题",
-      dataIndex: "requirementTitle",
+      title: "缺陷标题",
+      dataIndex: "defectTitle",
     },
     {
       title: "所属项目",
@@ -27,7 +30,7 @@ const RequirementManage: React.FC = () => {
       request: selectProject,
     },
     {
-      title: "需求负责人",
+      title: "缺陷负责人",
       dataIndex: ['responsibleUser', 'chnName'],
       request: selectUser,
     },
@@ -44,7 +47,7 @@ const RequirementManage: React.FC = () => {
         <a
           key="detail"
           onClick={async () => {
-            const detail = await loadRequirement(record.id);
+            const detail = await loadDefect(record.id);
             setCurrentRow(detail);
             setDetailOpen(true);
           }}
@@ -54,7 +57,7 @@ const RequirementManage: React.FC = () => {
         <a
           key='update'
           onClick={async () => {
-            const detail = await loadRequirement(record.id);
+            const detail = await loadDefect(record.id);
             setCurrentRow(detail);
             setEditOpen(true);
           }}
@@ -66,8 +69,8 @@ const RequirementManage: React.FC = () => {
   ]
   return (
     <PageContainer>
-      <ProTable<API.RequirementItem, API.RequirementQuery & API.PageParams>
-        headerTitle="需求列表"
+      <ProTable<API.DefectItem, API.DefectQuery & API.PageParams>
+        headerTitle="缺陷列表"
         rowKey="id"
         actionRef={actionRef}
         toolBarRender={() => [
@@ -82,23 +85,23 @@ const RequirementManage: React.FC = () => {
             <PlusOutlined/> 新建
           </Button>
         ]}
-        request={pageRequirement}
+        request={pageDefect}
         columns={columns}/>
-      <RequirementDescriptions
+      <DefectDescriptions
         open={isDetailOpen}
         onOpenChange={setDetailOpen}
         currentRow={currentRow!}
       />
-      <RequirementEditForm
+      <DefectEditForm
         open={isEditOpen}
         onOpenChange={setEditOpen}
         currentRow={currentRow}
         onFinish={async (value) => {
-          console.log('新增需求', value)
+          console.log('新增缺陷', value)
         }}
       />
     </PageContainer>
   )
 }
 
-export default RequirementManage;
+export default DefectManage;
