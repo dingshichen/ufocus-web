@@ -50,9 +50,6 @@ export default {
   'menu.editor.mind': '脑图编辑器',
   'menu.editor.koni': '拓扑编辑器',
 
-  'menu.user': '用户权限',
-  'menu.user.user-manage': '用户中心',
-  'menu.user.role-manage': '角色权限',
   'menu.project': '项目过程',
   'menu.project.process-dashboard': '过程看板',
   'menu.project.project-manage': '项目管理',
@@ -65,4 +62,7 @@ export default {
   'menu.db.db-ticket-manage': 'SQL工单',
   'menu.db.db-ticket-edit': 'SQL工单',
   'menu.db.db-ticket-detail': 'SQL工单',
+  'menu.setting': '系统设置',
+  'menu.setting.user-manage': '用户中心',
+  'menu.setting.role-manage': '角色权限',
 };

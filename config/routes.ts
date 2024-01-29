@@ -46,25 +46,10 @@ export default [
     ],
   },
   {
-    path: '/user',
-    name: 'user',
-    icon: 'user',
-    routes: [
-      {
-        path: '/user',
-        redirect: '/user/manage',
-      },
-      {
-        path: '/user/manage',
-        name: 'user-manage',
-        component: './user/UserManage',
-      },
-      {
-        path: '/user/role',
-        name: 'role-manage',
-        component: './role/RoleManage',
-      },
-    ],
+    name: 'list.table-list',
+    icon: 'table',
+    path: '/list',
+    component: './TableList',
   },
   {
     path: '/project',
@@ -129,10 +114,25 @@ export default [
     ],
   },
   {
-    name: 'list.table-list',
-    icon: 'table',
-    path: '/list',
-    component: './TableList',
+    path: '/setting',
+    name: 'setting',
+    icon: 'setting',
+    routes: [
+      {
+        path: '/setting',
+        redirect: '/setting/user',
+      },
+      {
+        path: '/setting/user',
+        name: 'user-manage',
+        component: './user/UserManage',
+      },
+      {
+        path: '/setting/role',
+        name: 'role-manage',
+        component: './role/RoleManage',
+      },
+    ],
   },
   {
     path: '/',
