@@ -66,6 +66,11 @@ export default [
         component: './process/ProcessDashboard',
       },
       {
+        path: '/project/board',
+        name: 'process-board',
+        component: './process/ProcessBoard',
+      },
+      {
         path: '/project/manage',
         name: 'project-manage',
         component: './project/ProjectManage',
