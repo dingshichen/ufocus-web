@@ -1,7 +1,9 @@
-import React from "react";
-import {ModalForm, ProFormSelect, ProFormText} from "@ant-design/pro-components";
+import React, {useState} from "react";
+import {ModalForm, ProForm, ProFormSelect, ProFormText} from "@ant-design/pro-components";
 import {selectUser} from "@/services/user/api";
 import {selectProject} from "@/services/project/api";
+import ReactQuill from "react-quill";
+import 'react-quill/dist/quill.snow.css';
 
 export type RequirementEditProps = {
   open: boolean;
@@ -11,12 +13,13 @@ export type RequirementEditProps = {
 }
 
 const RequirementEditForm: React.FC<RequirementEditProps> = (props) => {
+  const [value, setValue] = useState('');
   return (
     <ModalForm
       title={ props.currentRow ? "变更需求" : "新建需求" }
       open={props.open}
       onOpenChange={props.onOpenChange}
-      width="400px"
+      width="800px"
       modalProps={{ destroyOnClose: true, maskClosable: false }}
       onFinish={props.onFinish}
     >
@@ -58,6 +61,13 @@ const RequirementEditForm: React.FC<RequirementEditProps> = (props) => {
         request={selectUser}
         initialValue={ props.currentRow?.responsibleUser?.id }
       />
+      <ProForm.Item
+        name="context"
+        label="内容"
+        initialValue={value}
+      >
+        <ReactQuill theme='snow' value={value} onChange={setValue} />
+      </ProForm.Item>
     </ModalForm>
   )
 }
