@@ -51,7 +51,7 @@ export default {
   'menu.editor.koni': '拓扑编辑器',
 
   'menu.project': '项目过程',
-  'menu.project.process-dashboard': '过程看板',
+  'menu.project.process-board': '过程看板',
   'menu.project.project-manage': '项目管理',
   'menu.project.requirement-manage': '需求清单',
   'menu.project.task-manage': '任务计划',

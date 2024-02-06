@@ -1,9 +1,11 @@
 import React from "react";
 import {useDraggable} from "@dnd-kit/core";
+import {Card} from "antd";
 
 export type ProcessCardProps = {
   id: string;
   title: string;
+  user: string;
 }
 
 /**
@@ -13,14 +15,19 @@ const ProcessCard: React.FC<ProcessCardProps> = (props) => {
   const {attributes, listeners, setNodeRef, transform} = useDraggable({
     id: props.id,
   });
-
-  const style = transform ? {
-    transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
-  } : undefined;
+  const style = transform ? { transform: `translate3d(${transform.x}px, ${transform.y}px, 0)` } : undefined;
   return (
-    <div ref={setNodeRef} {... listeners} {...attributes}  style={{ background: 'red', borderStyle: 'solid', borderWidth: '2px', borderColor: 'yellow' , width: '200px', height: '80px', ...style }}>
-      {/*<span>{props.title}</span>*/}
-    </div>
+    <Card
+      id={props.id}
+      ref={setNodeRef}
+      title={props.title}
+      {...listeners}
+      {...attributes}
+      style={style}
+      hoverable={true}  // 鼠标移过时可浮起
+    >
+      {props.user}
+    </Card>
   )
 }
 
