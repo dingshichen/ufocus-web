@@ -25,23 +25,23 @@ const UserDescriptions: React.FC<UserDescriptionsProps> = (props) => {
         title="用户详情"
         dataSource={ props.currentRow }
       >
-        <ProDescriptions.Item dataIndex="chnName" label="用户名" span={2} />
+        <ProDescriptions.Item dataIndex="userName" label="用户名" span={2} />
         <ProDescriptions.Item label="角色"
           render={(_, user) => {
             return (
               <div>
                 {user.roles.map((role: API.RoleOption) => {
                   return (
-                    <Tag key={role.id}>{role.chnName}</Tag>
+                    <Tag key={role.id}>{role.roleName}</Tag>
                   )
                 })}
               </div>
             )
           }}
         />
-        <ProDescriptions.Item dataIndex="mobilePhoneNumber" label="手机号码"/>
-        <ProDescriptions.Item dataIndex="emailAddress" label="电子邮箱"/>
-        <ProDescriptions.Item dataIndex="isLockFlag" label="停用状态"
+        <ProDescriptions.Item dataIndex="phoneNo" label="手机号码"/>
+        <ProDescriptions.Item dataIndex="email" label="电子邮箱"/>
+        <ProDescriptions.Item dataIndex="lockFlag" label="停用状态"
           valueEnum={
             {
               false: {
@@ -54,10 +54,10 @@ const UserDescriptions: React.FC<UserDescriptionsProps> = (props) => {
               }
             }
         }/>
-        <ProDescriptions.Item dataIndex={["createUser", "chnName"]} label="创建人"/>
+        <ProDescriptions.Item dataIndex={["createUser", "userName"]} label="创建人"/>
         <ProDescriptions.Item dataIndex="createTime" label="创建时间" valueType="dateTime"/>
-        <ProDescriptions.Item dataIndex={["latestUpdateUser", "chnName"]} label="最近修改人"/>
-        <ProDescriptions.Item dataIndex="latestUpdateTime" label="最近更新时间" valueType="dateTime"/>
+        <ProDescriptions.Item dataIndex={["updateUser", "userName"]} label="最近更新人"/>
+        <ProDescriptions.Item dataIndex="updateTime" label="更新时间" valueType="dateTime"/>
       </ProDescriptions>
     </ModalForm>
   )

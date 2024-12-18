@@ -29,8 +29,8 @@ const DefectDescriptions: React.FC<DefectDescriptionsProps> = (props) => {
         <ProDescriptions.Item dataIndex={['responsibleUser', 'chnName']} label="缺陷负责人" />
         <ProDescriptions.Item dataIndex={["createUser", "chnName"]} label="创建人"/>
         <ProDescriptions.Item dataIndex="createTime" label="创建时间" valueType="dateTime"/>
-        <ProDescriptions.Item dataIndex={["latestUpdateUser", "chnName"]} label="最近修改人"/>
-        <ProDescriptions.Item dataIndex="latestUpdateTime" label="最近更新时间" valueType="dateTime"/>
+        <ProDescriptions.Item dataIndex={["updateUser", "chnName"]} label="最近更新人"/>
+        <ProDescriptions.Item dataIndex="updateTime" label="更新时间" valueType="dateTime"/>
       </ProDescriptions>
     </ModalForm>
   )

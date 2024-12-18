@@ -12,8 +12,8 @@ declare namespace API {
   }
 
   class TaskDetail extends TaskItem {
-    latestUpdateUser: UserOption;
-    latestUpdateTime: string;
+    updateUser: UserOption;
+    updateTime: string;
   }
 
   class TaskQuery {

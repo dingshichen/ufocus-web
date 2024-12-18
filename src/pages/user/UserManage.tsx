@@ -18,25 +18,25 @@ import {selectRoles} from "@/services/role/api";
 async function handleSubmit(value: Record<string, any>, current?: API.UserDetail) {
   if (current === undefined) {
     await insertUser({
-      chnName: value.chnName,
+      userName: value.userName,
       roleIds: value.roles,
-      mobilePhoneNumber: value.mobilePhoneNumber,
-      emailAddress: value.emailAddress,
+      phoneNo: value.phoneNo,
+      email: value.email,
       pwd: value.pwd,
     });
   } else {
     await updateUser({
       id: current.id,
-      chnName: value.chnName,
+      userName: value.userName,
       roleIds: value.roles.map((e: Record<string, any>) => e.value),
-      mobilePhoneNumber: value.mobilePhoneNumber,
-      emailAddress: value.emailAddress,
+      phoneNo: value.phoneNo,
+      email: value.email,
     });
   }
 }
 
 async function handleLocking(record: API.UserItem) {
-  if (record.isLockFlag) {
+  if (record.lockFlag) {
     await unlockUser(record.id)
   } else {
     await lockUser(record.id)
@@ -51,34 +51,34 @@ const UserManage: React.FC = () => {
   const columns: ProColumns<API.UserItem>[] = [
     {
       title: "用户名称",
-      dataIndex: "chnName",
+      dataIndex: "userName",
     },
     {
       title: "角色",
       valueType: "select",
       request: selectRoles,
-      fieldProps: { fieldNames: { value: 'id', label: 'chnName' } },
+      fieldProps: { fieldNames: { value: 'id', label: 'userName' } },
       ellipsis: true,
       render: (_, user) => {
         return(
           <div>
-            { user.roles.map((role) => <Tag key={role.id}>{role.chnName}</Tag>) }
+            { user.roles.map((role) => <Tag key={role.id}>{role.roleName}</Tag>) }
           </div>
         )
       }
     },
     {
       title: "手机号码",
-      dataIndex: "mobilePhoneNumber",
+      dataIndex: "phoneNo",
     },
     {
       title: "电子邮箱",
-      dataIndex: "emailAddress",
+      dataIndex: "email",
       search: false
     },
     {
       title: "停用状态",
-      dataIndex: "isLockFlag",
+      dataIndex: "lockFlag",
       valueEnum: {
         false: {
           text: "可用",
@@ -105,7 +105,7 @@ const UserManage: React.FC = () => {
         >
           详情
         </a>,
-        record.isLockFlag || <a
+        record.lockFlag || <a
           key="update"
           onClick={async () => {
             const user = await loadUser(record.id);
@@ -118,12 +118,12 @@ const UserManage: React.FC = () => {
         <Popconfirm
           key="lock"
           title="注意"
-          description={ record.isLockFlag ? "确认启用该用户？" : "停用后该用户将无法登陆！"}
+          description={ record.lockFlag ? "确认启用该用户？" : "停用后该用户将无法登陆！"}
           onConfirm={async () => {
             await handleLocking(record);
             actionRef.current?.reload();
           }} >
-            <a>{ record.isLockFlag? "启用" : "停用" }</a>
+            <a>{ record.lockFlag? "启用" : "停用" }</a>
         </Popconfirm>
         ,
       ],

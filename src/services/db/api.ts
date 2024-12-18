@@ -48,14 +48,14 @@ export async function loadDbInstanceMock(id: string) {
         password: 'dagp',
         createUser: {
           id: "1",
-          chnName: '超级管理员',
+          userName: '超级管理员',
         },
         createTime: '2023-09-01 12:00:00',
-        latestUpdateUser: {
+        updateUser: {
           id: "1",
-          chnName: '超级管理员',
+          userName: '超级管理员',
         },
-        latestUpdateTime: '2023-09-01 12:00:00',
+        updateTime: '2023-09-01 12:00:00',
       });
     } else if (id === "2") {
       resolve({
@@ -67,14 +67,14 @@ export async function loadDbInstanceMock(id: string) {
         password: 'dagp',
         createUser: {
           id: "2",
-          chnName: '小明',
+          userName: '小明',
         },
         createTime: '2023-09-01 12:00:00',
-        latestUpdateUser: {
+        updateUser: {
           id: "1",
-          chnName: '超级管理员',
+          userName: '超级管理员',
         },
-        latestUpdateTime: '2023-09-01 12:00:00',
+        updateTime: '2023-09-01 12:00:00',
       });
     } else {
       resolve({
@@ -86,14 +86,14 @@ export async function loadDbInstanceMock(id: string) {
         password: 'dagp',
         createUser: {
           id: "2",
-          chnName: '小明',
+          userName: '小明',
         },
         createTime: '2023-09-01 12:00:00',
-        latestUpdateUser: {
+        updateUser: {
           id: "1",
-          chnName: '超级管理员',
+          userName: '超级管理员',
         },
-        latestUpdateTime: '2023-09-01 12:00:00',
+        updateTime: '2023-09-01 12:00:00',
       });
     }
   });
@@ -115,14 +115,14 @@ export async function loadDbGroupMock(id: string) {
         ],
         createUser: {
           id: "1",
-          chnName: '超级管理员',
+          userName: '超级管理员',
         },
         createTime: '2023-09-01 12:00:00',
-        latestUpdateUser: {
+        updateUser: {
           id: "1",
-          chnName: '超级管理员',
+          userName: '超级管理员',
         },
-        latestUpdateTime: '2023-09-01 12:00:00',
+        updateTime: '2023-09-01 12:00:00',
       });
     } else {
       resolve({
@@ -143,14 +143,14 @@ export async function loadDbGroupMock(id: string) {
         ],
         createUser: {
           id: "1",
-          chnName: '超级管理员',
+          userName: '超级管理员',
         },
         createTime: '2023-09-01 12:00:00',
-        latestUpdateUser: {
+        updateUser: {
           id: "1",
-          chnName: '超级管理员',
+          userName: '超级管理员',
         },
-        latestUpdateTime: '2023-09-01 12:00:00',
+        updateTime: '2023-09-01 12:00:00',
       });
     }
   });
@@ -224,15 +224,15 @@ export async function loadDbTicketMock(id: string) {
         performState: "执行成功",
         createUser: {
           id: "1",
-          chnName: "超级管理员"
+          userName: "超级管理员"
         },
         createTime: "2023-09-01 12:00:00",
         textContent: "alter table",
-        latestUpdateUser: {
+        updateUser: {
           id: "1",
-          chnName: "超级管理员"
+          userName: "超级管理员"
         },
-        latestUpdateTime: "2023-09-01 12:00:00",
+        updateTime: "2023-09-01 12:00:00",
       })
     } else {
       resolve({
@@ -252,15 +252,15 @@ export async function loadDbTicketMock(id: string) {
         performState: "待执行",
         createUser: {
           id: "1",
-          chnName: "超级管理员"
+          userName: "超级管理员"
         },
         createTime: "2023-09-01 12:00:00",
         textContent: "update sql",
-        latestUpdateUser: {
+        updateUser: {
           id: "1",
-          chnName: "超级管理员"
+          userName: "超级管理员"
         },
-        latestUpdateTime: "2023-09-01 12:00:00",
+        updateTime: "2023-09-01 12:00:00",
       })
     }
   })
@@ -286,15 +286,15 @@ export async function loadDbTicketWithScript(id: string) {
         performState: "执行成功",
         createUser: {
           id: "1",
-          chnName: "超级管理员"
+          userName: "超级管理员"
         },
         createTime: "2023-09-01 12:00:00",
         textContent: "alter table",
-        latestUpdateUser: {
+        updateUser: {
           id: "1",
-          chnName: "超级管理员"
+          userName: "超级管理员"
         },
-        latestUpdateTime: "2023-09-01 12:00:00",
+        updateTime: "2023-09-01 12:00:00",
         instanceScripts: [
           {
             dbInstance: {
@@ -361,15 +361,15 @@ export async function loadDbTicketWithScriptV2(id: string) {
       performState: "执行成功",
       createUser: {
         id: "1",
-        chnName: "超级管理员"
+        userName: "超级管理员"
       },
       createTime: "2023-09-01 12:00:00",
       textContent: "alter table",
-      latestUpdateUser: {
+      updateUser: {
         id: "1",
-        chnName: "超级管理员"
+        userName: "超级管理员"
       },
-      latestUpdateTime: "2023-09-01 12:00:00",
+      updateTime: "2023-09-01 12:00:00",
       instanceScripts: [
         {
           dbInstance: {

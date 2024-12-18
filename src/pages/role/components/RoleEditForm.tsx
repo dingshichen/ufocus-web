@@ -30,9 +30,9 @@ const RoleEditForm: React.FC<RoleEditProps> = (props) => {
           }
         ]}
         width="md"
-        name="chnName"
+        name="roleName"
         label="角色名称"
-        initialValue={ props.currentRow?.chnName }
+        initialValue={ props.currentRow?.roleName }
       />
       <ProFormSelect
         width="md"

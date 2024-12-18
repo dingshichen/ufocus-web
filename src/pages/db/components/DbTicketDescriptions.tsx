@@ -33,8 +33,8 @@ const DbTicketDescriptions: React.FC<DbTicketDescriptionsProps> = (props) => {
         <ProDescriptions.Item dataIndex="performState" label="执行状态"/>
         <ProDescriptions.Item dataIndex={["createUser", "chnName"]} label="创建人"/>
         <ProDescriptions.Item dataIndex="createTime" label="创建时间" valueType="dateTime"/>
-        <ProDescriptions.Item dataIndex={["latestUpdateUser", "chnName"]} label="最近修改人"/>
-        <ProDescriptions.Item dataIndex="latestUpdateTime" label="最近更新时间" valueType="dateTime"/>
+        <ProDescriptions.Item dataIndex={["updateUser", "chnName"]} label="最近更新人"/>
+        <ProDescriptions.Item dataIndex="updateTime" label="更新时间" valueType="dateTime"/>
         <ProDescriptions.Item span={2} render={(_, value) => {
           return <DbTicketScriptTab dbTicketId={1} instanceScripts={(value as API.DbTicketWithScriptDetail).instanceScripts}/>
         }} />

@@ -1,27 +1,27 @@
 declare namespace API {
 
   class UserOption extends Base {
-    chnName: string;
+    userName: string;
   }
 
   class UserItem extends UserOption {
-    mobilePhoneNumber?: string;
-    emailAddress: string;
+    phoneNo?: string;
+    email: string;
     roles: RoleOption[];
-    isLockFlag: boolean;
+    lockFlag: boolean;
   }
 
   class UserDetail extends UserItem {
     createUser: UserOption;
     createTime: string;
-    latestUpdateUser: UserOption;
-    latestUpdateTime: string;
+    updateUser: UserOption;
+    updateTime: string;
   }
 
   class UserQuery {
-    chnName?: string;
-    mobilePhoneNumber?: string;
-    isLockFlag?: boolean;
+    userName?: string;
+    phoneNo?: string;
+    lockFlag?: boolean;
     roleId?: string;
   }
 
@@ -30,17 +30,17 @@ declare namespace API {
   }
 
   class UserInsert {
-    chnName: string;
-    mobilePhoneNumber?: string;
-    emailAddress: string;
+    userName: string;
+    phoneNo?: string;
+    email: string;
     roleIds: string[];
     pwd: string;
   }
 
   class UserUpdate extends Base {
-    chnName: string;
-    mobilePhoneNumber?: string;
-    emailAddress: string;
+    userName: string;
+    phoneNo?: string;
+    email: string;
     roleIds: string[];
   }
 }

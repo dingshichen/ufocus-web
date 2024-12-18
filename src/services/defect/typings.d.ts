@@ -11,8 +11,8 @@ declare namespace API {
   }
 
   class DefectDetail extends DefectItem {
-    latestUpdateUser: UserOption;
-    latestUpdateTime: string;
+    updateUser: UserOption;
+    updateTime: string;
   }
 
   class DefectQuery {

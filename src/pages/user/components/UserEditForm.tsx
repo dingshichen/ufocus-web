@@ -27,9 +27,9 @@ const UserEditForm: React.FC<UserEditProps> = (props) => {
           },
         ]}
         width="md"
-        name="chnName"
-        label="用户名"
-        initialValue={ props.currentRow?.chnName }
+        name="userName"
+        label="用户姓名"
+        initialValue={ props.currentRow?.userName }
       />
       <ProFormSelect
         rules={[
@@ -43,13 +43,13 @@ const UserEditForm: React.FC<UserEditProps> = (props) => {
         mode="multiple"
         label="角色"
         request={selectRoles}
-        initialValue={ props.currentRow?.roles.map(e => ({ value: e.id, label: e.chnName }) ) }
+        initialValue={ props.currentRow?.roles.map(e => ({ value: e.id, label: e.roleName }) ) }
       />
       <ProFormText
         width="md"
-        name="mobilePhoneNumber"
+        name="phoneNo"
         label="手机号码"
-        initialValue={ props.currentRow?.mobilePhoneNumber }
+        initialValue={ props.currentRow?.phoneNo }
       />
       <ProFormText
         rules={[
@@ -59,9 +59,9 @@ const UserEditForm: React.FC<UserEditProps> = (props) => {
           },
         ]}
         width="md"
-        name="emailAddress"
+        name="email"
         label="电子邮箱"
-        initialValue={ props.currentRow?.emailAddress }
+        initialValue={ props.currentRow?.email }
       />
       { !props.currentRow && (
         <ProFormText.Password

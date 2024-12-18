@@ -60,11 +60,11 @@ const load = (req: Request, res: Response) => {
         chnName: '刘彬'
       },
       createTime: '2023-07-01 12:12:12',
-      latestUpdateUser: {
+      updateUser: {
         id: '1735560201238421505',
         chnName: '刘彬'
       },
-      latestUpdateTime: '2023-07-01 12:12:12',
+      updateTime: '2023-07-01 12:12:12',
     }
   })
 }

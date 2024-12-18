@@ -1,7 +1,7 @@
 declare namespace API {
 
   class RoleOption extends Base {
-    chnName: string;
+    roleName: string;
   }
 
   class RoleItem extends RoleOption {
@@ -10,8 +10,8 @@ declare namespace API {
   }
 
   class RoleDetail extends RoleItem {
-    latestUpdateUser: UserOption;
-    latestUpdateTime: string;
+    updateUser: UserOption;
+    updateTime: string;
   }
 
   class RoleSelectQuery extends SelectQuery {
@@ -23,12 +23,12 @@ declare namespace API {
   }
 
   class RoleInsert {
-    chnName: string;
+    roleName: string;
     permissionIds: string[];
   }
 
   class RoleUpdate extends Base {
-    chnName: string;
+    roleName: string;
     permissionIds: string[];
   }
 }

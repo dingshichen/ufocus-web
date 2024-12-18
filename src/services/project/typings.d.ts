@@ -11,8 +11,8 @@ declare namespace API {
     projectDesc?: string;
     createUser: UserOption;
     createTime: string;
-    latestUpdateUser: UserOption;
-    latestUpdateTime: string;
+    updateUser: UserOption;
+    updateTime: string;
   }
 
   class ProjectQuery {

@@ -13,8 +13,8 @@ declare namespace API {
   class DbInstanceDetail extends DbInstanceItem {
     account: string;
     password: string;
-    latestUpdateUser: UserOption;
-    latestUpdateTime: string;
+    updateUser: UserOption;
+    updateTime: string;
   }
 
   class DbGroupOption extends Base {
@@ -29,8 +29,8 @@ declare namespace API {
   }
 
   class DbGroupDetail extends DbGroupItem {
-    latestUpdateUser: UserOption;
-    latestUpdateTime: string;
+    updateUser: UserOption;
+    updateTime: string;
   }
 
   class DbTicketOption extends Base {
@@ -49,8 +49,8 @@ declare namespace API {
 
   class DbTicketDetail extends DbTicketItem {
     textContent: string;
-    latestUpdateUser: UserOption;
-    latestUpdateTime: string;
+    updateUser: UserOption;
+    updateTime: string;
   }
 
   class DbTicketWithScriptDetail extends DbTicketDetail {

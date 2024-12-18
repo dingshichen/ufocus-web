@@ -11,8 +11,8 @@ declare namespace API {
   }
 
   class RequirementDetail extends RequirementItem {
-    latestUpdateUser: UserOption;
-    latestUpdateTime: string;
+    updateUser: UserOption;
+    updateTime: string;
   }
 
   class RequirementQuery {

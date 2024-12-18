@@ -8,9 +8,9 @@ import RoleEditForm from "@/pages/role/components/RoleEditForm";
 
 async function handleSubmit(value: Record<string, any>, current?: API.RoleDetail) {
   if (current === undefined) {
-    await insertRole({ chnName: value.chnName, permissionIds: value.permissionIds });
+    await insertRole({ roleName: value.roleName, permissionIds: value.permissionIds });
   } else {
-    await updateRole({ id: current.id, chnName: value.chnName, permissionIds: value.permissionIds })
+    await updateRole({ id: current.id, roleName: value.roleName, permissionIds: value.permissionIds })
   }
 }
 
@@ -23,12 +23,12 @@ const RoleManage: React.FC = () => {
   const columns: ProColumns<API.RoleItem>[] = [
     {
       title: '角色名称',
-      dataIndex: 'chnName',
-      render: (_, record) => (<Tag>{record.chnName}</Tag>)
+      dataIndex: 'roleName',
+      render: (_, record) => (<Tag>{record.roleName}</Tag>)
     },
     {
       title: "创建人",
-      dataIndex: ["createUser", "chnName"],
+      dataIndex: ["createUser", "userName"],
       search: false
     },
     {

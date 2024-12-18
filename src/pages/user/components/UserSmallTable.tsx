@@ -13,16 +13,16 @@ const UserSmallTable: React.FC<UserSmallTableProps> = (props) => {
   const actionRef = useRef<ActionType>();
   const columns: ProColumns<API.UserItem>[] = [
     {
-      title: "用户名称",
-      dataIndex: "chnName",
+      title: "用户姓名",
+      dataIndex: "userName",
     },
     {
       title: "手机号码",
-      dataIndex: "mobilePhoneNumber",
+      dataIndex: "phoneNo",
     },
     {
       title: "电子邮箱",
-      dataIndex: "emailAddress",
+      dataIndex: "email",
     }
   ]
   return (
